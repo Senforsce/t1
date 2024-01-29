@@ -1,4 +1,4 @@
-module github.com/a-h/templ/storybook/example
+module github.com/senforsce/templ/storybook/example
 
 go 1.20
 
