@@ -9,8 +9,8 @@ import (
 	"os/signal"
 	"runtime"
 
-	"github.com/a-h/templ"
 	"github.com/fatih/color"
+	templ "github.com/senforsce/t1"
 	"github.com/senforsce/t1/cmd/t1/fmtcmd"
 	"github.com/senforsce/t1/cmd/t1/generatecmd"
 	"github.com/senforsce/t1/cmd/t1/lspcmd"
@@ -27,7 +27,7 @@ const usageText = `usage: t1 <command> [<args>...]
 
 Thunderf1sh - build Semantic Web With OWL & HTMX UIs with Go
 
-See docs at https://templ.guide and https://senforsce.com/thunderf1sh/guide
+See docs at https://templ.guide and https://senforsce.com/thunderf1sh/guide (coming soon)
 
 commands:
   generate   Generates Go code from t1 or templ files

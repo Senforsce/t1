@@ -9,10 +9,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/a-h/templ/cmd/templ/processor"
-	v1 "github.com/a-h/templ/parser/v1"
-	v2 "github.com/a-h/templ/parser/v2"
 	"github.com/natefinch/atomic"
+	"github.com/senforsce/t1/cmd/t1/processor"
+	v1 "github.com/senforsce/t1/parser/v1"
+	v2 "github.com/senforsce/t1/parser/v2"
 )
 
 const workerCount = 4
