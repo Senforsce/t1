@@ -5,8 +5,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/a-h/templ"
 	"github.com/google/go-cmp/cmp"
+	templ "github.com/senforsce/t1"
 )
 
 func TestTextWhitespace(t *testing.T) {

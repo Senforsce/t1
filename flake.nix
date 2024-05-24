@@ -1,5 +1,5 @@
 {
-  description = "templ";
+  description = "thunderf1sh";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-unstable";
@@ -28,13 +28,13 @@
     in
     {
       packages = forAllSystems ({ pkgs, ... }: rec {
-        default = templ;
+        default = thunderfish;
 
-        templ = pkgs.buildGo121Module {
-          name = "templ";
+        thunderfish = pkgs.buildGo121Module {
+          name = "thunderfish";
           src = gitignore.lib.gitignoreSource ./.;
-          subPackages = [ "cmd/templ" ];
-          vendorHash = "sha256-U/KFUGi47dSE1YxKWOUlxvUR1BKI1snRjZlXZ8hY24c=";
+          subPackages = [ "cmd/t1" ];
+          vendorHash = "sha256-4tHofTnSNI/MBmrGdGsLNoXjxUC0+Gwp3PzzUwfUkQU=";
           CGO_ENABLED = 0;
           flags = [
             "-trimpath"
@@ -46,8 +46,8 @@
           ];
         };
 
-        templ-docs = pkgs.buildNpmPackage {
-          name = "templ-docs";
+        thunderf1sh-docs = pkgs.buildNpmPackage {
+          name = "thunderf1sh-docs";
           src = gitignore.lib.gitignoreSource ./docs;
           npmDepsHash = "sha256-i6clvSyHtQEGl2C/wcCXonl1W/Kxq7WPTYH46AhUvDM=";
           installPhase = ''
@@ -70,16 +70,16 @@
         });
 
       # This flake outputs an overlay that can be used to add templ and
-      # templ-docs to nixpkgs as per https://templ.guide/quick-start/installation/#nix
+      # thunderf1sh-docs to nixpkgs as per https://senforsce.com/thunderf1sh/quick-start/installation/#nix
       #
       # Example usage:
       #
       # nixpkgs.overlays = [
-      #   inputs.templ.overlays.default
+      #   inputs.thunderf1sh.overlays.default
       # ];
       overlays.default = final: prev: {
-        templ = self.packages.${final.stdenv.system}.templ;
-        templ-docs = self.packages.${final.stdenv.system}.templ-docs;
+        thunderf1sh = self.packages.${final.stdenv.system}.thunderf1sh;
+        thunderf1sh-docs = self.packages.${final.stdenv.system}.thunderf1sh-docs;
       };
     };
 }

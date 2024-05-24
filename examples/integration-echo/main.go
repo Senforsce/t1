@@ -3,8 +3,8 @@ package main
 import (
 	"net/http"
 
-	"github.com/a-h/templ"
 	"github.com/labstack/echo/v4"
+	"github.com/senforsce/templ"
 )
 
 func main() {

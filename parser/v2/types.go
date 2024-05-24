@@ -887,6 +887,16 @@ func (c GoComment) Write(w io.Writer, indent int) error {
 	return writeIndent(w, indent, "//", c.Contents)
 }
 
+// HDTContextRetrievalExpression.
+type HDTContextRetrievalExpression struct {
+	Contents string
+}
+
+func (c HDTContextRetrievalExpression) IsNode() bool { return true }
+func (c HDTContextRetrievalExpression) Write(w io.Writer, indent int) error {
+	return writeIndent(w, indent, `c.get("`, c.Contents, `").(string)`)
+}
+
 // HTMLComment.
 type HTMLComment struct {
 	Contents string
@@ -1103,6 +1113,27 @@ type ScriptTemplate struct {
 func (s ScriptTemplate) IsTemplateFileNode() bool { return true }
 func (s ScriptTemplate) Write(w io.Writer, indent int) error {
 	if err := writeIndent(w, indent, "script ", s.Name.Value, "(", s.Parameters.Value, ") {\n"); err != nil {
+		return err
+	}
+	if _, err := io.WriteString(w, s.Value); err != nil {
+		return err
+	}
+	if err := writeIndent(w, indent, "}"); err != nil {
+		return err
+	}
+	return nil
+}
+
+// O8Template is a script block.
+type O8Template struct {
+	Name       Expression
+	Parameters Expression
+	Value      string
+}
+
+func (s O8Template) IsTemplateFileNode() bool { return true }
+func (s O8Template) Write(w io.Writer, indent int) error {
+	if err := writeIndent(w, indent, "o8 ", s.Name.Value, "(", s.Parameters.Value, ") {\n"); err != nil {
 		return err
 	}
 	if _, err := io.WriteString(w, s.Value); err != nil {

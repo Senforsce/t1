@@ -7,8 +7,8 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/a-h/templ"
-	"github.com/a-h/templ/generator/htmldiff"
+	templ "github.com/senforsce/t1"
+	"github.com/senforsce/t1/generator/htmldiff"
 )
 
 //go:embed expected.html

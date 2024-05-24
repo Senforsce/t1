@@ -29,13 +29,16 @@ type templateExpressionParser struct {
 }
 
 var templateExpressionStartParser = createStartParser("templ")
+var alternateExpressionStartParser = createStartParser("t1")
 
 func (p templateExpressionParser) Parse(pi parse.Input) parse.Result {
 	var r templateExpression
 
 	// Check the prefix first.
-	prefixResult := templateExpressionStartParser(pi)
-	if !prefixResult.Success {
+	prefixResult := alternateExpressionStartParser(pi)
+	prefixResultAlternate := templateExpressionStartParser(pi)
+
+	if !prefixResult.Success || !prefixResultAlternate.Success {
 		return prefixResult
 	}
 

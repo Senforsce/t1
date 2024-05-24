@@ -1,9 +1,9 @@
-module github.com/a-h/templ/examples/integration-gin
+module github.com/senforsce/t1/examples/integration-gin
 
 go 1.21.1
 
 require (
-	github.com/a-h/templ v0.2.432
+	github.com/senforsce/t1 v0.2.432
 	github.com/gin-gonic/gin v1.9.1
 )
 
@@ -34,4 +34,4 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
-replace github.com/a-h/templ => ../../
+replace github.com/senforsce/t1 => ../../

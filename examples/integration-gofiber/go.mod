@@ -1,9 +1,9 @@
-module github.com/a-h/templ/examples/integration-gofiber
+module github.com/senforsce/t1/examples/integration-gofiber
 
 go 1.21
 
 require (
-	github.com/a-h/templ v0.2.501
+	github.com/senforsce/t1 v0.2.501
 	github.com/gofiber/fiber/v2 v2.51.0
 )
 
@@ -21,4 +21,4 @@ require (
 	golang.org/x/sys v0.14.0 // indirect
 )
 
-replace github.com/a-h/templ => ../../
+replace github.com/senforsce/t1 => ../../

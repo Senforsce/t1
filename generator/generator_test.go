@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/a-h/templ/parser/v2"
 	"github.com/google/go-cmp/cmp"
+	"github.com/senforsce/t1/parser/v2"
 )
 
 func TestGeneratorSourceMap(t *testing.T) {

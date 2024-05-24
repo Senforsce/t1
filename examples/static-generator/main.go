@@ -9,8 +9,8 @@ import (
 	"path"
 	"time"
 
-	"github.com/a-h/templ"
 	"github.com/gosimple/slug"
+	"github.com/senforsce/templ"
 	"github.com/yuin/goldmark"
 )
 

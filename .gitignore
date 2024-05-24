@@ -1,8 +1,8 @@
 # Output.
-cmd/templ/templ
+cmd/t1/t1
 
 # Logs.
-cmd/templ/lspcmd/*log.txt
+cmd/t1/lspcmd/*log.txt
 
 # Go code coverage.
 coverage.out

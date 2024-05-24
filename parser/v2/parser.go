@@ -25,7 +25,7 @@ var template = parse.Func(func(pi *parse.Input) (r HTMLTemplate, ok bool, err er
 		return
 	}
 	if !ok {
-		err = parse.Error("templ: expected nodes in templ body, but found none", pi.Position())
+		err = parse.Error("thunderf1sh: expected nodes in templ body, but found none", pi.Position())
 		return
 	}
 	r.Children = nodes.Nodes

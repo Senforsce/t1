@@ -4,7 +4,7 @@ import (
 	_ "embed"
 	"testing"
 
-	"github.com/a-h/templ/generator/htmldiff"
+	"github.com/senforsce/t1/generator/htmldiff"
 )
 
 //go:embed expected.html

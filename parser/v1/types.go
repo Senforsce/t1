@@ -693,3 +693,24 @@ func (s ScriptTemplate) Write(w io.Writer, indent int) error {
 	}
 	return nil
 }
+
+// O8Template is a script block.
+type O8Template struct {
+	Name       Expression
+	Parameters Expression
+	Value      string
+}
+
+func (s O8Template) IsTemplateFileNode() bool { return true }
+func (s O8Template) Write(w io.Writer, indent int) error {
+	if err := writeIndent(w, indent, "{% o8 "+s.Name.Value+"("+s.Parameters.Value+") %}\n"); err != nil {
+		return err
+	}
+	if _, err := io.WriteString(w, s.Value); err != nil {
+		return err
+	}
+	if err := writeIndent(w, indent, "{% endo8 %}"); err != nil {
+		return err
+	}
+	return nil
+}

@@ -49,6 +49,7 @@ var stringUntilNewLineOrEOF = parse.StringUntil(newLineOrEOF)
 
 var jsOrGoSingleLineComment = parse.StringFrom(parse.String("//"), parse.StringUntil(parse.Any(parse.NewLine, parse.EOF[string]())))
 var jsOrGoMultiLineComment = parse.StringFrom(parse.String("/*"), parse.StringUntil(parse.String("*/")))
+var singleHDTContextRetrievalExpression = parse.StringFrom(parse.String("/-"), parse.StringUntil(parse.String("-/")))
 
 var exp = expressionParser{
 	startBraceCount: 1,
@@ -79,6 +80,15 @@ loop:
 
 		// Try to parse a multi-line comment.
 		if result, ok, err = jsOrGoMultiLineComment.Parse(pi); err != nil {
+			return
+		}
+		if ok {
+			sb.WriteString(result)
+			continue
+		}
+
+		// Try to parse a triple value.
+		if result, ok, err = singleHDTContextRetrievalExpression.Parse(pi); err != nil {
 			return
 		}
 		if ok {

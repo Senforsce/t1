@@ -59,7 +59,7 @@ type templateParser struct {
 func (p templateParser) Parse(pi parse.Input) parse.Result {
 	var r HTMLTemplate
 
-	// {% templ FuncName(p Person, other Other) %}
+	// {% (t1 or templ) FuncName(p Person, other Other) %}
 	tepr := newTemplateExpressionParser().Parse(pi)
 	if !tepr.Success {
 		return tepr
@@ -77,14 +77,14 @@ func (p templateParser) Parse(pi parse.Input) parse.Result {
 	}
 	// If there's no match, there's no template elements.
 	if !tnpr.Success {
-		return parse.Failure("templateParser", newParseError("templ: expected nodes in templ body, but found none", from, NewPositionFromInput(pi)))
+		return parse.Failure("templateParser", newParseError("thunderf1sh: expected nodes in t1 or templ body, but found none", from, NewPositionFromInput(pi)))
 	}
 	r.Children = tnpr.Item.([]Node)
 
 	// We must have a final {% endtempl %}, or the close has been forgotten.
-	// {% endtempl %}
+	// {% endtempl or endt1 %}
 	if et := endTemplateParser(pi); !et.Success {
-		return parse.Failure("templateParser", newParseError("templ: missing end (expected '{% endtempl %}')", from, NewPositionFromInput(pi)))
+		return parse.Failure("templateParser", newParseError("thunderf1sh: missing end (expected '{% endt1 %}' or '{% endtempl %}')", from, NewPositionFromInput(pi)))
 	}
 
 	// Eat optional whitespace.
@@ -92,10 +92,10 @@ func (p templateParser) Parse(pi parse.Input) parse.Result {
 		return wpr
 	}
 
-	return parse.Success("templ", r, nil)
+	return parse.Success("t1", r, nil)
 }
 
-var endTemplateParser = createEndParser("endtempl")
+var endTemplateParser = createEndParser("endt1")
 
 // Parse error.
 func newParseError(msg string, from Position, to Position) ParseError {

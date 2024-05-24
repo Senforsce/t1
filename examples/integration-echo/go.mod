@@ -1,9 +1,9 @@
-module github.com/a-h/templ/examples/integration-echo
+module github.com/senforsce/t1/examples/integration-echo
 
 go 1.20
 
 require (
-	github.com/a-h/templ v0.2.513
+	github.com/senforsce/t1 v0.2.513
 	github.com/labstack/echo/v4 v4.11.4
 )
 
@@ -19,4 +19,4 @@ require (
 	golang.org/x/text v0.14.0 // indirect
 )
 
-replace github.com/a-h/templ => ../../
+replace github.com/senforsce/t1 => ../../

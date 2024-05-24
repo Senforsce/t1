@@ -4,7 +4,7 @@ package ifelse
 
 //lint:file-ignore SA4006 This context is only used if a nested component is present.
 
-import "github.com/a-h/templ"
+import "github.com/senforsce/t1"
 import "context"
 import "io"
 import "bytes"

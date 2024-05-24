@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/a-h/templ/examples/counter/db"
+	"github.com/senforsce/t1/examples/counter/db"
 	"golang.org/x/exp/slog"
 )
 

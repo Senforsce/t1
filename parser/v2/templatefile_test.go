@@ -23,7 +23,7 @@ func TestTemplateFileParser(t *testing.T) {
 	t.Run("but can accept a package expression, if one is provided", func(t *testing.T) {
 		input := `package goof
 
-templ Hello() {
+t1 Hello() {
 	Hello
 }`
 		tf, err := ParseString(input)
@@ -41,7 +41,7 @@ templ Hello() {
 		input := `// Example comment.
 package goof
 
-templ Hello() {
+t1 Hello() {
 	Hello
 }`
 		tf, err := ParseString(input)
@@ -57,7 +57,7 @@ templ Hello() {
 
 const x = "123"
 
-templ Hello() {
+t1 Hello() {
 	Hello
 }
 
@@ -94,7 +94,7 @@ const y = "456"
 
 const x = "123"
 
-templ Hello() {
+t1 Hello() {
 	Hello
 }
 
@@ -137,13 +137,13 @@ func TestTemplateFileRoundTrip(t *testing.T) {
 			name: "template files can be round tripped",
 			input: `package goof
 
-templ Hello() {
+t1 Hello() {
 	Hello
 }
 `,
 			expected: `package goof
 
-templ Hello() {
+t1 Hello() {
 	Hello
 }
 `,
@@ -153,14 +153,14 @@ templ Hello() {
 			input: `// Go comment
 package goof
 
-templ Hello() {
+t1 Hello() {
 	Hello
 }
 `,
 			expected: `// Go comment
 package goof
 
-templ Hello() {
+t1 Hello() {
 	Hello
 }
 `,
@@ -172,7 +172,7 @@ templ Hello() {
 
 package goof
 
-templ Hello() {
+t1 Hello() {
 	Hello
 }
 `,
@@ -181,7 +181,7 @@ templ Hello() {
 
 package goof
 
-templ Hello() {
+t1 Hello() {
 	Hello
 }
 `,
@@ -195,7 +195,7 @@ templ Hello() {
 
 package goof
 
-templ Hello() {
+t1 Hello() {
 	Hello
 }
 `,
@@ -206,7 +206,7 @@ templ Hello() {
 
 package goof
 
-templ Hello() {
+t1 Hello() {
 	Hello
 }
 `,
@@ -226,7 +226,7 @@ Multi-line comment on multiple lines
 
 package goof
 
-templ Hello() {
+t1 Hello() {
 	Hello
 }
 `,
@@ -243,7 +243,7 @@ Multi-line comment on multiple lines
 
 package goof
 
-templ Hello() {
+t1 Hello() {
 	Hello
 }
 `,

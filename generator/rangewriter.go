@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/a-h/templ/parser/v2"
+	"github.com/senforsce/t1/parser/v2"
 )
 
 func NewRangeWriter(w io.Writer) *RangeWriter {
