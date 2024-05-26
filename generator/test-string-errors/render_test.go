@@ -7,7 +7,7 @@ import (
 	"errors"
 	"testing"
 
-	templ "github.com/senforsce/t1"
+	t1 "github.com/senforsce/t1"
 	"github.com/senforsce/t1/generator/htmldiff"
 )
 
@@ -31,13 +31,13 @@ func Test(t *testing.T) {
 			t.Fatalf("expected error, but got nil")
 		}
 
-		t.Run("the errors are templ errors", func(t *testing.T) {
-			var templateErr templ.Error
+		t.Run("the errors are t1 errors", func(t *testing.T) {
+			var templateErr t1.Error
 			if !errors.As(err, &templateErr) {
-				t.Fatalf("expected error to be templ.Error, but got %T", err)
+				t.Fatalf("expected error to be t1.Error, but got %T", err)
 			}
-			if templateErr.FileName != `generator/test-string-errors/template.templ` {
-				t.Errorf("expected error in `generator/test-string-errors/template.templ`, but got %v", templateErr.FileName)
+			if templateErr.FileName != `generator/test-string-errors/template.t1` {
+				t.Errorf("expected error in `generator/test-string-errors/template.t1`, but got %v", templateErr.FileName)
 			}
 			if templateErr.Line != 17 {
 				t.Errorf("expected error on line 17, but got %v", templateErr.Line)

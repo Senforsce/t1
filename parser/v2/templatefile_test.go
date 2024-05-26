@@ -279,22 +279,22 @@ func TestDefaultPackageName(t *testing.T) {
 	}{
 		{
 			name:     "standard filename",
-			input:    "/files/on/disk/header.templ",
+			input:    "/files/on/disk/header.t1",
 			expected: "disk",
 		},
 		{
 			name:     "path that starts with numbers",
-			input:    "/files/on/123disk/header.templ",
+			input:    "/files/on/123disk/header.t1",
 			expected: "main",
 		},
 		{
 			name:     "path that includes hyphens",
-			input:    "/files/on/disk-drive/header.templ",
+			input:    "/files/on/disk-drive/header.t1",
 			expected: "main",
 		},
 		{
 			name:     "relative path",
-			input:    "header.templ",
+			input:    "header.t1",
 			expected: "main",
 		},
 	}

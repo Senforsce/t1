@@ -10,7 +10,7 @@ import (
 // TemplateExpression.
 
 // TemplateExpression.
-// {% templ Func(p Parameter) %}
+// {% t1 Func(p Parameter) %}
 type templateExpression struct {
 	Name       Expression
 	Parameters Expression

@@ -3,7 +3,7 @@
 ### build-templ
 
 ```
-templ generate
+t1 generate
 ```
 
 ### build-js

@@ -4,9 +4,9 @@ import "testing"
 
 func TestTemplateFileParser(t *testing.T) {
 	t.Run("does not require a package expression", func(t *testing.T) {
-		input := `{% templ Hello() %}
+		input := `{% t1 Hello() %}
 Hello
-{% endtempl %}`
+{% endt1 %}`
 		tf, err := ParseString(input)
 		if err != nil {
 			t.Fatalf("failed to parse template, with error: %v", err)
@@ -21,9 +21,9 @@ Hello
 	t.Run("but can accept a package expression, if one is provided", func(t *testing.T) {
 		input := `{% package main %}
 
-{% templ Hello() %}
+{% t1 Hello() %}
 Hello
-{% endtempl %}`
+{% endt1 %}`
 		tf, err := ParseString(input)
 		if err != nil {
 			t.Fatalf("failed to parse template, with error: %v", err)
@@ -42,22 +42,22 @@ func TestDefaultPackageName(t *testing.T) {
 	}{
 		{
 			name:     "standard filename",
-			input:    "/files/on/disk/header.templ",
+			input:    "/files/on/disk/header.t1",
 			expected: "disk",
 		},
 		{
 			name:     "path that starts with numbers",
-			input:    "/files/on/123disk/header.templ",
+			input:    "/files/on/123disk/header.t1",
 			expected: "main",
 		},
 		{
 			name:     "path that includes hyphens",
-			input:    "/files/on/disk-drive/header.templ",
+			input:    "/files/on/disk-drive/header.t1",
 			expected: "main",
 		},
 		{
 			name:     "relative path",
-			input:    "header.templ",
+			input:    "header.t1",
 			expected: "main",
 		},
 	}

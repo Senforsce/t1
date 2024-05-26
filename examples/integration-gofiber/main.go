@@ -3,7 +3,6 @@ package main
 import (
 	"net/http"
 
-	"github.com/a-h/templ"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/log"
 	"github.com/gofiber/fiber/v2/middleware/adaptor"
@@ -25,11 +24,11 @@ func main() {
 }
 
 func NotFoundMiddleware(c *fiber.Ctx) error {
-	return Render(c, NotFound(), templ.WithStatus(http.StatusNotFound))
+	return Render(c, NotFound(), t1.WithStatus(http.StatusNotFound))
 }
 
-func Render(c *fiber.Ctx, component templ.Component, options ...func(*templ.ComponentHandler)) error {
-	componentHandler := templ.Handler(component)
+func Render(c *fiber.Ctx, component t1.Component, options ...func(*t1.ComponentHandler)) error {
+	componentHandler := t1.Handler(component)
 	for _, o := range options {
 		o(componentHandler)
 	}

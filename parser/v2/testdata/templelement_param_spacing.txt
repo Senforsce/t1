@@ -1,12 +1,12 @@
 -- in --
 package p
 
-templ f() {
+t1 f() {
 	@Other(p.Test,"s")
 }
 -- out --
 package p
 
-templ f() {
+t1 f() {
 	@Other(p.Test, "s")
 }

@@ -8,17 +8,20 @@ import (
 
 	_ "net/http/pprof"
 
-	"github.com/a-h/templ/cmd/templ/sloghandler"
+	"github.com/senforsce/t1/cmd/t1/sloghandler"
 )
 
 type Arguments struct {
 	FileName                        string
+	ToStdout                        bool
 	Path                            string
 	Watch                           bool
 	OpenBrowser                     bool
 	Command                         string
+	ProxyBind                       string
 	ProxyPort                       int
 	Proxy                           string
+	NotifyProxy                     bool
 	WorkerCount                     int
 	GenerateSourceMapVisualisations bool
 	IncludeVersion                  bool

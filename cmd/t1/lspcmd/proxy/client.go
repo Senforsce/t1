@@ -12,9 +12,9 @@ import (
 // Client is responsible for rewriting messages that are
 // originated from gopls, and are sent to the client.
 //
-// Since `gopls` is working on Go files, and this is the `templ` LSP,
+// Since `gopls` is working on Go files, and this is the `t1` LSP,
 // the job of this code is to rewrite incoming requests to adjust the
-// file name from `*_templ.go` to `*.templ`, and to remap the char
+// file name from `*_t1.go` to `*.t1`, and to remap the char
 // positions where required.
 type Client struct {
 	Log             *zap.Logger
@@ -54,7 +54,7 @@ func (p Client) PublishDiagnostics(ctx context.Context, params *lsp.PublishDiagn
 		p.Log.Info(fmt.Sprintf("client <- server: PublishDiagnostics: [%d]", i), zap.Any("diagnostic", diagnostic))
 	}
 	// Get the sourcemap from the cache.
-	uri := strings.TrimSuffix(string(params.URI), "_templ.go") + ".templ"
+	uri := strings.TrimSuffix(string(params.URI), "_t1.go") + ".t1"
 	sourceMap, ok := p.SourceMapCache.Get(uri)
 	if !ok {
 		return fmt.Errorf("unable to complete because the sourcemap for %q doesn't exist in the cache, has the didOpen notification been sent yet?", uri)

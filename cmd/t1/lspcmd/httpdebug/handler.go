@@ -6,7 +6,8 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/a-h/templ"
+	"github.com/senforsce/t1"
+
 	"github.com/senforsce/t1/cmd/t1/lspcmd/proxy"
 	"github.com/senforsce/t1/cmd/t1/visualize"
 	"go.uber.org/zap"
@@ -54,7 +55,7 @@ func NewHandler(l *zap.Logger, s *proxy.Server) http.Handler {
 			return
 		}
 		// Assume we've got a URI.
-		templSource, ok := s.TemplSource.Get(uri)
+		t1Source, ok := s.TemplSource.Get(uri)
 		if !ok {
 			if !ok {
 				Error(w, "uri not found in document contents", http.StatusNotFound)
@@ -73,30 +74,30 @@ func NewHandler(l *zap.Logger, s *proxy.Server) http.Handler {
 			Error(w, "uri not found", http.StatusNotFound)
 			return
 		}
-		if err := visualize.HTML(uri, templSource.String(), goSource, sm).Render(r.Context(), w); err != nil {
+		if err := visualize.HTML(uri, t1Source.String(), goSource, sm).Render(r.Context(), w); err != nil {
 			Error(w, "failed to visualize HTML", http.StatusInternalServerError)
 		}
 	})
 	return m
 }
 
-func getMapURL(uri string) templ.SafeURL {
+func getMapURL(uri string) t1.SafeURL {
 	return withQuery("/", uri)
 }
 
-func getSourceMapURL(uri string) templ.SafeURL {
+func getSourceMapURL(uri string) t1.SafeURL {
 	return withQuery("/sourcemap", uri)
 }
 
-func getTemplURL(uri string) templ.SafeURL {
+func getTemplURL(uri string) t1.SafeURL {
 	return withQuery("/templ", uri)
 }
 
-func getGoURL(uri string) templ.SafeURL {
+func getGoURL(uri string) t1.SafeURL {
 	return withQuery("/go", uri)
 }
 
-func withQuery(path, uri string) templ.SafeURL {
+func withQuery(path, uri string) t1.SafeURL {
 	q := make(url.Values)
 	q.Set("uri", uri)
 	u := &url.URL{
@@ -104,7 +105,7 @@ func withQuery(path, uri string) templ.SafeURL {
 		RawPath:  path,
 		RawQuery: q.Encode(),
 	}
-	return templ.SafeURL(u.String())
+	return t1.SafeURL(u.String())
 }
 
 func JSON(w http.ResponseWriter, v any) {

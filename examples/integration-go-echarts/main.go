@@ -6,7 +6,6 @@ import (
 	"math/rand"
 	"net/http"
 
-	"github.com/a-h/templ"
 	"github.com/go-echarts/go-echarts/v2/charts"
 	"github.com/go-echarts/go-echarts/v2/opts"
 )
@@ -38,8 +37,8 @@ type Renderable interface {
 }
 
 // So lets adapt it.
-func ConvertChartToTemplComponent(chart Renderable) templ.Component {
-	return templ.ComponentFunc(func(ctx context.Context, w io.Writer) error {
+func ConvertChartToTemplComponent(chart Renderable) t1.Component {
+	return t1.ComponentFunc(func(ctx context.Context, w io.Writer) error {
 		return chart.Render(w)
 	})
 }
@@ -47,7 +46,7 @@ func ConvertChartToTemplComponent(chart Renderable) templ.Component {
 func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		chart := createBarChart()
-		h := templ.Handler(Home(chart))
+		h := t1.Handler(Home(chart))
 		h.ServeHTTP(w, r)
 	})
 	http.ListenAndServe("localhost:3000", nil)

@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/a-h/parse"
-	"github.com/a-h/templ/parser/v2/goexpression"
+	"github.com/senforsce/t1/parser/v2/goexpression"
 )
 
 func parseGoFuncDecl(prefix string, pi *parse.Input) (name string, expression Expression, err error) {
@@ -22,8 +22,8 @@ func parseGoFuncDecl(prefix string, pi *parse.Input) (name string, expression Ex
 	return name, NewExpression(expr, pi.PositionAt(from+len(prefix)), to), nil
 }
 
-func parseTemplFuncDecl(pi *parse.Input) (name string, expression Expression, err error) {
-	return parseGoFuncDecl("templ", pi)
+func parseT1FuncDecl(pi *parse.Input) (name string, expression Expression, err error) {
+	return parseGoFuncDecl("t1", pi)
 }
 
 func parseCSSFuncDecl(pi *parse.Input) (name string, expression Expression, err error) {

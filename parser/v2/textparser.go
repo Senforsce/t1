@@ -11,7 +11,7 @@ var tagTemplOrNewLine = parse.Any(parse.Rune('<'), parse.Rune('{'), parse.Rune('
 var textParser = parse.Func(func(pi *parse.Input) (n Node, ok bool, err error) {
 	from := pi.Position()
 
-	// Read until a tag or templ expression opens.
+	// Read until a tag or t1 expression opens.
 	var t Text
 	if t.Value, ok, err = parse.StringUntil(tagTemplOrNewLine).Parse(pi); err != nil || !ok {
 		return
@@ -20,7 +20,7 @@ var textParser = parse.Func(func(pi *parse.Input) (n Node, ok bool, err error) {
 		return t, false, nil
 	}
 	if _, ok = pi.Peek(1); !ok {
-		err = parse.Error("textParser: unterminated text, expected tag open, templ expression open, or newline", from)
+		err = parse.Error("textParser: unterminated text, expected tag open, t1 expression open, or newline", from)
 		return
 	}
 

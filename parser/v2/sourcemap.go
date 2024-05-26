@@ -4,7 +4,7 @@ import (
 	"strings"
 )
 
-// NewSourceMap creates a new lookup to map templ source code to items in the
+// NewSourceMap creates a new lookup to map t1 source code to items in the
 // parsed template.
 func NewSourceMap() *SourceMap {
 	return &SourceMap{

@@ -2,10 +2,10 @@
 
 # HTML comments
 
-Inside templ statements, use HTML comments.
+Inside t1 statements, use HTML comments.
 
-```templ title="template.templ"
-templ template() {
+```t1 title="template.t1"
+t1 template() {
 	<!-- Single line -->
 	<!--
 		Single or multiline.
@@ -26,15 +26,15 @@ As per HTML, nested comments are not supported.
 
 # Go comments
 
-Outside of templ statements, use Go comments.
+Outside of t1 statements, use Go comments.
 
-```templ
+```t1
 package main
 
-// Use standard Go comments outside templ statements.
+// Use standard Go comments outside t1 statements.
 var greeting = "Hello!"
 
-templ hello(name string) {
+t1 hello(name string) {
 	<p>{greeting} { name }</p>
 }
 ```

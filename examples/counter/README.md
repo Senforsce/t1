@@ -3,7 +3,7 @@
 ### generate
 
 ```sh
-templ generate
+t1 generate
 ```
 
 ### deploy

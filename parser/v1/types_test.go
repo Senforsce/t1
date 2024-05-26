@@ -64,7 +64,7 @@ func TestTemplFormatting(t *testing.T) {
 			input: ` // first line removed to make indentation clear in Go code
 {% package test %}
 
-{% templ input(value, validation string) %}
+{% t1 input(value, validation string) %}
 <area></area>
 <base></base>
 <br></br>
@@ -82,12 +82,12 @@ func TestTemplFormatting(t *testing.T) {
 <track></track>
 <wbr></wbr>
 
-{% endtempl %}
+{% endt1 %}
 `,
 			expected: `// first line removed to make indentation clear in Go code
 {% package test %}
 
-{% templ input(value, validation string) %}
+{% t1 input(value, validation string) %}
 	<area/>
 	<base/>
 	<br/>
@@ -104,7 +104,7 @@ func TestTemplFormatting(t *testing.T) {
 	<source/>
 	<track/>
 	<wbr/>
-{% endtempl %}
+{% endt1 %}
 
 `,
 		},
@@ -113,21 +113,21 @@ func TestTemplFormatting(t *testing.T) {
 			input: ` // first line removed to make indentation clear in Go code
 {% package test %}
 
-{% templ input(value, validation string) %}
+{% t1 input(value, validation string) %}
 <div>
 <p>
 </p>
 </div>
-{% endtempl %}
+{% endt1 %}
 `,
 			expected: `// first line removed to make indentation clear in Go code
 {% package test %}
 
-{% templ input(value, validation string) %}
+{% t1 input(value, validation string) %}
 	<div>
 		<p></p>
 	</div>
-{% endtempl %}
+{% endt1 %}
 
 `,
 		},
@@ -136,18 +136,18 @@ func TestTemplFormatting(t *testing.T) {
 			input: ` // first line removed to make indentation clear in Go code
 {% package test %}
 
-{% templ input(value, validation string) %}
+{% t1 input(value, validation string) %}
 <div><p>{%= "the" %}<a href="http://example.com">{%= "data" %}</a></p></div>
-{% endtempl %}
+{% endt1 %}
 `,
 			expected: `// first line removed to make indentation clear in Go code
 {% package test %}
 
-{% templ input(value, validation string) %}
+{% t1 input(value, validation string) %}
 	<div>
 		<p>{%= "the" %}<a href="http://example.com">{%= "data" %}</a></p>
 	</div>
-{% endtempl %}
+{% endt1 %}
 
 `,
 		},
@@ -156,19 +156,19 @@ func TestTemplFormatting(t *testing.T) {
 			input: ` // first line removed to make indentation clear in Go code
 {% package test %}
 
-{% templ nested() %}
+{% t1 nested() %}
 <div>{%= "the" %}<div>{%= "other" %}</div></div>
-{% endtempl %}
+{% endt1 %}
 `,
 			expected: `// first line removed to make indentation clear in Go code
 {% package test %}
 
-{% templ nested() %}
+{% t1 nested() %}
 	<div>
 		{%= "the" %}
 		<div>{%= "other" %}</div>
 	</div>
-{% endtempl %}
+{% endt1 %}
 
 `,
 		},
@@ -177,16 +177,16 @@ func TestTemplFormatting(t *testing.T) {
 			input: ` // first line removed to make indentation clear in Go code
 {% package test %}
 
-{% templ input(items []string) %}
+{% t1 input(items []string) %}
 <div>{%= "the" %}<div>{%= "other" %}</div>{% for _, item := range items %}
 		<div>{%= item %}</div>
 	{% endfor %}</div>
-{% endtempl %}
+{% endt1 %}
 `,
 			expected: `// first line removed to make indentation clear in Go code
 {% package test %}
 
-{% templ input(items []string) %}
+{% t1 input(items []string) %}
 	<div>
 		{%= "the" %}
 		<div>{%= "other" %}</div>
@@ -194,7 +194,7 @@ func TestTemplFormatting(t *testing.T) {
 			<div>{%= item %}</div>
 		{% endfor %}
 	</div>
-{% endtempl %}
+{% endt1 %}
 
 `,
 		},

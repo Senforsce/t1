@@ -5,25 +5,25 @@
 With Go 1.20 or greater installed, run:
 
 ```sh
-go install github.com/a-h/templ/cmd/templ@latest
+go install github.com/senforsce/t1/cmd/templ@latest
 ```
 
 ## Github binaries
 
-Download the latest release from https://github.com/a-h/templ/releases/latest
+Download the latest release from https://github.com/senforsce/t1/releases/latest
 
 ## Nix
 
-templ provides a Nix flake with an exported package containing the binary at https://github.com/a-h/templ/blob/main/flake.nix
+t1 provides a Nix flake with an exported package containing the binary at https://github.com/senforsce/t1/blob/main/flake.nix
 
 ```sh
-nix run github:a-h/templ
+nix run github:senforsce/t1
 ```
 
-templ also provides a development shell which includes a Neovim configuration setup to use the templ autocompletion features.
+t1 also provides a development shell which includes a Neovim configuration setup to use the t1 autocompletion features.
 
 ```sh
-nix develop github:a-h/templ
+nix develop github:senforsce/t1
 ```
 
 To install in your Nix Flake:
@@ -34,7 +34,7 @@ This flake exposes an overlay, so you can add it to your own Flake and/or NixOS 
 {
   inputs = {
     ...
-    templ.url = "github:a-h/templ";
+    t1.url = "github:senforsce/t1";
     ...
   };
   outputs = inputs@{
@@ -45,11 +45,11 @@ This flake exposes an overlay, so you can add it to your own Flake and/or NixOS 
   {
     # Add the overlay,
     nixpkgs.overlays = [
-      inputs.templ.overlays.default
+      inputs.t1.overlays.default
     ];
     # and install the package
     environment.systemPackages = with pkgs; [
-      templ
+      t1
     ];
   };
 
@@ -59,13 +59,13 @@ This flake exposes an overlay, so you can add it to your own Flake and/or NixOS 
       inherit system;
       pkgs = import nixpkgs { inherit system; };
     });
-    templ = system: inputs.templ.packages.${system}.templ;
+    t1 = system: inputs.t1.packages.${system}.t1;
   in {
     packages = forAllSystems ({ pkgs, system }): {
       myNewPackage = pkgs.buildGoModule {
         ...
         preBuild = ''
-          ${templ system}/bin/templ generate
+          ${t1 system}/bin/t1 generate
         '';
       };
     };
@@ -74,7 +74,7 @@ This flake exposes an overlay, so you can add it to your own Flake and/or NixOS 
       pkgs.mkShell {
         buildInputs = with pkgs; [
           go
-          (templ system)
+          (t1 system)
         ];
       };
   };

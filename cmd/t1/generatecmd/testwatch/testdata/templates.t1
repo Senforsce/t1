@@ -1,0 +1,17 @@
+package main
+
+import "fmt"
+
+t1 Page(count int) {
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<title>T1 test page</title>
+		</head>
+		<body>
+			<h1>Count</h1>
+			<div data-testid="count">{ fmt.Sprintf("%d", count) }</div>
+			<div data-testid="modification">Original</div>
+		</body>
+	</html>
+}

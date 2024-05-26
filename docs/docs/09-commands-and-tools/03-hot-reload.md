@@ -1,23 +1,23 @@
 # Hot reload
 
-To access a Go web application that uses templ in a web browser, a few things must happen:
+To access a Go web application that uses t1 in a web browser, a few things must happen:
 
-1. `templ generate` must be executed, to create Go code (`*_templ.go` files) from the `*.templ` files.
+1. `t1 generate` must be executed, to create Go code (`*_t1.go` files) from the `*.t1` files.
 2. The Go code must start a web server on a port, e.g. (`http.ListenAndServe("localhost:8080", nil)`.
 3. The Go program must be ran, e.g. by running `go run .`.
 4. The web browser must access or reload the page, e.g. `http://localhost:8080`.
 
-If the `*.templ` files change, #1 and #2 must be ran.
+If the `*.t1` files change, #1 and #2 must be ran.
 
 If the `*.go` files change, #3 and #4 must be ran.
 
 ## Built-in
 
-`templ generate --watch` watches the current directory for changes and generates Go code if changes are detected.
+`t1 generate --watch` watches the current directory for changes and generates Go code if changes are detected.
 
-`templ generate --watch` generates Go code that loads strings from a `_templ.txt` file on disk to reduce the number of times that Go code needs to be re-generated, and therefore reduces the number of time your app needs to be recompiled and restarted.
+`t1 generate --watch` generates Go code that loads strings from a `_t1.txt` file on disk to reduce the number of times that Go code needs to be re-generated, and therefore reduces the number of time your app needs to be recompiled and restarted.
 
-To re-run your app automatically, add the `--cmd` argument to `templ generate`, and templ will start or restart your app using the command provided once template code generation is complete (#3).
+To re-run your app automatically, add the `--cmd` argument to `t1 generate`, and t1 will start or restart your app using the command provided once template code generation is complete (#3).
 
 Finally, to trigger your web browser to reload automatically (without pressing F5), set the `--proxy` argument (#4).
 
@@ -26,7 +26,7 @@ The `--proxy` argument starts a HTTP proxy which proxies requests to your app. F
 Altogether, to setup hot reload on an app that listens on port 8080, run the following.
 
 ```
-templ generate --watch --proxy="http://localhost:8080" --cmd="go run ."
+t1 generate --watch --proxy="http://localhost:8080" --cmd="go run ."
 ```
 
 ```go title="main.go"
@@ -36,23 +36,23 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/a-h/templ"
+	"github.com/senforsce/t1"
 )
 
 func main() {
 	component := hello("World")
 
-	http.Handle("/", templ.Handler(component))
+	http.Handle("/", t1.Handler(component))
 
 	fmt.Println("Listening on :8080")
 	http.ListenAndServe(":8080", nil)
 }
 ```
 
-```templ title="hello.templ"
+```t1 title="hello.t1"
 package main
 
-templ hello(name string) {
+t1 hello(name string) {
   <body>
 	    <div>Hello, { name }</div>
   </body>
@@ -63,21 +63,21 @@ The hot reload process can be shown in the following diagram:
 
 ```mermaid
 sequenceDiagram
-    browser->>templ_proxy: HTTP
-    activate templ_proxy
-    templ_proxy->>app: HTTP
+    browser->>t1_proxy: HTTP
+    activate t1_proxy
+    t1_proxy->>app: HTTP
     activate app
-    app->>templ_proxy: HTML
+    app->>t1_proxy: HTML
     deactivate app
-    templ_proxy->>templ_proxy: add reload script
-    templ_proxy->>browser: HTML
-    deactivate templ_proxy
-    browser->>templ_proxy: SSE request to /_templ/reload/events
-    activate templ_proxy
-    templ_proxy->>generate: run templ generate if *.templ files have changed
-    templ_proxy->>app: restart app if *.go files have changed
-    templ_proxy->>browser: notify browser to reload page
-    deactivate templ_proxy
+    t1_proxy->>t1_proxy: add reload script
+    t1_proxy->>browser: HTML
+    deactivate t1_proxy
+    browser->>t1_proxy: SSE request to /_templ/reload/events
+    activate t1_proxy
+    t1_proxy->>generate: run t1 generate if *.t1 files have changed
+    t1_proxy->>app: restart app if *.go files have changed
+    t1_proxy->>browser: notify browser to reload page
+    deactivate t1_proxy
 ```
 
 ## Alternative 1: wgo
@@ -87,10 +87,10 @@ sequenceDiagram
 > Live reload for Go apps. Watch arbitrary files and respond with arbitrary commands. Supports running multiple invocations in parallel.
 
 ```
-wgo -file=.go -file=.templ -xfile=_templ.go templ generate :: go run main.go
+wgo -file=.go -file=.t1 -xfile=_t1.go t1 generate :: go run main.go
 ```
 
-To avoid a continous reloading files ending with `_templ.go` should be skipped via `-xfile`.
+To avoid a continous reloading files ending with `_t1.go` should be skipped via `-xfile`.
 
 ## Alternative 2: air
 
@@ -106,11 +106,11 @@ tmp_dir = "tmp"
 
 [build]
   bin = "./tmp/main"
-  cmd = "templ generate && go build -o ./tmp/main ."
+  cmd = "t1 generate && go build -o ./tmp/main ."
   delay = 1000
   exclude_dir = ["assets", "tmp", "vendor"]
   exclude_file = []
-  exclude_regex = [".*_templ.go"]
+  exclude_regex = [".*_t1.go"]
   exclude_unchanged = false
   follow_symlink = false
   full_bin = ""

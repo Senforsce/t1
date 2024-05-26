@@ -98,3 +98,14 @@ var htmlSnippets = []lsp.CompletionItem{
 		InsertTextFormat: lsp.InsertTextFormatSnippet,
 	},
 }
+
+var snippet = []lsp.CompletionItem{
+	{
+		Label: "t1",
+		InsertText: `t1 ${2:TemplateName}() {
+	${0}
+}`,
+		Kind:             lsp.CompletionItemKind(lsp.CompletionItemKindSnippet),
+		InsertTextFormat: lsp.InsertTextFormatSnippet,
+	},
+}

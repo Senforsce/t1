@@ -2,18 +2,18 @@
 
 The example counter project demonstrates a way to structure your applications.
 
-https://github.com/a-h/templ/tree/main/examples/counter
+https://github.com/senforsce/t1/tree/main/examples/counter
 
 The application is divided up into multiple packages, each with its own purpose.
 
-* `cdk` - Infrastructure setup for deploying the application.
-* `components` - templ components.
-* `db` - Database access code used to increment and get counts.
-* `handlers` - HTTP handlers.
-* `lambda` - The AWS Lambda entry point.
-* `services` - Services used by the handlers.
-* `session` - Middleware for implementing HTTP session IDs.
-* `main.go` - Used to run the application locally.
+- `cdk` - Infrastructure setup for deploying the application.
+- `components` - t1 components.
+- `db` - Database access code used to increment and get counts.
+- `handlers` - HTTP handlers.
+- `lambda` - The AWS Lambda entry point.
+- `services` - Services used by the handlers.
+- `session` - Middleware for implementing HTTP session IDs.
+- `main.go` - Used to run the application locally.
 
 ## Application architecture
 
@@ -27,19 +27,19 @@ graph LR
     handler -- renders --> components[Components]
 ```
 
-* HTTP Handler
-  * Processes HTTP requests
-  * Does not contain application logic itself
-  * Uses `services` that carry out application logic
-  * Takes the responses from `services` and uses `components` to render HTML
-  * Creates HTTP responses
-* Services
-  * Carries out application logic such as orchestrating API calls, or making database calls
-  * Does not do anything related to HTML or HTTP
-  * Is not aware of the specifics of database calls
-* Database access code
-  * Handles database activity such as inserting and querying records
-  * Ensures that the database representation (`records`) doesn't leak to the service layer
+- HTTP Handler
+  - Processes HTTP requests
+  - Does not contain application logic itself
+  - Uses `services` that carry out application logic
+  - Takes the responses from `services` and uses `components` to render HTML
+  - Creates HTTP responses
+- Services
+  - Carries out application logic such as orchestrating API calls, or making database calls
+  - Does not do anything related to HTML or HTTP
+  - Is not aware of the specifics of database calls
+- Database access code
+  - Handles database activity such as inserting and querying records
+  - Ensures that the database representation (`records`) doesn't leak to the service layer
 
 A more complex application may have a `models` package containing plain structs that represent common data structures in the application, such as `User`.
 
@@ -82,10 +82,10 @@ Dependency injection frameworks are not typically used in Go. If you're coming f
 
 ## HTTP layer
 
-This HTTP handler reads HTTP requests, uses the `CountService` to `Get` or `Increment` the counters, and renders the templ Components.
+This HTTP handler reads HTTP requests, uses the `CountService` to `Get` or `Increment` the counters, and renders the t1 Components.
 
 :::note
-Note that the `View` method uses the templ Components from the `components` directory to render the page.
+Note that the `View` method uses the t1 Components from the `components` directory to render the page.
 :::
 
 ```go "title="handlers/default.go"
@@ -218,10 +218,10 @@ import (
 	"os"
 	"time"
 
-	"github.com/a-h/templ/examples/counter/db"
-	"github.com/a-h/templ/examples/counter/handlers"
-	"github.com/a-h/templ/examples/counter/services"
-	"github.com/a-h/templ/examples/counter/session"
+	"github.com/senforsce/t1/examples/counter/db"
+	"github.com/senforsce/t1/examples/counter/handlers"
+	"github.com/senforsce/t1/examples/counter/services"
+	"github.com/senforsce/t1/examples/counter/session"
 	"golang.org/x/exp/slog"
 )
 

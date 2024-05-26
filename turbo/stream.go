@@ -5,51 +5,51 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/a-h/templ"
+	"github.com/senforsce/t1"
 )
 
 // Append adds an append action to the output stream.
-func Append(w http.ResponseWriter, target string, template templ.Component) error {
+func Append(w http.ResponseWriter, target string, template t1.Component) error {
 	return AppendWithContext(context.Background(), w, target, template)
 }
 
 // AppendWithContext adds an append action to the output stream.
-func AppendWithContext(ctx context.Context, w http.ResponseWriter, target string, template templ.Component) error {
+func AppendWithContext(ctx context.Context, w http.ResponseWriter, target string, template t1.Component) error {
 	w.Header().Set("Content-Type", "text/vnd.turbo-stream.html")
-	return actionTemplate("append", target).Render(templ.WithChildren(ctx, template), w)
+	return actionTemplate("append", target).Render(t1.WithChildren(ctx, template), w)
 }
 
 // Prepend adds a prepend action to the output stream.
-func Prepend(w http.ResponseWriter, target string, template templ.Component) error {
+func Prepend(w http.ResponseWriter, target string, template t1.Component) error {
 	return PrependWithContext(context.Background(), w, target, template)
 }
 
 // PrependWithContext adds a prepend action to the output stream.
-func PrependWithContext(ctx context.Context, w http.ResponseWriter, target string, template templ.Component) error {
+func PrependWithContext(ctx context.Context, w http.ResponseWriter, target string, template t1.Component) error {
 	w.Header().Set("Content-Type", "text/vnd.turbo-stream.html")
-	return actionTemplate("prepend", target).Render(templ.WithChildren(ctx, template), w)
+	return actionTemplate("prepend", target).Render(t1.WithChildren(ctx, template), w)
 }
 
 // Replace adds a replace action to the output stream.
-func Replace(w http.ResponseWriter, target string, template templ.Component) error {
+func Replace(w http.ResponseWriter, target string, template t1.Component) error {
 	return ReplaceWithContext(context.Background(), w, target, template)
 }
 
 // ReplaceWithContext adds a replace action to the output stream.
-func ReplaceWithContext(ctx context.Context, w http.ResponseWriter, target string, template templ.Component) error {
+func ReplaceWithContext(ctx context.Context, w http.ResponseWriter, target string, template t1.Component) error {
 	w.Header().Set("Content-Type", "text/vnd.turbo-stream.html")
-	return actionTemplate("replace", target).Render(templ.WithChildren(ctx, template), w)
+	return actionTemplate("replace", target).Render(t1.WithChildren(ctx, template), w)
 }
 
 // Update adds an update action to the output stream.
-func Update(w http.ResponseWriter, target string, template templ.Component) error {
+func Update(w http.ResponseWriter, target string, template t1.Component) error {
 	return UpdateWithContext(context.Background(), w, target, template)
 }
 
 // UpdateWithContext adds an update action to the output stream.
-func UpdateWithContext(ctx context.Context, w http.ResponseWriter, target string, template templ.Component) error {
+func UpdateWithContext(ctx context.Context, w http.ResponseWriter, target string, template t1.Component) error {
 	w.Header().Set("Content-Type", "text/vnd.turbo-stream.html")
-	return actionTemplate("update", target).Render(templ.WithChildren(ctx, template), w)
+	return actionTemplate("update", target).Render(t1.WithChildren(ctx, template), w)
 }
 
 // Remove adds a remove action to the output stream.

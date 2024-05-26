@@ -490,8 +490,8 @@ func TestTemplateParser(t *testing.T) {
 		},
 		{
 			name: "template: no parameters",
-			input: `{% templ Name() %}
-{% endtempl %}`,
+			input: `{% t1 Name() %}
+{% endt1 %}`,
 			expected: HTMLTemplate{
 				Name: Expression{
 					Value: "Name",
@@ -528,8 +528,8 @@ func TestTemplateParser(t *testing.T) {
 		},
 		{
 			name: "template: no spaces",
-			input: `{%templ Name()%}
-{% endtempl %}`,
+			input: `{%t1 Name()%}
+{% endt1 %}`,
 			expected: HTMLTemplate{
 				Name: Expression{
 					Value: "Name",
@@ -566,8 +566,8 @@ func TestTemplateParser(t *testing.T) {
 		},
 		{
 			name: "template: single parameter",
-			input: `{% templ Name(p Parameter) %}
-{% endtempl %}`,
+			input: `{% t1 Name(p Parameter) %}
+{% endt1 %}`,
 			expected: HTMLTemplate{
 				Name: Expression{
 					Value: "Name",
@@ -604,9 +604,9 @@ func TestTemplateParser(t *testing.T) {
 		},
 		{
 			name: "template: containing element",
-			input: `{% templ Name(p Parameter) %}
+			input: `{% t1 Name(p Parameter) %}
 <span>{%= "span content" %}</span>
-{% endtempl %}`,
+{% endt1 %}`,
 			expected: HTMLTemplate{
 				Name: Expression{
 					Value: "Name",
@@ -670,14 +670,14 @@ func TestTemplateParser(t *testing.T) {
 		},
 		{
 			name: "template: containing nested elements",
-			input: `{% templ Name(p Parameter) %}
+			input: `{% t1 Name(p Parameter) %}
 <div>
   {%= "div content" %}
   <span>
 	{%= "span content" %}
   </span>
 </div>
-{% endtempl %}`,
+{% endt1 %}`,
 			expected: HTMLTemplate{
 				Name: Expression{
 					Value: "Name",
@@ -767,13 +767,13 @@ func TestTemplateParser(t *testing.T) {
 		},
 		{
 			name: "template: containing if element",
-			input: `{% templ Name(p Parameter) %}
+			input: `{% t1 Name(p Parameter) %}
 	{% if p.Test %}
 		<span>
 			{%= "span content" %}
 		</span>
 	{% endif %}
-{% endtempl %}`,
+{% endt1 %}`,
 			expected: HTMLTemplate{
 				Name: Expression{
 					Value: "Name",
@@ -864,10 +864,10 @@ func TestTemplateParser(t *testing.T) {
 		},
 		{
 			name: "template: inputs",
-			input: `{% templ Name(p Parameter) %}
+			input: `{% t1 Name(p Parameter) %}
 <input type="text" value="a" />
 <input type="text" value="b" />
-{% endtempl %}`,
+{% endt1 %}`,
 			expected: HTMLTemplate{
 				Name: Expression{
 					Value: "Name",
@@ -921,9 +921,9 @@ func TestTemplateParser(t *testing.T) {
 		},
 		{
 			name: "template: doctype",
-			input: `{% templ Name() %}
+			input: `{% t1 Name() %}
 <!DOCTYPE html>
-{% endtempl %}`,
+{% endt1 %}`,
 			expected: HTMLTemplate{
 				Name: Expression{
 					Value: "Name",

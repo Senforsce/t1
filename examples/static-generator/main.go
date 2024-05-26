@@ -10,7 +10,7 @@ import (
 	"time"
 
 	"github.com/gosimple/slug"
-	"github.com/senforsce/templ"
+	"github.com/senforsce/t1"
 	"github.com/yuin/goldmark"
 )
 
@@ -20,8 +20,8 @@ type Post struct {
 	Content string
 }
 
-func Unsafe(html string) templ.Component {
-	return templ.ComponentFunc(func(ctx context.Context, w io.Writer) (err error) {
+func Unsafe(html string) t1.Component {
+	return t1.ComponentFunc(func(ctx context.Context, w io.Writer) (err error) {
 		_, err = io.WriteString(w, html)
 		return
 	})
@@ -100,7 +100,7 @@ Top May Day Activities in the UK:
 		// Create an unsafe component containing raw HTML.
 		content := Unsafe(buf.String())
 
-		// Use templ to render the template containing the raw HTML.
+		// Use t1 to render the template containing the raw HTML.
 		err = contentPage(post.Title, content).Render(context.Background(), f)
 		if err != nil {
 			log.Fatalf("failed to write output file: %v", err)

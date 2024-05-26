@@ -37,7 +37,7 @@ func TestGeneratorSourceMap(t *testing.T) {
 			Value: `package main
 
 // A comment.
-templ h1() {
+t1 h1() {
 	<h1></h1>
 }
 			`,

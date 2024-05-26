@@ -84,7 +84,7 @@ func (w *RecursiveWatcher) loop() {
 					w.Errors <- err
 				}
 			}
-			// Only notify on templ related files.
+			// Only notify on t1 related files.
 			if !shouldIncludeFile(event.Name) {
 				continue
 			}

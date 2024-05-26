@@ -19,14 +19,14 @@ import (
 //   color: #ffffff;
 // {% endcss %}
 //
-// {% templ RenderAddress(addr Address) %}
+// {% t1 RenderAddress(addr Address) %}
 // 	<div style={%= AddressLineStyle() %}>{%= addr.Address1 %}</div>
 // 	<div>{%= addr.Address2 %}</div>
 // 	<div>{%= addr.Address3 %}</div>
 // 	<div>{%= addr.Address4 %}</div>
-// {% endtempl %}
+// {% endt1 %}
 //
-// {% templ Render(p Person) %}
+// {% t1 Render(p Person) %}
 //    <div>
 //      <div>{%= p.Name() %}</div>
 //      <a href={%= p.URL %}>{%= strings.ToUpper(p.Name()) %}</a>
@@ -41,7 +41,7 @@ import (
 //          {% endfor %}
 //      </div>
 //    </div>
-// {% endtempl %}
+// {% endt1 %}
 
 // Source mapping to map from the source code of the template to the
 // in-memory representation.
@@ -276,12 +276,12 @@ func (dt DocType) Write(w io.Writer, indent int) error {
 }
 
 // HTMLTemplate definition.
-// {% templ Name(p Parameter) %}
+// {% t1 Name(p Parameter) %}
 //
 //	{% if ... %}
 //	<Element></Element>
 //
-// {% endtempl %}
+// {% endt1 %}
 type HTMLTemplate struct {
 	Name       Expression
 	Parameters Expression
@@ -291,13 +291,13 @@ type HTMLTemplate struct {
 func (t HTMLTemplate) IsTemplateFileNode() bool { return true }
 
 func (t HTMLTemplate) Write(w io.Writer, indent int) error {
-	if err := writeIndent(w, indent, "{% templ "+t.Name.Value+"("+t.Parameters.Value+") %}\n"); err != nil {
+	if err := writeIndent(w, indent, "{% t1 "+t.Name.Value+"("+t.Parameters.Value+") %}\n"); err != nil {
 		return err
 	}
 	if err := writeNodesBlock(w, indent+1, t.Children); err != nil {
 		return err
 	}
-	if err := writeIndent(w, indent, "{% endtempl %}"); err != nil {
+	if err := writeIndent(w, indent, "{% endt1 %}"); err != nil {
 		return err
 	}
 	return nil
@@ -382,7 +382,7 @@ func (e Element) Validate() (msgs []string, ok bool) {
 	for _, attr := range e.Attributes {
 		if exprAttr, isExprAttr := attr.(ExpressionAttribute); isExprAttr {
 			if strings.EqualFold(exprAttr.Name, "style") {
-				msgs = append(msgs, "invalid style attribute: style attributes cannot be a templ expression")
+				msgs = append(msgs, "invalid style attribute: style attributes cannot be a t1 expression")
 			}
 		}
 	}
@@ -511,7 +511,7 @@ func (ca ConstantAttribute) String() string {
 	return ca.Name + `="` + html.EscapeString(ca.Value) + `"`
 }
 
-// href={%= templ.Bool(...) }
+// href={%= t1.Bool(...) }
 type BoolExpressionAttribute struct {
 	Name       string
 	Expression Expression

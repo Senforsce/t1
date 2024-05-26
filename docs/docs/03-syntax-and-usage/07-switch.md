@@ -1,11 +1,11 @@
 # Switch
 
-templ uses standard Go `switch` statements which can be used to conditionally render components and elements.
+t1 uses standard Go `switch` statements which can be used to conditionally render components and elements.
 
-```templ title="component.templ"
+```t1 title="component.t1"
 package main
 
-templ userTypeDisplay(userType string) {
+t1 userTypeDisplay(userType string) {
 	switch userType {
 		case "test":
 			<span>{ "Test user" }</span>
@@ -31,7 +31,5 @@ func main() {
 ```
 
 ```html title="Output"
-<span>
- Unknown user
-</span>
+<span> Unknown user </span>
 ```

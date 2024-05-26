@@ -1,6 +1,6 @@
-# Generating static HTML files with templ
+# Generating static HTML files with t1
 
-templ components implement the `templ.Component` interface.
+t1 components implement the `t1.Component` interface.
 
 The interface has a `Render` method which outputs HTML to an `io.Writer` that is passed in.
 
@@ -13,9 +13,9 @@ type Component interface {
 
 In Go, the `io.Writer` interface is implemented by many built-in types in the standard library, including `os.File` (files), `os.Stdout`, and `http.ResponseWriter` (HTTP responses).
 
-This makes it easy to use templ components in a variety of contexts to generate HTML.
+This makes it easy to use t1 components in a variety of contexts to generate HTML.
 
-To render static HTML files using templ component, first create a new Go project.
+To render static HTML files using t1 component, first create a new Go project.
 
 ## Setup project
 
@@ -29,37 +29,37 @@ Initialize a new Go project within it.
 
 ```sh
 cd static-generator
-go mod init github.com/a-h/templ-examples/static-generator
+go mod init github.com/a-h/t1-examples/static-generator
 ```
 
-## Create a templ file
+## Create a t1 file
 
-To use it, create a `hello.templ` file containing a component.
+To use it, create a `hello.t1` file containing a component.
 
-Components are functions that contain templ elements, markup, `if`, `switch` and `for` Go expressions.
+Components are functions that contain t1 elements, markup, `if`, `switch` and `for` Go expressions.
 
-```templ title="hello.templ"
+```t1 title="hello.t1"
 package main
 
-templ hello(name string) {
+t1 hello(name string) {
 	<div>Hello, { name }</div>
 }
 ```
 
-## Generate Go code from the templ file
+## Generate Go code from the t1 file
 
-Run the `templ generate` command.
+Run the `t1 generate` command.
 
 ```sh
-templ generate
+t1 generate
 ```
 
-templ will generate a `hello_templ.go` file containing Go code.
+t1 will generate a `hello_t1.go` file containing Go code.
 
-This file will contain a function called `hello` which takes `name` as an argument, and returns a `templ.Component` that renders HTML.
+This file will contain a function called `hello` which takes `name` as an argument, and returns a `t1.Component` that renders HTML.
 
 ```go
-func hello(name string) templ.Component {
+func hello(name string) t1.Component {
   // ...
 }
 ```

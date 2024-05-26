@@ -8,24 +8,24 @@ import (
 	"strconv"
 	"strings"
 
-	templ "github.com/senforsce/t1"
+	"github.com/senforsce/t1"
 	"github.com/senforsce/t1/parser/v2"
 )
 
-func HTML(templFileName string, templContents, goContents string, sourceMap *parser.SourceMap) templ.Component {
-	tl := templLines{contents: string(templContents), sourceMap: sourceMap}
+func HTML(t1FileName string, t1Contents, goContents string, sourceMap *parser.SourceMap) t1.Component {
+	tl := t1Lines{contents: string(t1Contents), sourceMap: sourceMap}
 	gl := goLines{contents: string(goContents), sourceMap: sourceMap}
-	return combine(templFileName, tl, gl)
+	return combine(t1FileName, tl, gl)
 }
 
-type templLines struct {
+type t1Lines struct {
 	contents  string
 	sourceMap *parser.SourceMap
 }
 
-func (tl templLines) Render(ctx context.Context, w io.Writer) (err error) {
-	templLines := strings.Split(tl.contents, "\n")
-	for lineIndex, line := range templLines {
+func (tl t1Lines) Render(ctx context.Context, w io.Writer) (err error) {
+	t1Lines := strings.Split(tl.contents, "\n")
+	for lineIndex, line := range t1Lines {
 		if _, err = w.Write([]byte("<span>" + strconv.Itoa(lineIndex) + "&nbsp;</span>\n")); err != nil {
 			return
 		}
@@ -58,8 +58,8 @@ type goLines struct {
 }
 
 func (gl goLines) Render(ctx context.Context, w io.Writer) (err error) {
-	templLines := strings.Split(gl.contents, "\n")
-	for lineIndex, line := range templLines {
+	t1Lines := strings.Split(gl.contents, "\n")
+	for lineIndex, line := range t1Lines {
 		if _, err = w.Write([]byte("<span>" + strconv.Itoa(lineIndex) + "&nbsp;</span>\n")); err != nil {
 			return
 		}

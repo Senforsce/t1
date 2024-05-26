@@ -1,19 +1,18 @@
-![templ](https://github.com/a-h/templ/raw/main/templ.png)
+![t1](https://github.com/senforsce/t1/raw/main/t1.png)
 
-## A HTML templating language for Go that has great developer tooling.
+## A HTML t1ating language for Go that has great developer tooling.
 
-![templ](ide-demo.gif)
-
+![t1](ide-demo.gif)
 
 ## Documentation
 
-See user documentation at https://templ.guide
+See user documentation at https://senforsce.com/t1/guide
 
 <p align="center">
-<a href="https://pkg.go.dev/github.com/a-h/templ"><img src="https://pkg.go.dev/badge/github.com/a-h/templ.svg" alt="Go Reference" /></a>
+<a href="https://pkg.go.dev/github.com/senforsce/t1"><img src="https://pkg.go.dev/badge/github.com/senforsce/t1.svg" alt="Go Reference" /></a>
 <a href="https://xcfile.dev"><img src="https://xcfile.dev/badge.svg" alt="xc compatible" /></a>
-<a href="https://raw.githack.com/wiki/a-h/templ/coverage.html"><img src="https://github.com/a-h/templ/wiki/coverage.svg" alt="Go Coverage" /></a>
-<a href="https://goreportcard.com/report/github.com/a-h/templ"><img src="https://goreportcard.com/badge/github.com/a-h/templ" alt="Go Report Card" /></a<
+<a href="https://raw.githack.com/wiki/senforsce/t1/coverage.html"><img src="https://github.com/senforsce/t1/wiki/coverage.svg" alt="Go Coverage" /></a>
+<a href="https://goreportcard.com/report/github.com/senforsce/t1"><img src="https://goreportcard.com/badge/github.com/senforsce/t1" alt="Go Report Card" /></a<
 </p>
 
 ## Tasks
@@ -24,7 +23,7 @@ Build a local version.
 
 ```sh
 go run ./get-version > .version
-cd cmd/templ
+cd cmd/t1
 go build
 ```
 
@@ -33,15 +32,15 @@ go build
 Build and install current version.
 
 ```sh
-# Remove templ from the non-standard ~/bin/templ path
+# Remove t1 from the non-standard ~/bin/t1 path
 # that this command previously used.
-rm -f ~/bin/templ
+rm -f ~/bin/t1
 # Clear LSP logs.
-rm -f cmd/templ/lspcmd/*.txt
+rm -f cmd/t1/lspcmd/*.txt
 # Update version.
 go run ./get-version > .version
 # Install to $GOPATH/bin or $HOME/go/bin
-cd cmd/templ && go install
+cd cmd/t1 && go install
 ```
 
 ### build-snapshot
@@ -54,10 +53,10 @@ goreleaser build --snapshot --clean
 
 ### generate
 
-Run templ generate using local version.
+Run t1 generate using local version.
 
 ```sh
-go run ./cmd/templ generate -include-version=false
+go run ./cmd/t1 generate -include-version=false
 ```
 
 ### test
@@ -66,7 +65,7 @@ Run Go tests.
 
 ```sh
 go run ./get-version > .version
-go run ./cmd/templ generate -include-version=false
+go run ./cmd/t1 generate -include-version=false
 go test ./...
 ```
 
@@ -81,11 +80,11 @@ mkdir -p coverage/generate
 mkdir -p coverage/version
 mkdir -p coverage/unit
 # Build the test binary.
-go build -cover -o ./coverage/templ-cover ./cmd/templ
+go build -cover -o ./coverage/t1-cover ./cmd/t1
 # Run the covered generate command.
-GOCOVERDIR=coverage/fmt ./coverage/templ-cover fmt .
-GOCOVERDIR=coverage/generate ./coverage/templ-cover generate -include-version=false
-GOCOVERDIR=coverage/version ./coverage/templ-cover version
+GOCOVERDIR=coverage/fmt ./coverage/t1-cover fmt .
+GOCOVERDIR=coverage/generate ./coverage/t1-cover generate -include-version=false
+GOCOVERDIR=coverage/version ./coverage/t1-cover version
 # Run the unit tests.
 go test -cover ./... -args -test.gocoverdir="$PWD/coverage/unit"
 # Display the combined percentage.
@@ -101,16 +100,16 @@ go tool cover -func coverage.out | grep total
 Run benchmarks.
 
 ```sh
-go run ./cmd/templ generate -include-version=false && go test ./... -bench=. -benchmem
+go run ./cmd/t1 generate -include-version=false && go test ./... -bench=. -benchmem
 ```
 
 ### fmt
 
-Format all Go and templ code.
+Format all Go and t1 code.
 
 ```sh
 gofmt -s -w .
-go run ./cmd/templ fmt .
+go run ./cmd/t1 fmt .
 ```
 
 ### lint
@@ -148,4 +147,3 @@ Directory: docs
 ```sh
 npm run build
 ```
-

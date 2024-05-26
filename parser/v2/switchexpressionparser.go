@@ -2,14 +2,14 @@ package parser
 
 import (
 	"github.com/a-h/parse"
-	"github.com/a-h/templ/parser/v2/goexpression"
+	"github.com/senforsce/t1/parser/v2/goexpression"
 )
 
 var switchExpression parse.Parser[Node] = switchExpressionParser{}
 
 type switchExpressionParser struct{}
 
-func (_ switchExpressionParser) Parse(pi *parse.Input) (n Node, ok bool, err error) {
+func (switchExpressionParser) Parse(pi *parse.Input) (n Node, ok bool, err error) {
 	var r SwitchExpression
 	start := pi.Index()
 
@@ -92,7 +92,6 @@ var caseExpressionParser = parse.Func(func(pi *parse.Input) (r CaseExpression, o
 		return
 	}
 	r.Children = nodes.Nodes
-	r.Diagnostics = nodes.Diagnostics
 
 	// Optional whitespace.
 	if _, ok, err = parse.OptionalWhitespace.Parse(pi); err != nil || !ok {

@@ -10,16 +10,16 @@ import (
 
 func TestFindLastImport(t *testing.T) {
 	tests := []struct {
-		name          string
-		templContents string
-		packageName   string
-		expected      string
+		name        string
+		t1Contents  string
+		packageName string
+		expected    string
 	}{
 		{
 			name: "if there are no imports, add a single line import",
-			templContents: `package main
+			t1Contents: `package main
 
-templ example() {
+t1 example() {
 }
 `,
 			packageName: "strings",
@@ -27,17 +27,17 @@ templ example() {
 
 import "strings"
 
-templ example() {
+t1 example() {
 }
 `,
 		},
 		{
 			name: "if there is an existing single-line imports, add one at the end",
-			templContents: `package main
+			t1Contents: `package main
 
 import "strings"
 
-templ example() {
+t1 example() {
 }
 `,
 			packageName: "fmt",
@@ -46,18 +46,18 @@ templ example() {
 import "strings"
 import "fmt"
 
-templ example() {
+t1 example() {
 }
 `,
 		},
 		{
 			name: "if there are multiple existing single-line imports, add one at the end",
-			templContents: `package main
+			t1Contents: `package main
 
 import "strings"
 import "fmt"
 
-templ example() {
+t1 example() {
 }
 `,
 			packageName: "time",
@@ -67,19 +67,19 @@ import "strings"
 import "fmt"
 import "time"
 
-templ example() {
+t1 example() {
 }
 `,
 		},
 		{
 			name: "if there are existing multi-line imports, add one at the end",
-			templContents: `package main
+			t1Contents: `package main
 
 import (
 	"strings"
 )
 
-templ example() {
+t1 example() {
 }
 `,
 			packageName: "fmt",
@@ -90,17 +90,17 @@ import (
 	"fmt"
 )
 
-templ example() {
+t1 example() {
 }
 `,
 		},
 		{
 			name: "ignore imports that happen after templates",
-			templContents: `package main
+			t1Contents: `package main
 
 import "strings"
 
-templ example() {
+t1 example() {
 }
 
 import "other"
@@ -111,7 +111,7 @@ import "other"
 import "strings"
 import "fmt"
 
-templ example() {
+t1 example() {
 }
 
 import "other"
@@ -119,7 +119,7 @@ import "other"
 		},
 		{
 			name: "ignore imports that happen after funcs in the file",
-			templContents: `package main
+			t1Contents: `package main
 
 import "strings"
 
@@ -142,7 +142,7 @@ import "other"
 		},
 		{
 			name: "ignore imports that happen after css expressions in the file",
-			templContents: `package main
+			t1Contents: `package main
 
 import "strings"
 
@@ -165,7 +165,7 @@ import "other"
 		},
 		{
 			name: "ignore imports that happen after script expressions in the file",
-			templContents: `package main
+			t1Contents: `package main
 
 import "strings"
 
@@ -188,7 +188,7 @@ import "other"
 		},
 		{
 			name: "ignore imports that happen after var expressions in the file",
-			templContents: `package main
+			t1Contents: `package main
 
 import "strings"
 
@@ -209,7 +209,7 @@ import "other"
 		},
 		{
 			name: "ignore imports that happen after const expressions in the file",
-			templContents: `package main
+			t1Contents: `package main
 
 import "strings"
 
@@ -230,7 +230,7 @@ import "other"
 		},
 		{
 			name: "ignore imports that happen after type expressions in the file",
-			templContents: `package main
+			t1Contents: `package main
 
 import "strings"
 
@@ -252,7 +252,7 @@ import "other"
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			lines := strings.Split(test.templContents, "\n")
+			lines := strings.Split(test.t1Contents, "\n")
 			imp := addImport(lines, fmt.Sprintf("%q", test.packageName))
 			textWithoutNewline := strings.TrimSuffix(imp.Text, "\n")
 			actualLines := append(lines[:imp.LineIndex], append([]string{textWithoutNewline}, lines[imp.LineIndex:]...)...)

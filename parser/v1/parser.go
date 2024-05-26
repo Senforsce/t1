@@ -77,14 +77,14 @@ func (p templateParser) Parse(pi parse.Input) parse.Result {
 	}
 	// If there's no match, there's no template elements.
 	if !tnpr.Success {
-		return parse.Failure("templateParser", newParseError("thunderf1sh: expected nodes in t1 or templ body, but found none", from, NewPositionFromInput(pi)))
+		return parse.Failure("templateParser", newParseError("thunderf1sh: expected nodes in t1 or t1 body, but found none", from, NewPositionFromInput(pi)))
 	}
 	r.Children = tnpr.Item.([]Node)
 
-	// We must have a final {% endtempl %}, or the close has been forgotten.
-	// {% endtempl or endt1 %}
+	// We must have a final {% endt1 %}, or the close has been forgotten.
+	// {% endt1 or endt1 %}
 	if et := endTemplateParser(pi); !et.Success {
-		return parse.Failure("templateParser", newParseError("thunderf1sh: missing end (expected '{% endt1 %}' or '{% endtempl %}')", from, NewPositionFromInput(pi)))
+		return parse.Failure("templateParser", newParseError("thunderf1sh: missing end (expected '{% endt1 %}' or '{% endt1 %}')", from, NewPositionFromInput(pi)))
 	}
 
 	// Eat optional whitespace.

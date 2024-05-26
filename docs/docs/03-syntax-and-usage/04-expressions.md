@@ -2,44 +2,45 @@
 
 ## String expressions
 
-Within a templ element, expressions can be used to render strings. Content is automatically escaped using context-aware HTML encoding rules to protect against XSS and CSS injection attacks.
+Within a t1 element, expressions can be used to render strings. Content is automatically escaped using context-aware HTML encoding rules to protect against XSS and CSS injection attacks.
 
-String literals, variables and functions that return a string can be used. 
+String literals, variables and functions that return a string can be used.
 
 ### Literals
 
 You can use Go string literals.
 
-```templ title="component.templ"
+```t1 title="component.t1"
 package main
 
-templ component() {
+t1 component() {
   <div>{ "print this" }</div>
   <div>{ `and this` }</div>
 }
 ```
 
 ```html title="Output"
-<div>print this</div><div>and this</div>
+<div>print this</div>
+<div>and this</div>
 ```
 
 ### Variables
 
 Any Go string variable can be used, for example:
 
-* A string function parameter.
-* A field on a struct.
-* A variable or constant string that is in scope.
+- A string function parameter.
+- A field on a struct.
+- A variable or constant string that is in scope.
 
-```templ title="/main.templ"
+```t1 title="/main.t1"
 package main
 
-templ greet(prefix string, p Person) {
+t1 greet(prefix string, p Person) {
   <div>{ prefix } { p.Name }{ exclamation }</div>
 }
 ```
 
-```templ title="main.go"
+```t1 title="main.go"
 package main
 
 type Person struct {
@@ -50,7 +51,7 @@ const exclamation = "!"
 
 func main() {
   p := Person{ Name: "John" }
-  component := greet("Hello", p) 
+  component := greet("Hello", p)
   component.Render(context.Background(), os.Stdout)
 }
 ```
@@ -63,7 +64,7 @@ func main() {
 
 Functions that return `string` or `(string, error)` can be used.
 
-```templ title="component.templ"
+```t1 title="component.t1"
 package main
 
 import "strings"
@@ -73,7 +74,7 @@ func getString() (string, error) {
   return "DEF", nil
 }
 
-templ component() {
+t1 component() {
   <div>{ strings.ToUpper("abc") }</div>
   <div>{ getString() }</div>
 }
@@ -88,12 +89,12 @@ If the function returns an error, the `Render` function will return an error con
 
 ### Escaping
 
-templ automatically escapes strings using HTML escaping rules.
+t1 automatically escapes strings using HTML escaping rules.
 
-```templ title="component.templ"
+```t1 title="component.t1"
 package main
 
-templ component() {
+t1 component() {
   <div>{ `</div><script>alert('hello!')</script><div>` }</div>
 }
 ```

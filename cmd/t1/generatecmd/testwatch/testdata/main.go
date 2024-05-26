@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-
-	"github.com/a-h/templ"
 )
 
 var flagPort = flag.Int("port", 0, "Set the HTTP listen port")
@@ -23,7 +21,7 @@ func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		count++
 		c := Page(count)
-		templ.Handler(c).ServeHTTP(w, r)
+		t1.Handler(c).ServeHTTP(w, r)
 	})
 	err := http.ListenAndServe(fmt.Sprintf("localhost:%d", *flagPort), nil)
 	if err != nil {

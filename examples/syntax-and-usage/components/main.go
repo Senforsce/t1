@@ -7,7 +7,7 @@ import (
 	"io"
 	"os"
 
-	"github.com/a-h/templ"
+	"github.com/senforsce/t1"
 )
 
 func main() {
@@ -16,8 +16,8 @@ func main() {
 	codeList([]string{"A", "B", "C"}).Render(ctx, os.Stdout)
 }
 
-func codeList(items []string) templ.Component {
-	return templ.ComponentFunc(func(ctx context.Context, w io.Writer) (err error) {
+func codeList(items []string) t1.Component {
+	return t1.ComponentFunc(func(ctx context.Context, w io.Writer) (err error) {
 		if _, err = io.WriteString(w, "<ol>"); err != nil {
 			return
 		}

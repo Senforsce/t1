@@ -7,7 +7,7 @@ import (
 	"github.com/google/go-cmp/cmp"
 )
 
-// # List of situations where a templ file could contain braces.
+// # List of situations where a t1 file could contain braces.
 
 // Inside a HTML attribute.
 // <a style="font-family: { arial }">That does not make sense, but still...</a>
@@ -15,10 +15,10 @@ import (
 // Inside a script tag.
 // <script>var value = { test: 123 };</script>
 
-// Inside a templ definition expression.
-// { templ Name(data map[string]interface{}) }
+// Inside a t1 definition expression.
+// { t1 Name(data map[string]interface{}) }
 
-// Inside a templ script.
+// Inside a t1 script.
 // { script Name(data map[string]interface{}) }
 //   { something }
 // { endscript }
@@ -113,23 +113,23 @@ func TestExpressions(t *testing.T) {
 		expected        string
 	}{
 		{
-			name:            "templ: no parameters",
-			input:           "{ templ TemplName() }\n",
-			prefix:          "{ templ ",
+			name:            "t1: no parameters",
+			input:           "{ t1 TemplName() }\n",
+			prefix:          "{ t1 ",
 			startBraceCount: 1,
 			expected:        "TemplName()",
 		},
 		{
-			name:            "templ: string parameter",
-			input:           `{ templ TemplName(a string) }`,
-			prefix:          "{ templ ",
+			name:            "t1: string parameter",
+			input:           `{ t1 TemplName(a string) }`,
+			prefix:          "{ t1 ",
 			startBraceCount: 1,
 			expected:        `TemplName(a string)`,
 		},
 		{
-			name:            "templ: map parameter",
-			input:           `{ templ TemplName(data map[string]interface{}) }`,
-			prefix:          "{ templ ",
+			name:            "t1: map parameter",
+			input:           `{ t1 TemplName(data map[string]interface{}) }`,
+			prefix:          "{ t1 ",
 			startBraceCount: 1,
 			expected:        `TemplName(data map[string]interface{})`,
 		},

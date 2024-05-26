@@ -10,7 +10,7 @@ import (
 	"runtime"
 
 	"github.com/fatih/color"
-	templ "github.com/senforsce/t1"
+	"github.com/senforsce/t1"
 	"github.com/senforsce/t1/cmd/t1/fmtcmd"
 	"github.com/senforsce/t1/cmd/t1/generatecmd"
 	"github.com/senforsce/t1/cmd/t1/lspcmd"
@@ -25,14 +25,15 @@ func main() {
 
 const usageText = `usage: t1 <command> [<args>...]
 
-Thunderf1sh - build Semantic Web With OWL & HTMX UIs with Go
+Tndr - build Semantic Web With OWL & HTMX UIs with Go
 
-See docs at https://templ.guide and https://senforsce.com/thunderf1sh/guide (coming soon)
+See docs at https://senforsce.com/t1/guide and https://senforsce.com/tndr/guide (coming soon)
+Based off https://t1.guide
 
 commands:
-  generate   Generates Go code from t1 or templ files
-  fmt        Formats t1 or templ files
-  lsp        Starts a language server for t1 or templ files
+  generate   Generates Go code from t1 or t1 files
+  fmt        Formats t1 or t1 files
+  lsp        Starts a language server for t1 or t1 files
   version    Prints the version
 `
 
@@ -49,10 +50,10 @@ func run(w io.Writer, args []string) (code int) {
 	case "lsp":
 		return lspCmd(w, args[2:])
 	case "version":
-		fmt.Fprintln(w, templ.Version())
+		fmt.Fprintln(w, t1.Version())
 		return 0
 	case "--version":
-		fmt.Fprintln(w, templ.Version())
+		fmt.Fprintln(w, t1.Version())
 		return 0
 	}
 	fmt.Fprint(w, usageText)
@@ -61,17 +62,17 @@ func run(w io.Writer, args []string) (code int) {
 
 const generateUsageText = `usage: t1 generate [<args>...]
 
-Generates Go code from t1 or templ files.
+Generates Go code from t1 or t1 files.
 
 Args:
   -path <path>
     Generates code for all files in path. (default .)
   -f <file>
-    Optionally generates code for a single file, e.g. -f header.templ
+    Optionally generates code for a single file, e.g. -f header.t1
   -sourceMapVisualisations
-    Set to true to generate HTML files to visualise the t1 or templ code and its corresponding Go code.
+    Set to true to generate HTML files to visualise the t1 or t1 code and its corresponding Go code.
   -include-version
-    Set to false to skip inclusion of the templ version in the generated code. (default true)
+    Set to false to skip inclusion of the t1 version in the generated code. (default true)
   -include-timestamp
     Set to true to include the current time in the generated code.
   -watch
@@ -87,7 +88,7 @@ Args:
   -pprof
     Port to run the pprof server on.
   -keep-orphaned-files
-    Keeps orphaned generated templ files. (default false)
+    Keeps orphaned generated t1 files. (default false)
   -v
     Set log verbosity level to "debug". (default "info")
   -log-level
@@ -103,7 +104,7 @@ Examples:
 
   Generate code for a single file:
 
-    t1 generate -f header.templ
+    t1 generate -f header.t1
 
   Watch the current directory and subdirectories for changes and regenerate code:
 
@@ -172,19 +173,19 @@ func generateCmd(w io.Writer, args []string) (code int) {
 	return 0
 }
 
-const fmtUsageText = `usage: templ fmt [<args> ...]
+const fmtUsageText = `usage: t1 fmt [<args> ...]
 
 Format all files in directory:
 
-  templ fmt .
+  t1 fmt .
 
 Format stdin to stdout:
 
-  templ fmt < header.templ
+  t1 fmt < header.t1
 
 Format file or directory to stdout:
 
-  templ fmt -stdout FILE
+  t1 fmt -stdout FILE
 
 Args:
   -stdout
@@ -234,13 +235,13 @@ func fmtCmd(w io.Writer, args []string) (code int) {
 	return 0
 }
 
-const lspUsageText = `usage: templ lsp [<args> ...]
+const lspUsageText = `usage: t1 lsp [<args> ...]
 
-Starts a language server for templ.
+Starts a language server for t1.
 
 Args:
   -log string
-    The file to log templ LSP output to, or leave empty to disable logging.
+    The file to log t1 LSP output to, or leave empty to disable logging.
   -goplsLog string
     The file to log gopls output, or leave empty to disable logging.
   -goplsRPCTrace

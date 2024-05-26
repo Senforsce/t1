@@ -69,7 +69,7 @@
           ];
         });
 
-      # This flake outputs an overlay that can be used to add templ and
+      # This flake outputs an overlay that can be used to add t1 and
       # thunderf1sh-docs to nixpkgs as per https://senforsce.com/thunderf1sh/quick-start/installation/#nix
       #
       # Example usage:

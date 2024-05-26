@@ -1,39 +1,39 @@
 # Command-line tools
 
-`templ` provides a command line interface. Most users will only need to run the `templ generate` command to generate Go code from `*.templ` files.
+`t1` provides a command line interface. Most users will only need to run the `t1 generate` command to generate Go code from `*.t1` files.
 
 ```
-usage: templ <command> [parameters]
+usage: t1 <command> [parameters]
 To see help text, you can run:
-  templ generate --help
-  templ fmt --help
-  templ lsp --help
-  templ migrate --help
-  templ version
+  t1 generate --help
+  t1 fmt --help
+  t1 lsp --help
+  t1 migrate --help
+  t1 version
 examples:
-  templ generate
+  t1 generate
 ```
 
-## Generating Go code from templ files
+## Generating Go code from t1 files
 
-The `templ generate` command generates Go code from `*.templ` files in the current directory tree.
+The `t1 generate` command generates Go code from `*.t1` files in the current directory tree.
 
 The command provides additional options:
 
 ```
-usage: templ generate [<args>...]
+usage: t1 generate [<args>...]
 
-Generates Go code from templ files.
+Generates Go code from t1 files.
 
 Args:
   -path <path>
     Generates code for all files in path. (default .)
   -f <file>
-    Optionally generates code for a single file, e.g. -f header.templ
+    Optionally generates code for a single file, e.g. -f header.t1
   -sourceMapVisualisations
-    Set to true to generate HTML files to visualise the templ code and its corresponding Go code.
+    Set to true to generate HTML files to visualise the t1 code and its corresponding Go code.
   -include-version
-    Set to false to skip inclusion of the templ version in the generated code. (default true)
+    Set to false to skip inclusion of the t1 version in the generated code. (default true)
   -include-timestamp
     Set to true to include the current time in the generated code.
   -watch
@@ -49,7 +49,7 @@ Args:
   -pprof
     Port to run the pprof server on.
   -keep-orphaned-files
-    Keeps orphaned generated templ files. (default false)
+    Keeps orphaned generated t1 files. (default false)
   -v
     Set log verbosity level to "debug". (default "info")
   -log-level
@@ -61,28 +61,28 @@ Args:
 For example, to generate code for a single file:
 
 ```
-templ generate -f header.templ
+t1 generate -f header.t1
 ```
 
-## Formatting templ files
+## Formatting t1 files
 
-The `templ fmt` command formats template files. You can use this command in different ways:
+The `t1 fmt` command formats template files. You can use this command in different ways:
 
 1. Format all template files in the current directory and subdirectories:
 
 ```
-templ fmt .
+t1 fmt .
 ```
 
 2. Format input from stdin and output to stdout:
 
 ```
-templ fmt
+t1 fmt
 ```
 
 ## Language Server for IDE integration
 
-`templ lsp` provides a Language Server Protocol (LSP) implementation to support IDE integrations.
+`t1 lsp` provides a Language Server Protocol (LSP) implementation to support IDE integrations.
 
 This command isn't intended to be used directly by users, but is used by IDE integrations such as the VSCode extension and by Neovim support.
 
@@ -98,7 +98,7 @@ A number of additional options are provided to enable runtime logging and profil
   -http string
         Enable http debug server by setting a listen address (e.g. localhost:7474)
   -log string
-        The file to log templ LSP output to, or leave empty to disable logging.
+        The file to log t1 LSP output to, or leave empty to disable logging.
   -pprof
         Enable pprof web server (default address is localhost:9999)
 ```

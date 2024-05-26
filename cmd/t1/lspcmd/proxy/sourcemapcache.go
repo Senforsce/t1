@@ -6,7 +6,7 @@ import (
 	"github.com/senforsce/t1/parser/v2"
 )
 
-// NewSourceMapCache creates a cache of .templ file URIs to the source map.
+// NewSourceMapCache creates a cache of .t1 file URIs to the source map.
 func NewSourceMapCache() *SourceMapCache {
 	return &SourceMapCache{
 		m:              new(sync.Mutex),
@@ -14,7 +14,7 @@ func NewSourceMapCache() *SourceMapCache {
 	}
 }
 
-// SourceMapCache is a cache of .templ file URIs to the source map.
+// SourceMapCache is a cache of .t1 file URIs to the source map.
 type SourceMapCache struct {
 	m              *sync.Mutex
 	uriToSourceMap map[string]*parser.SourceMap

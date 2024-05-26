@@ -1,21 +1,21 @@
-# Using JavaScript with templ
+# Using JavaScript with t1
 
 ## Script tags
 
 You can use standard script tags to load JavaScript from a URL.
 
-```templ
-templ head() {
+```t1
+t1 head() {
 	<head>
 		<script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
 	</head>
 }
 ```
 
-You can then use the imported JavaScript directly in templ.
+You can then use the imported JavaScript directly in t1.
 
-```templ
-templ body() {
+```t1
+t1 body() {
 	<script>
 		const chart = LightweightCharts.createChart(document.body, { width: 400, height: 300 });
 		const lineSeries = chart.addLineSeries();
@@ -41,7 +41,7 @@ To pass Go data to scripts, you can use a script template.
 
 Here, the `page` HTML template includes a `script` element that loads a charting library, which is then used by the `body` element to render some data.
 
-```templ
+```t1
 package main
 
 script graph(data []TimeValue) {
@@ -50,7 +50,7 @@ script graph(data []TimeValue) {
 	lineSeries.setData(data);
 }
 
-templ page(data []TimeValue) {
+t1 page(data []TimeValue) {
 	<html>
 		<head>
 			<script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
@@ -104,9 +104,9 @@ func main() {
 }
 ```
 
-`script` elements are templ Components, so you can also directly render the Javascript function, passing in Go data, using the `@` expression:
+`script` elements are t1 Components, so you can also directly render the Javascript function, passing in Go data, using the `@` expression:
 
-```templ
+```t1
 package main
 
 import "fmt"
@@ -115,7 +115,7 @@ script printToConsole(content string) {
 	console.log(content)
 }
 
-templ page(content string) {
+t1 page(content string) {
 	<html>
 		<body>
 		  @printToConsole(content)
@@ -158,10 +158,18 @@ After building and running the executable, running `curl http://localhost:8080/`
 
 ```html title="Output"
 <html>
-	<body>
-		<script type="text/javascript">function __templ_printToConsole_5a85(content){console.log(content)}</script>
-		<script type="text/javascript">__templ_printToConsole_5a85("2023-11-11 01:01:40.983381358 +0000 UTC")</script>
-		<script type="text/javascript">__templ_printToConsole_5a85("Again: 2023-11-11 01:01:40.983381358 +0000 UTC")</script>
-	</body>
+  <body>
+    <script type="text/javascript">
+      function __t1_printToConsole_5a85(content) {
+        console.log(content);
+      }
+    </script>
+    <script type="text/javascript">
+      __t1_printToConsole_5a85("2023-11-11 01:01:40.983381358 +0000 UTC");
+    </script>
+    <script type="text/javascript">
+      __t1_printToConsole_5a85("Again: 2023-11-11 01:01:40.983381358 +0000 UTC");
+    </script>
+  </body>
 </html>
 ```

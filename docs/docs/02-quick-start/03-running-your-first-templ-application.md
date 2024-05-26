@@ -1,4 +1,4 @@
-# Running your first templ application
+# Running your first t1 application
 
 Let's update the previous application to serve HTML over HTTP instead of writing it to the terminal.
 
@@ -6,7 +6,7 @@ Let's update the previous application to serve HTML over HTTP instead of writing
 
 Update the `main.go` file.
 
-templ components can be served as a standard HTTP handler using the `templ.Handler` function.
+t1 components can be served as a standard HTTP handler using the `t1.Handler` function.
 
 ```go title="main.go"
 package main
@@ -15,13 +15,13 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/a-h/templ"
+	"github.com/senforsce/t1"
 )
 
 func main() {
 	component := hello("John")
-	
-	http.Handle("/", templ.Handler(component))
+
+	http.Handle("/", t1.Handler(component))
 
 	fmt.Println("Listening on :3000")
 	http.ListenAndServe(":3000", nil)

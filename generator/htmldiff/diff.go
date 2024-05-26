@@ -9,8 +9,8 @@ import (
 	"sync"
 
 	"github.com/a-h/htmlformat"
-	"github.com/a-h/templ"
 	"github.com/google/go-cmp/cmp"
+	"github.com/senforsce/t1"
 )
 
 func DiffStrings(expected, actual string) (diff string, err error) {
@@ -48,11 +48,11 @@ func DiffStrings(expected, actual string) (diff string, err error) {
 	return cmp.Diff(expected, actual), errors.Join(errs...)
 }
 
-func Diff(input templ.Component, expected string) (diff string, err error) {
+func Diff(input t1.Component, expected string) (diff string, err error) {
 	return DiffCtx(context.Background(), input, expected)
 }
 
-func DiffCtx(ctx context.Context, input templ.Component, expected string) (diff string, err error) {
+func DiffCtx(ctx context.Context, input t1.Component, expected string) (diff string, err error) {
 	var wg sync.WaitGroup
 	wg.Add(2)
 

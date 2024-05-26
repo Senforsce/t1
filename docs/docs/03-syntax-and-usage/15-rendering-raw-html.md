@@ -1,6 +1,6 @@
 # Rendering raw HTML
 
-To render HTML that has come from a trusted source, bypassing all HTML escaping and security mechanisms that templ includes, use the `templ.Raw` function.
+To render HTML that has come from a trusted source, bypassing all HTML escaping and security mechanisms that t1 includes, use the `t1.Raw` function.
 
 :::info
 Only include HTML that comes from a trusted source.
@@ -10,12 +10,12 @@ Only include HTML that comes from a trusted source.
 Use of this function may introduce security vulnerabilities to your program.
 :::
 
-```templ title="component.templ"
-templ Example() {
+```t1 title="component.t1"
+t1 Example() {
 	<!DOCTYPE html>
 	<html>
 		<body>
-			@templ.Raw("<div>Hello, World!</div>")
+			@t1.Raw("<div>Hello, World!</div>")
 		</body>
 	</html>
 }
@@ -24,8 +24,8 @@ templ Example() {
 ```html title="Output"
 <!DOCTYPE html>
 <html>
-	<body>
-		<div>Hello, World!</div>
-	</body>
+  <body>
+    <div>Hello, World!</div>
+  </body>
 </html>
 ```

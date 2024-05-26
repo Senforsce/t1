@@ -204,11 +204,11 @@ func TestTemplElementExpressionParser(t *testing.T) {
 			},
 		},
 		{
-			name:  "templelement: supports the use of templ elements in other packages",
+			name:  "templelement: supports the use of t1 elements in other packages",
 			input: `@templates.Icon("home", Inline)`,
 			expected: TemplElementExpression{
 				Expression: Expression{
-					Value: `templates.Icon("home", Inline)`,
+					Value: `t1ates.Icon("home", Inline)`,
 					Range: Range{
 						From: Position{
 							Index: 1,
@@ -229,7 +229,7 @@ func TestTemplElementExpressionParser(t *testing.T) {
 			input: `@templates.New(test{}, other())`,
 			expected: TemplElementExpression{
 				Expression: Expression{
-					Value: `templates.New(test{}, other())`,
+					Value: `t1ates.New(test{}, other())`,
 					Range: Range{
 						From: Position{
 							Index: 1,
@@ -250,7 +250,7 @@ func TestTemplElementExpressionParser(t *testing.T) {
 			input: `@templates[0]()`,
 			expected: TemplElementExpression{
 				Expression: Expression{
-					Value: `templates[0]()`,
+					Value: `t1ates[0]()`,
 					Range: Range{
 						From: Position{
 							Index: 1,
@@ -271,7 +271,7 @@ func TestTemplElementExpressionParser(t *testing.T) {
 			input: `@templates["key"]()`,
 			expected: TemplElementExpression{
 				Expression: Expression{
-					Value: `templates["key"]()`,
+					Value: `t1ates["key"]()`,
 					Range: Range{
 						From: Position{
 							Index: 1,
@@ -292,7 +292,7 @@ func TestTemplElementExpressionParser(t *testing.T) {
 			input: `@templates[0].CreateTemplate()`,
 			expected: TemplElementExpression{
 				Expression: Expression{
-					Value: `templates[0].CreateTemplate()`,
+					Value: `t1ates[0].CreateTemplate()`,
 					Range: Range{
 						From: Position{
 							Index: 1,
@@ -313,7 +313,7 @@ func TestTemplElementExpressionParser(t *testing.T) {
 		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
 			input := parse.NewInput(tt.input)
-			actual, ok, err := templElementExpression.Parse(input)
+			actual, ok, err := t1ElementExpression.Parse(input)
 			if err != nil {
 				t.Fatalf("unexpected error: %v", err)
 			}

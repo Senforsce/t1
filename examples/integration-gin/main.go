@@ -3,8 +3,8 @@ package main
 import (
 	"net/http"
 
-	"github.com/a-h/templ/examples/integration-gin/gintemplrenderer"
 	"github.com/gin-gonic/gin"
+	"github.com/senforsce/t1/examples/integration-gin/gintemplrenderer"
 )
 
 func main() {

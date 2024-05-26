@@ -2,14 +2,14 @@ package parser
 
 import (
 	"github.com/a-h/parse"
-	"github.com/a-h/templ/parser/v2/goexpression"
+	"github.com/senforsce/t1/parser/v2/goexpression"
 )
 
 var forExpression parse.Parser[Node] = forExpressionParser{}
 
 type forExpressionParser struct{}
 
-func (_ forExpressionParser) Parse(pi *parse.Input) (n Node, ok bool, err error) {
+func (forExpressionParser) Parse(pi *parse.Input) (n Node, ok bool, err error) {
 	var r ForExpression
 	start := pi.Index()
 
@@ -41,7 +41,6 @@ func (_ forExpressionParser) Parse(pi *parse.Input) (n Node, ok bool, err error)
 		return
 	}
 	r.Children = nodes.Nodes
-	r.Diagnostics = nodes.Diagnostics
 
 	// Read the required closing brace.
 	if _, ok, err = closeBraceWithOptionalPadding.Parse(pi); err != nil || !ok {

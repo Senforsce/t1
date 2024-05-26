@@ -4,13 +4,13 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/a-h/templ"
 	"github.com/gin-gonic/gin/render"
+	"github.com/senforsce/t1"
 )
 
 var Default = &Renderer{}
 
-func New(ctx context.Context, status int, component templ.Component) *Renderer {
+func New(ctx context.Context, status int, component t1.Component) *Renderer {
 	return &Renderer{
 		Ctx:       ctx,
 		Status:    status,
@@ -21,7 +21,7 @@ func New(ctx context.Context, status int, component templ.Component) *Renderer {
 type Renderer struct {
 	Ctx       context.Context
 	Status    int
-	Component templ.Component
+	Component t1.Component
 }
 
 func (t Renderer) Render(w http.ResponseWriter) error {
@@ -38,13 +38,13 @@ func (t Renderer) WriteContentType(w http.ResponseWriter) {
 }
 
 func (t *Renderer) Instance(name string, data any) render.Render {
-	templData, ok := data.(templ.Component)
+	t1Data, ok := data.(t1.Component)
 	if !ok {
 		return nil
 	}
 	return &Renderer{
 		Ctx:       context.Background(),
 		Status:    http.StatusOK,
-		Component: templData,
+		Component: t1Data,
 	}
 }

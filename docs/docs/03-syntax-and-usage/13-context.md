@@ -10,22 +10,22 @@ The technique of passing data through a stack of components is sometimes called 
 
 In this example, the `middle` component doesn't use the `name` parameter, but must accept it as a parameter in order to pass it to the `bottom` component.
 
-```templ title="component.templ"
+```t1 title="component.t1"
 package main
 
-templ top(name string) {
+t1 top(name string) {
 	<div>
 		@middle(name)
 	</div>
 }
 
-templ middle(name string) {
+t1 middle(name string) {
 	<ul>
 		@bottom(name)
 	</ul>
 }
 
-templ bottom(name string) {
+t1 bottom(name string) {
   <li>{ name }</li>
 }
 ```
@@ -40,14 +40,14 @@ Context is not strongly typed, and errors only show at runtime, not compile time
 
 Some data is useful for many components throughout the hierarchy, for example:
 
-* Whether the current user is logged in or not.
-* The username of the current user.
-* The locale of the user (used for localization).
-* Theme preferences (e.g. light vs dark).
+- Whether the current user is logged in or not.
+- The username of the current user.
+- The locale of the user (used for localization).
+- Theme preferences (e.g. light vs dark).
 
 One way to pass this information is to create a `Settings` struct and pass it through the stack as a parameter.
 
-```templ title="component.templ"
+```t1 title="component.t1"
 package main
 
 type Settings struct {
@@ -56,19 +56,19 @@ type Settings struct {
 	Theme    string
 }
 
-templ top(settings Settings) {
+t1 top(settings Settings) {
 	<div>
 		@middle(settings)
 	</div>
 }
 
-templ middle(settings Settings) {
+t1 middle(settings Settings) {
 	<ul>
 		@bottom(settings)
 	</ul>
 }
 
-templ bottom(settings Settings) {
+t1 bottom(settings Settings) {
   <li>{ settings.Theme }</li>
 }
 ```
@@ -78,22 +78,22 @@ However, this `Settings` struct may be unique to a single website, and reduce th
 ## Using `context`
 
 :::info
-templ components have an implicit `ctx` variable within the scope. This `ctx` variable is the variable that is passed to the `templ.Component`'s `Render` method.
+t1 components have an implicit `ctx` variable within the scope. This `ctx` variable is the variable that is passed to the `t1.Component`'s `Render` method.
 :::
 
 To allow data to be accessible at any level in the hierarchy, we can use Go's built in `context` package.
 
-Within templ components, use the implicit `ctx` variable to access the context.
+Within t1 components, use the implicit `ctx` variable to access the context.
 
-```templ title="component.templ"
-templ themeName() {
+```t1 title="component.t1"
+t1 themeName() {
 	<div>{ ctx.Value(themeContextKey).(string) }</div>
 }
 ```
 
 To allow the template to get the `themeContextKey` from the context, create a context, and pass it to the component's `Render` function.
 
-```templ title="main.go"
+```t1 title="main.go"
 // Define the context key type.
 type contextKey string
 
@@ -117,7 +117,7 @@ Rather than read from the context object directly, it's common to implement a ty
 
 This is also required when the type of the context key is in a different package to the consumer of the context, and the type is private (which is usually the case).
 
-```templ title="main.go"
+```t1 title="main.go"
 func GetTheme(ctx context.Context) string {
 	if theme, ok := ctx.Value(themeContextKey).(string); ok {
 		return theme
@@ -128,8 +128,8 @@ func GetTheme(ctx context.Context) string {
 
 This minor change makes the template code a little tidier.
 
-```templ title="component.templ"
-templ themeName() {
+```t1 title="component.t1"
+t1 themeName() {
 	<div>{ GetTheme(ctx) }</div>
 }
 ```
@@ -140,9 +140,9 @@ In HTTP applications, a common pattern is to insert HTTP middleware into the req
 
 Middleware can be used to update the context that is passed to other components. Common use cases for middleware include authentication, and theming.
 
-By inserting HTTP middleware, you can set values in the context that can be read by any templ component in the stack for the duration of that HTTP request.
+By inserting HTTP middleware, you can set values in the context that can be read by any t1 component in the stack for the duration of that HTTP request.
 
-```templ title="component.templ"
+```t1 title="component.t1"
 type contextKey string
 type contextClass = contextKey("class")
 
@@ -153,16 +153,16 @@ func Middleware(next http.Handler) http.Handler {
   })
 }
 
-templ Page() {
+t1 Page() {
   @Show()
 }
 
-templ Show() {
+t1 Show() {
   <div class={ ctx.Value(contextClass) }>Display</div>
 }
 
 func main() {
-  h := templ.Handler(Page())
+  h := t1.Handler(Page())
   withMiddleware := Middleware(h)
   http.Handle("/", withMiddleware)
   http.ListenAndServe(":8080", h)
@@ -174,4 +174,3 @@ If you write a component that relies on a context variable that doesn't exist, o
 
 This means that if your component relies on HTTP middleware that sets the context, and you forget to add it, your component will panic at runtime.
 :::
-

@@ -1,0 +1,13 @@
+package turbo
+
+t1 actionTemplate(action string, target string) {
+	<turbo-stream action={ action } target={ target }>
+		<template>
+			{ children... }
+		</template>
+	</turbo-stream>
+}
+
+t1 removeTemplate(action string, target string) {
+	<turbo-stream action={ action } target={ target }></turbo-stream>
+}

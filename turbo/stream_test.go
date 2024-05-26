@@ -8,10 +8,10 @@ import (
 	"testing"
 
 	"github.com/PuerkitoBio/goquery"
-	"github.com/a-h/templ"
+	"github.com/senforsce/t1"
 )
 
-var contentTemplate = templ.ComponentFunc(func(ctx context.Context, w io.Writer) error {
+var contentTemplate = t1.ComponentFunc(func(ctx context.Context, w io.Writer) error {
 	_, err := io.WriteString(w, "content")
 	return err
 })

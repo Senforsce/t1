@@ -6,7 +6,8 @@ import (
 	"path/filepath"
 	"regexp"
 
-	"github.com/a-h/templ"
+	"github.com/senforsce/t1"
+
 	"golang.org/x/mod/modfile"
 	"golang.org/x/mod/semver"
 )
@@ -45,7 +46,7 @@ func WalkUp(dir string) (string, error) {
 	return dir, nil
 }
 
-// Replace "go 1.21.3" with "go 1.21" until https://github.com/golang/go/issues/61888 is fixed, see templ issue https://github.com/senforsce/t1/issues/355
+// Replace "go 1.21.3" with "go 1.21" until https://github.com/golang/go/issues/61888 is fixed, see t1 issue https://github.com/senforsce/t1/issues/355
 var goVersionRegexp = regexp.MustCompile(`\ngo (\d+\.\d+)(?:\D.+)\n`)
 
 func patchGoVersion(moduleFileContents []byte) []byte {
@@ -59,7 +60,7 @@ func Check(dir string) error {
 	}
 
 	// Found a go.mod file.
-	// Read it and find the templ version.
+	// Read it and find the t1 version.
 	modFile := filepath.Join(dir, "go.mod")
 	m, err := os.ReadFile(modFile)
 	if err != nil {
@@ -74,17 +75,17 @@ func Check(dir string) error {
 		return fmt.Errorf("failed to parse go.mod file: %w", err)
 	}
 	if mf.Module.Mod.Path == "github.com/senforsce/t1" {
-		// The go.mod file is for templ itself.
+		// The go.mod file is for t1 itself.
 		return nil
 	}
 	for _, r := range mf.Require {
 		if r.Mod.Path == "github.com/senforsce/t1" {
-			cmp := semver.Compare(r.Mod.Version, templ.Version())
+			cmp := semver.Compare(r.Mod.Version, t1.Version())
 			if cmp < 0 {
-				return fmt.Errorf("generator %v is newer than t1 version %v found in go.mod file, consider running `go get -u github.com/senforsce/t1` to upgrade", templ.Version(), r.Mod.Version)
+				return fmt.Errorf("generator %v is newer than t1 version %v found in go.mod file, consider running `go get -u github.com/senforsce/t1` to upgrade", t1.Version(), r.Mod.Version)
 			}
 			if cmp > 0 {
-				return fmt.Errorf("generator %v is older than t1 version %v found in go.mod file, consider upgrading t1 CLI", templ.Version(), r.Mod.Version)
+				return fmt.Errorf("generator %v is older than t1 version %v found in go.mod file, consider upgrading t1 CLI", t1.Version(), r.Mod.Version)
 			}
 			return nil
 		}

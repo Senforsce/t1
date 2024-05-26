@@ -2,9 +2,11 @@ package proxy
 
 import (
 	"bytes"
+	"compress/gzip"
 	"fmt"
 	"io"
-	"log"
+	stdlog "log"
+	"log/slog"
 	"math"
 	"net/http"
 	"net/http/httputil"
@@ -14,6 +16,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/andybalholm/brotli"
 	"github.com/senforsce/t1/cmd/t1/generatecmd/sse"
 
 	_ "embed"
@@ -25,40 +28,123 @@ var script string
 const scriptTag = `<script src="/_t1/reload/script.js"></script>`
 
 type Handler struct {
+	log    *slog.Logger
 	URL    string
 	Target *url.URL
 	p      *httputil.ReverseProxy
 	sse    *sse.Handler
 }
 
-func New(port int, target *url.URL) *Handler {
+func insertScriptTagIntoBody(body string) (updated string) {
+	return strings.Replace(body, "</body>", scriptTag+"</body>", -1)
+}
+
+type passthroughWriteCloser struct {
+	io.Writer
+}
+
+func (pwc passthroughWriteCloser) Close() error {
+	return nil
+}
+
+const unsupportedContentEncoding = "Unsupported content encoding, hot reload script not inserted."
+
+func (h *Handler) modifyResponse(r *http.Response) error {
+	log := h.log.With(slog.String("url", r.Request.URL.String()))
+	if r.Header.Get("t1-skip-modify") == "true" {
+		log.Debug("Skipping response modification because t1-skip-modify header is set")
+		return nil
+	}
+	if contentType := r.Header.Get("Content-Type"); !strings.HasPrefix(contentType, "text/html") {
+		log.Debug("Skipping response modification because content type is not text/html", slog.String("content-type", contentType))
+		return nil
+	}
+
+	// Set up readers and writers.
+	newReader := func(in io.Reader) (out io.Reader, err error) {
+		return in, nil
+	}
+	newWriter := func(out io.Writer) io.WriteCloser {
+		return passthroughWriteCloser{out}
+	}
+	switch r.Header.Get("Content-Encoding") {
+	case "gzip":
+		newReader = func(in io.Reader) (out io.Reader, err error) {
+			return gzip.NewReader(in)
+		}
+		newWriter = func(out io.Writer) io.WriteCloser {
+			return gzip.NewWriter(out)
+		}
+	case "br":
+		newReader = func(in io.Reader) (out io.Reader, err error) {
+			return brotli.NewReader(in), nil
+		}
+		newWriter = func(out io.Writer) io.WriteCloser {
+			return brotli.NewWriter(out)
+		}
+	case "":
+		log.Debug("No content encoding header found")
+	default:
+		h.log.Warn(unsupportedContentEncoding, slog.String("encoding", r.Header.Get("Content-Encoding")))
+	}
+
+	// Read the encoded body.
+	encr, err := newReader(r.Body)
+	if err != nil {
+		return err
+	}
+	defer r.Body.Close()
+	body, err := io.ReadAll(encr)
+	if err != nil {
+		return err
+	}
+
+	// Update it.
+	updated := insertScriptTagIntoBody(string(body))
+	if log.Enabled(r.Request.Context(), slog.LevelDebug) {
+		if len(updated) == len(body) {
+			log.Debug("Reload script not inserted")
+		} else {
+			log.Debug("Reload script inserted")
+		}
+	}
+
+	// Encode the response.
+	var buf bytes.Buffer
+	encw := newWriter(&buf)
+	_, err = encw.Write([]byte(updated))
+	if err != nil {
+		return err
+	}
+	err = encw.Close()
+	if err != nil {
+		return err
+	}
+
+	// Update the response.
+	r.Body = io.NopCloser(&buf)
+	r.ContentLength = int64(buf.Len())
+	r.Header.Set("Content-Length", strconv.Itoa(buf.Len()))
+	return nil
+}
+
+func New(log *slog.Logger, bind string, port int, target *url.URL) (h *Handler) {
 	p := httputil.NewSingleHostReverseProxy(target)
-	p.ErrorLog = log.New(os.Stderr, "Proxy to target error: ", 0)
+	p.ErrorLog = stdlog.New(os.Stderr, "Proxy to target error: ", 0)
 	p.Transport = &roundTripper{
-		maxRetries:      10,
+		maxRetries:      20,
 		initialDelay:    100 * time.Millisecond,
 		backoffExponent: 1.5,
 	}
-	p.ModifyResponse = func(r *http.Response) error {
-		if contentType := r.Header.Get("Content-Type"); !strings.HasPrefix(contentType, "text/html") {
-			return nil
-		}
-		body, err := io.ReadAll(r.Body)
-		if err != nil {
-			return err
-		}
-		updated := strings.Replace(string(body), "</body>", scriptTag+"</body>", -1)
-		r.Body = io.NopCloser(strings.NewReader(updated))
-		r.ContentLength = int64(len(updated))
-		r.Header.Set("Content-Length", strconv.Itoa(len(updated)))
-		return nil
-	}
-	return &Handler{
-		URL:    fmt.Sprintf("http://127.0.0.1:%d", port),
+	h = &Handler{
+		log:    log,
+		URL:    fmt.Sprintf("http://%s:%d", bind, port),
 		Target: target,
 		p:      p,
 		sse:    sse.New(),
 	}
+	p.ModifyResponse = h.modifyResponse
+	return h
 }
 
 func (p *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -72,8 +158,17 @@ func (p *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if r.URL.Path == "/_t1/reload/events" {
-		// Provides a list of messages including a reload message.
-		p.sse.ServeHTTP(w, r)
+		switch r.Method {
+		case http.MethodGet:
+			// Provides a list of messages including a reload message.
+			p.sse.ServeHTTP(w, r)
+			return
+		case http.MethodPost:
+			// Send a reload message to all connected clients.
+			p.sse.Send("message", "reload")
+			return
+		}
+		http.Error(w, "only GET or POST method allowed", http.StatusMethodNotAllowed)
 		return
 	}
 	p.p.ServeHTTP(w, r)
@@ -87,6 +182,15 @@ type roundTripper struct {
 	maxRetries      int
 	initialDelay    time.Duration
 	backoffExponent float64
+}
+
+func (rt *roundTripper) setShouldSkipResponseModificationHeader(r *http.Request, resp *http.Response) {
+	// Instruct the modifyResponse function to skip modifying the response if the
+	// HTTP request has come from HTMX.
+	if r.Header.Get("HX-Request") != "true" {
+		return
+	}
+	resp.Header.Set("t1-skip-modify", "true")
 }
 
 func (rt *roundTripper) RoundTrip(r *http.Request) (*http.Response, error) {
@@ -118,8 +222,20 @@ func (rt *roundTripper) RoundTrip(r *http.Request) (*http.Response, error) {
 			continue
 		}
 
+		rt.setShouldSkipResponseModificationHeader(r, resp)
+
 		return resp, nil
 	}
 
-	return nil, fmt.Errorf("max retries reached")
+	return nil, fmt.Errorf("max retries reached: %q", r.URL.String())
+}
+
+func NotifyProxy(host string, port int) error {
+	urlStr := fmt.Sprintf("http://%s:%d/_t1/reload/events", host, port)
+	req, err := http.NewRequest(http.MethodPost, urlStr, nil)
+	if err != nil {
+		return err
+	}
+	_, err = http.DefaultClient.Do(req)
+	return err
 }

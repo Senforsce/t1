@@ -1,0 +1,9 @@
+package main
+
+t1 Home(name string) {
+	<div>Hello { name }</div>
+}
+
+t1 NotFound() {
+	<div>404</div>
+}

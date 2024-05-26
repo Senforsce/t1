@@ -1,9 +1,9 @@
 # If/else
 
-templ uses standard Go `if`/`else` statements which can be used to conditionally render components and elements.
+t1 uses standard Go `if`/`else` statements which can be used to conditionally render components and elements.
 
-```templ title="component.templ"
-templ login(isLoggedIn bool) {
+```t1 title="component.t1"
+t1 login(isLoggedIn bool) {
   if isLoggedIn {
     <div>Welcome back!</div>
   } else {
@@ -26,7 +26,5 @@ func main() {
 ```
 
 ```html title="Output"
-<div>
- Welcome back!
-</div>
+<div>Welcome back!</div>
 ```

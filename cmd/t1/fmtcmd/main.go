@@ -106,7 +106,7 @@ func readFromStdin() (fileName, src string, err error) {
 	if err != nil {
 		return "", "", fmt.Errorf("failed to read stdin: %w", err)
 	}
-	return "stdin.templ", string(b), nil
+	return "stdin.t1", string(b), nil
 }
 
 func readFromFile(name string) reader {

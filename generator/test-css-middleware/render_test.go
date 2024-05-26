@@ -9,8 +9,8 @@ import (
 	"testing"
 
 	"github.com/a-h/htmlformat"
-	"github.com/a-h/templ"
 	"github.com/google/go-cmp/cmp"
+	"github.com/senforsce/t1"
 )
 
 //go:embed expected.html
@@ -36,8 +36,8 @@ func Test(t *testing.T) {
 	}()
 
 	component := render("Red text")
-	h := templ.Handler(component)
-	cssmw := templ.NewCSSMiddleware(h, red())
+	h := t1.Handler(component)
+	cssmw := t1.NewCSSMiddleware(h, red())
 
 	// Create the actual value.
 	var actual string
@@ -60,7 +60,7 @@ func Test(t *testing.T) {
 		defer wg.Done()
 
 		w := httptest.NewRecorder()
-		cssmw.ServeHTTP(w, httptest.NewRequest("GET", "/styles/templ.css", nil))
+		cssmw.ServeHTTP(w, httptest.NewRequest("GET", "/styles/t1.css", nil))
 
 		a := new(strings.Builder)
 		err := htmlformat.Fragment(a, w.Body)

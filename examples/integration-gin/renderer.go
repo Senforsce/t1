@@ -5,12 +5,12 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin/render"
-	templ "github.com/senforsce/t1"
+	"github.com/senforsce/t1"
 )
 
 type TemplRender struct {
 	Code int
-	Data templ.Component
+	Data t1.Component
 }
 
 func (t TemplRender) Render(w http.ResponseWriter) error {
@@ -27,10 +27,10 @@ func (t TemplRender) WriteContentType(w http.ResponseWriter) {
 }
 
 func (t *TemplRender) Instance(name string, data interface{}) render.Render {
-	if templData, ok := data.(templ.Component); ok {
+	if t1Data, ok := data.(t1.Component); ok {
 		return &TemplRender{
 			Code: http.StatusOK,
-			Data: templData,
+			Data: t1Data,
 		}
 	}
 	return nil

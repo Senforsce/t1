@@ -530,7 +530,7 @@ func TestElementParserErrors(t *testing.T) {
 		{
 			name:  "element: attempted use of expression for style attribute (open/close)",
 			input: `<a style={%= value %}></a>`,
-			expected: newParseError(`<a>: invalid style attribute: style attributes cannot be a templ expression`,
+			expected: newParseError(`<a>: invalid style attribute: style attributes cannot be a t1 expression`,
 				Position{
 					Index: 0,
 					Line:  1,
@@ -545,7 +545,7 @@ func TestElementParserErrors(t *testing.T) {
 		{
 			name:  "element: attempted use of expression for style attribute (self-closing)",
 			input: `<a style={%= value %}/>`,
-			expected: newParseError(`<a>: invalid style attribute: style attributes cannot be a templ expression`,
+			expected: newParseError(`<a>: invalid style attribute: style attributes cannot be a t1 expression`,
 				Position{
 					Index: 0,
 					Line:  1,

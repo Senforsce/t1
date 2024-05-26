@@ -10,7 +10,7 @@ var expressionFuncEnd = parse.All(parse.Rune(')'), openBraceWithOptionalPadding)
 // Template
 
 var template = parse.Func(func(pi *parse.Input) (r HTMLTemplate, ok bool, err error) {
-	// templ FuncName(p Person, other Other) {
+	// t1 FuncName(p Person, other Other) {
 	var te templateExpression
 	if te, ok, err = templateExpressionParser.Parse(pi); err != nil || !ok {
 		return
@@ -25,11 +25,10 @@ var template = parse.Func(func(pi *parse.Input) (r HTMLTemplate, ok bool, err er
 		return
 	}
 	if !ok {
-		err = parse.Error("thunderf1sh: expected nodes in templ body, but found none", pi.Position())
+		err = parse.Error("tndr: expected nodes in t1 body, but found none", pi.Position())
 		return
 	}
 	r.Children = nodes.Nodes
-	r.Diagnostics = nodes.Diagnostics
 
 	// Eat any whitespace.
 	_, _, err = parse.OptionalWhitespace.Parse(pi)

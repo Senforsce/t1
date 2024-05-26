@@ -47,7 +47,7 @@ func (w *watchLiteralWriter) writeLiteral(inLiteral bool, s string) string {
 		return ""
 	}
 
-	return "templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, " + strconv.Itoa(w.index+1) + ")\n"
+	return "t1_7745c5c3_Err = t1.WriteWatchModeString(t1_7745c5c3_Buffer, " + strconv.Itoa(w.index+1) + ")\n"
 }
 
 func (w *watchLiteralWriter) literals() string {
@@ -64,7 +64,7 @@ func (prodLiteralWriter) writeLiteral(inLiteral bool, s string) string {
 	if inLiteral {
 		return s
 	}
-	return `_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("` + s
+	return `_, t1_7745c5c3_Err = t1_7745c5c3_Buffer.WriteString("` + s
 }
 
 func (prodLiteralWriter) literals() string {
@@ -144,12 +144,12 @@ func (rw *RangeWriter) write(s string) (r parser.Range, err error) {
 }
 
 func (rw *RangeWriter) writeErrorHandler(indentLevel int) (err error) {
-	_, err = rw.WriteIndent(indentLevel, "if templ_7745c5c3_Err != nil {\n")
+	_, err = rw.WriteIndent(indentLevel, "if t1_7745c5c3_Err != nil {\n")
 	if err != nil {
 		return err
 	}
 	indentLevel++
-	_, err = rw.WriteIndent(indentLevel, "return templ_7745c5c3_Err\n")
+	_, err = rw.WriteIndent(indentLevel, "return t1_7745c5c3_Err\n")
 	if err != nil {
 		return err
 	}

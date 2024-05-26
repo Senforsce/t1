@@ -5,12 +5,12 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/a-h/templ"
+	"github.com/senforsce/t1"
 )
 
 func main() {
 	// Use a template that doesn't take parameters.
-	http.Handle("/", templ.Handler(home()))
+	http.Handle("/", t1.Handler(home()))
 
 	// Use a template that accesses data or handles form posts.
 	http.Handle("/posts", NewPostsHandler())
@@ -45,7 +45,7 @@ func (ph PostsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "failed to retrieve posts", http.StatusInternalServerError)
 		return
 	}
-	templ.Handler(posts(ps)).ServeHTTP(w, r)
+	t1.Handler(posts(ps)).ServeHTTP(w, r)
 }
 
 type Post struct {

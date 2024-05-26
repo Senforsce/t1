@@ -48,22 +48,22 @@ export default function prismIncludeLanguages(PrismObject) {
     spread = re(spread).source;
 
 
-    globalThis.Prism.languages.templ = globalThis.Prism.languages.extend('markup', go);
-    globalThis.Prism.languages.templ.tag.pattern = re(
+    globalThis.Prism.languages.t1 = globalThis.Prism.languages.extend('markup', go);
+    globalThis.Prism.languages.t1.tag.pattern = re(
         /<\/?(?:[\w.:-]+(?:<S>+(?:[\w.:$-]+(?:=(?:"(?:\\[\s\S]|[^\\"])*"|'(?:\\[\s\S]|[^\\'])*'|[^\s{'"/>=]+|<BRACES>))?|<SPREAD>))*<S>*\/?)?>/.source
     );
 
-    globalThis.Prism.languages.templ.tag.inside['tag'].pattern = /^<\/?[^\s>\/]*/;
-    globalThis.Prism.languages.templ.tag.inside['attr-value'].pattern = /=(?!\{)(?:"(?:\\[\s\S]|[^\\"])*"|'(?:\\[\s\S]|[^\\'])*'|[^\s'">]+)/;
-    globalThis.Prism.languages.templ.tag.inside['tag'].inside['class-name'] = /^[A-Z]\w*(?:\.[A-Z]\w*)*$/;
-    globalThis.Prism.languages.templ.tag.inside['comment'] = go['comment'];
+    globalThis.Prism.languages.t1.tag.inside['tag'].pattern = /^<\/?[^\s>\/]*/;
+    globalThis.Prism.languages.t1.tag.inside['attr-value'].pattern = /=(?!\{)(?:"(?:\\[\s\S]|[^\\"])*"|'(?:\\[\s\S]|[^\\'])*'|[^\s'">]+)/;
+    globalThis.Prism.languages.t1.tag.inside['tag'].inside['class-name'] = /^[A-Z]\w*(?:\.[A-Z]\w*)*$/;
+    globalThis.Prism.languages.t1.tag.inside['comment'] = go['comment'];
 
     globalThis.Prism.languages.insertBefore('inside', 'attr-name', {
         'spread': {
             pattern: re(/<SPREAD>/.source),
-            inside: globalThis.Prism.languages.templ
+            inside: globalThis.Prism.languages.t1
         }
-    }, globalThis.Prism.languages.templ.tag);
+    }, globalThis.Prism.languages.t1.tag);
 
     globalThis.Prism.languages.insertBefore('inside', 'special-attr', {
         'script': {
@@ -75,10 +75,10 @@ export default function prismIncludeLanguages(PrismObject) {
                     pattern: /^=(?=\{)/,
                     alias: 'punctuation'
                 },
-                rest: globalThis.Prism.languages.templ
+                rest: globalThis.Prism.languages.t1
             },
         }
-    }, globalThis.Prism.languages.templ.tag);
+    }, globalThis.Prism.languages.t1.tag);
 
     // The following will handle plain text inside tags
     var stringifyToken = function(token) {
@@ -123,12 +123,12 @@ export default function prismIncludeLanguages(PrismObject) {
                     }
                 } else if (openedTags.length > 0 && token.type === 'punctuation' && token.content === '{') {
 
-                    // Here we might have entered a templ context inside a tag
+                    // Here we might have entered a t1 context inside a tag
                     openedTags[openedTags.length - 1].openedBraces++;
 
                 } else if (openedTags.length > 0 && openedTags[openedTags.length - 1].openedBraces > 0 && token.type === 'punctuation' && token.content === '}') {
 
-                    // Here we might have left a templ context inside a tag
+                    // Here we might have left a t1 context inside a tag
                     openedTags[openedTags.length - 1].openedBraces--;
 
                 } else {
@@ -137,7 +137,7 @@ export default function prismIncludeLanguages(PrismObject) {
             }
             if (notTagNorBrace || typeof token === 'string') {
                 if (openedTags.length > 0 && openedTags[openedTags.length - 1].openedBraces === 0) {
-                    // Here we are inside a tag, and not inside a templ context.
+                    // Here we are inside a tag, and not inside a t1 context.
                     // That's plain text: drop any tokens matched.
                     var plainText = stringifyToken(token);
 

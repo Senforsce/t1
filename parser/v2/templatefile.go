@@ -60,7 +60,7 @@ func NewTemplateFileParser(pkg string) TemplateFileParser {
 	}
 }
 
-var ErrLegacyFileFormat = errors.New("legacy file format - run templ migrate")
+var ErrLegacyFileFormat = errors.New("legacy file format - run t1 migrate")
 var ErrTemplateNotFound = errors.New("template not found")
 
 type TemplateFileParser struct {
@@ -102,7 +102,7 @@ func (p TemplateFileParser) Parse(pi *parse.Input) (tf TemplateFile, ok bool, er
 		}
 		var newLine string
 		newLine, _, _ = parse.NewLine.Parse(pi)
-		tf.Header = append(tf.Header, TemplateFileGoExpression{Expression: NewExpression(line+newLine, from, pi.Position())})
+		tf.Header = append(tf.Header, TemplateFileGoExpression{Expression: NewExpression(line+newLine, from, pi.Position()), BeforePackage: true})
 	}
 
 	// Strip any whitespace between the template declaration and the first template.
@@ -111,7 +111,7 @@ func (p TemplateFileParser) Parse(pi *parse.Input) (tf TemplateFile, ok bool, er
 outer:
 	for {
 		// Optional templates, CSS, and script templates.
-		// templ Name(p Parameter)
+		// t1 Name(p Parameter)
 		var tn HTMLTemplate
 		tn, ok, err = template.Parse(pi)
 		if err != nil {
@@ -119,7 +119,6 @@ outer:
 		}
 		if ok {
 			tf.Nodes = append(tf.Nodes, tn)
-			tf.Diagnostics = append(tf.Diagnostics, tn.Diagnostics...)
 			_, _, _ = parse.OptionalWhitespace.Parse(pi)
 			continue
 		}
@@ -160,7 +159,7 @@ outer:
 				return
 			}
 			hasTemplatePrefix := strings.HasPrefix(l, "t1 ") || strings.HasPrefix(l, "css ") || strings.HasPrefix(l, "script ")
-			if hasTemplatePrefix && strings.HasSuffix(l, "{") {
+			if hasTemplatePrefix && strings.Contains(l, "(") {
 				// Unread the line.
 				pi.Seek(last)
 				// Take the code so far.

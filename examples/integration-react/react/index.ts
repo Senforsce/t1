@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client';
 import { Header, Body, Hello } from './components';
 
-// Render the React component into the templ page at the react-header.
+// Render the React component into the t1 page at the react-header.
 const headerRoot = document.getElementById('react-header');
 if (!headerRoot) {
 	throw new Error('Could not find element with id react-header');

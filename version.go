@@ -1,4 +1,4 @@
-package templ
+package t1
 
 import _ "embed"
 

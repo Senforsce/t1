@@ -919,7 +919,7 @@ func TestElementParser(t *testing.T) {
 		},
 		{
 			name:  "element: inputs can contain class attributes",
-			input: `<input  type="email" id="email" name="email" class={ "a", "b", "c",  templ.KV("c", false)}	placeholder="your@email.com" autocomplete="off"/>`,
+			input: `<input  type="email" id="email" name="email" class={ "a", "b", "c",  t1.KV("c", false)}	placeholder="your@email.com" autocomplete="off"/>`,
 			expected: Element{
 				Name: "input",
 				Attributes: []Attribute{
@@ -938,7 +938,7 @@ func TestElementParser(t *testing.T) {
 					ExpressionAttribute{
 						Name: "class",
 						Expression: Expression{
-							Value: `"a", "b", "c",  templ.KV("c", false)`,
+							Value: `"a", "b", "c",  t1.KV("c", false)`,
 							Range: Range{
 								From: Position{
 									Index: 53,
@@ -1022,7 +1022,7 @@ func TestElementParserErrors(t *testing.T) {
 		{
 			name:  "element: attempted use of expression for style attribute (open/close)",
 			input: `<a style={ value }></a>`,
-			expected: parse.Error(`<a>: invalid style attribute: style attributes cannot be a templ expression`,
+			expected: parse.Error(`<a>: invalid style attribute: style attributes cannot be a t1 expression`,
 				parse.Position{
 					Index: 0,
 					Line:  0,
@@ -1032,7 +1032,7 @@ func TestElementParserErrors(t *testing.T) {
 		{
 			name:  "element: attempted use of expression for style attribute (self-closing)",
 			input: `<a style={ value }/>`,
-			expected: parse.Error(`<a>: invalid style attribute: style attributes cannot be a templ expression`,
+			expected: parse.Error(`<a>: invalid style attribute: style attributes cannot be a t1 expression`,
 				parse.Position{
 					Index: 0,
 					Line:  0,

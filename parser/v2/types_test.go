@@ -18,7 +18,7 @@ func TestT1Formatting(t *testing.T) {
 			input: ` // first line removed to make indentation clear in Go code
 package test
 
-templ input(value, validation string) {
+t1 input(value, validation string) {
 	<area></area>
 	<base></base>
 	<br></br>
@@ -41,7 +41,7 @@ templ input(value, validation string) {
 			expected: `// first line removed to make indentation clear in Go code
 package test
 
-templ input(value, validation string) {
+t1 input(value, validation string) {
 	<area/>
 	<base/>
 	<br/>
@@ -859,7 +859,7 @@ func TestTemplFormatting(t *testing.T) {
 			input: ` // first line removed to make indentation clear in Go code
 package test
 
-templ input(value, validation string) {
+t1 input(value, validation string) {
 	<area></area>
 	<base></base>
 	<br></br>
@@ -882,7 +882,7 @@ templ input(value, validation string) {
 			expected: `// first line removed to make indentation clear in Go code
 package test
 
-templ input(value, validation string) {
+t1 input(value, validation string) {
 	<area/>
 	<base/>
 	<br/>
@@ -907,7 +907,7 @@ templ input(value, validation string) {
 			input: ` // first line removed to make indentation clear in Go code
 package test
 
-templ input(value, validation string) {
+t1 input(value, validation string) {
 	<script src="https://example.com/myscript.js"></script>
 }
 
@@ -915,7 +915,7 @@ templ input(value, validation string) {
 			expected: `// first line removed to make indentation clear in Go code
 package test
 
-templ input(value, validation string) {
+t1 input(value, validation string) {
 	<script src="https://example.com/myscript.js"></script>
 }
 `,
@@ -925,7 +925,7 @@ templ input(value, validation string) {
 			input: ` // first line removed to make indentation clear in Go code
 package test
 
-templ input(value, validation string) {
+t1 input(value, validation string) {
 	<div>
 		<p>
 		</p>
@@ -935,7 +935,7 @@ templ input(value, validation string) {
 			expected: `// first line removed to make indentation clear in Go code
 package test
 
-templ input(value, validation string) {
+t1 input(value, validation string) {
 	<div>
 		<p></p>
 	</div>
@@ -947,14 +947,14 @@ templ input(value, validation string) {
 			input: ` // first line removed to make indentation clear in Go code
 package test
 
-templ input(value, validation string) {
+t1 input(value, validation string) {
 	<div><div><b>Text</b></div></div>
 }
 `,
 			expected: `// first line removed to make indentation clear in Go code
 package test
 
-templ input(value, validation string) {
+t1 input(value, validation string) {
 	<div><div><b>Text</b></div></div>
 }
 `,
@@ -964,7 +964,7 @@ templ input(value, validation string) {
 			input: ` // first line removed to make indentation clear in Go code
 package test
 
-templ input(value, validation string) {
+t1 input(value, validation string) {
 	<div>
 	<div><b>Text</b></div></div>
 }
@@ -972,7 +972,7 @@ templ input(value, validation string) {
 			expected: `// first line removed to make indentation clear in Go code
 package test
 
-templ input(value, validation string) {
+t1 input(value, validation string) {
 	<div>
 		<div><b>Text</b></div>
 	</div>
@@ -984,7 +984,7 @@ templ input(value, validation string) {
 			input: ` // first line removed to make indentation clear in Go code
 package test
 
-templ input(value, validation string) {
+t1 input(value, validation string) {
 	<div><p>{ "the" }<a href="http://example.com">{ "data" }</a></p>
     </div>
 }
@@ -992,7 +992,7 @@ templ input(value, validation string) {
 			expected: `// first line removed to make indentation clear in Go code
 package test
 
-templ input(value, validation string) {
+t1 input(value, validation string) {
 	<div>
 		<p>{ "the" }<a href="http://example.com">{ "data" }</a></p>
 	</div>
@@ -1004,7 +1004,7 @@ templ input(value, validation string) {
 			input: ` // first line removed to make indentation clear in Go code
 package test
 
-templ input(value, validation string) {
+t1 input(value, validation string) {
 	<div>
         <p>{ "the" }<a href="http://example.com">{ "data" }</a></p></div>
 }
@@ -1012,7 +1012,7 @@ templ input(value, validation string) {
 			expected: `// first line removed to make indentation clear in Go code
 package test
 
-templ input(value, validation string) {
+t1 input(value, validation string) {
 	<div>
 		<p>{ "the" }<a href="http://example.com">{ "data" }</a></p>
 	</div>
@@ -1024,7 +1024,7 @@ templ input(value, validation string) {
 			input: ` // first line removed to make indentation clear in Go code
 package test
 
-templ input(value, validation string) {
+t1 input(value, validation string) {
 	<div><p>{ "the" }<a href="http://example.com">{ "data" }
 </a></p></div>
 }
@@ -1032,7 +1032,7 @@ templ input(value, validation string) {
 			expected: `// first line removed to make indentation clear in Go code
 package test
 
-templ input(value, validation string) {
+t1 input(value, validation string) {
 	<div>
 		<p>
 			{ "the" }
@@ -1049,14 +1049,14 @@ templ input(value, validation string) {
 			input: ` // first line removed to make indentation clear in Go code
 package test
 
-templ input(value, validation string) {
+t1 input(value, validation string) {
 	<div><p>{ "the" }<a href="http://example.com">{ "data" } </a></p></div>
 }
 `,
 			expected: `// first line removed to make indentation clear in Go code
 package test
 
-templ input(value, validation string) {
+t1 input(value, validation string) {
 	<div><p>{ "the" }<a href="http://example.com">{ "data" } </a></p></div>
 }
 `,
@@ -1066,7 +1066,7 @@ templ input(value, validation string) {
 			input: ` // first line removed to make indentation clear in Go code
 package test
 
-templ nested() {
+t1 nested() {
 	<div>{ "the" }<div>{ "other" }</div></div>
 }
 
@@ -1074,7 +1074,7 @@ templ nested() {
 			expected: `// first line removed to make indentation clear in Go code
 package test
 
-templ nested() {
+t1 nested() {
 	<div>{ "the" }<div>{ "other" }</div></div>
 }
 `,
@@ -1084,7 +1084,7 @@ templ nested() {
 			input: ` // first line removed to make indentation clear in Go code
 package test
 
-templ nested() {
+t1 nested() {
 	<div class="double">double</div>
 	<div class='single-not-required'>single-not-required</div>
 	<div data-value='{"data":"value"}'>single-required</div>
@@ -1094,7 +1094,7 @@ templ nested() {
 			expected: `// first line removed to make indentation clear in Go code
 package test
 
-templ nested() {
+t1 nested() {
 	<div class="double">double</div>
 	<div class="single-not-required">single-not-required</div>
 	<div data-value='{"data":"value"}'>single-required</div>
@@ -1106,7 +1106,7 @@ templ nested() {
 			input: ` // first line removed to make indentation clear in Go code
 package test
 
-templ input(items []string) {
+t1 input(items []string) {
 <div>{ "the" }<div>{ "other" }</div>for _, item := range items {
 <div>{ item }</div>
 }</div>
@@ -1115,7 +1115,7 @@ templ input(items []string) {
 			expected: `// first line removed to make indentation clear in Go code
 package test
 
-templ input(items []string) {
+t1 input(items []string) {
 	<div>
 		{ "the" }
 		<div>{ "other" }</div>
@@ -1131,7 +1131,7 @@ templ input(items []string) {
 			input: ` // first line removed to make indentation clear in Go code
 package test
 
-templ input(items []string) {
+t1 input(items []string) {
 <div>{ "the" }<div>{ "other" }</div>if items != nil {
 <div>{ items[0] }</div>
 		} else {
@@ -1143,7 +1143,7 @@ templ input(items []string) {
 			expected: `// first line removed to make indentation clear in Go code
 package test
 
-templ input(items []string) {
+t1 input(items []string) {
 	<div>
 		{ "the" }
 		<div>{ "other" }</div>
@@ -1161,7 +1161,7 @@ templ input(items []string) {
 			input: ` // first line removed to make indentation clear in Go code
 package test
 
-templ input(items []string) {
+t1 input(items []string) {
 <div>{ "the" }<div>{ "other" }</div>switch items[0] {
 	case "a":
 <div>{ items[0] }</div>
@@ -1173,7 +1173,7 @@ templ input(items []string) {
 			expected: `// first line removed to make indentation clear in Go code
 package test
 
-templ input(items []string) {
+t1 input(items []string) {
 	<div>
 		{ "the" }
 		<div>{ "other" }</div>
@@ -1230,7 +1230,7 @@ css ClassName() {
 			input: ` // first line removed to make indentation clear
 package test
 
-templ table(accountNumber string, registration string) {
+t1 table(accountNumber string, registration string) {
 	<table>
 	       <tr>
 		       <th width="20%">Your account number</th>
@@ -1246,7 +1246,7 @@ templ table(accountNumber string, registration string) {
 			expected: ` // first line removed to make indentation clear
 package test
 
-templ table(accountNumber string, registration string) {
+t1 table(accountNumber string, registration string) {
 	<table>
 		<tr>
 			<th width="20%">Your account number</th>
@@ -1265,7 +1265,7 @@ templ table(accountNumber string, registration string) {
 			input: ` // first line removed to make indentation clear
 package test
 
-templ conditionalAttributes(addClass bool) {
+t1 conditionalAttributes(addClass bool) {
 	<div id="conditional" if addClass {
 		class="itWasTrue"
 	}
@@ -1275,7 +1275,7 @@ templ conditionalAttributes(addClass bool) {
 			expected: `// first line removed to make indentation clear
 package test
 
-templ conditionalAttributes(addClass bool) {
+t1 conditionalAttributes(addClass bool) {
 	<div
 		id="conditional"
 		if addClass {
@@ -1291,7 +1291,7 @@ templ conditionalAttributes(addClass bool) {
 			input: ` // first line removed to make indentation clear
 package test
 
-templ conditionalAttributes(addClass bool) {
+t1 conditionalAttributes(addClass bool) {
 	<div id="conditional"
 if addClass {
 class="itWasTrue"
@@ -1302,7 +1302,7 @@ width="300">Content</div>
 			expected: `// first line removed to make indentation clear
 package test
 
-templ conditionalAttributes(addClass bool) {
+t1 conditionalAttributes(addClass bool) {
 	<div
 		id="conditional"
 		if addClass {
@@ -1318,7 +1318,7 @@ templ conditionalAttributes(addClass bool) {
 			input: ` // first line removed to make indentation clear
 package test
 
-templ conditionalAttributes(addClass bool) {
+t1 conditionalAttributes(addClass bool) {
 	<div id="conditional"
 if addClass {
 class="itWasTrue"
@@ -1330,7 +1330,7 @@ Content</div>
 			expected: ` // first line removed to make indentation clear
 package test
 
-templ conditionalAttributes(addClass bool) {
+t1 conditionalAttributes(addClass bool) {
 	<div
 		id="conditional"
 		if addClass {
@@ -1347,7 +1347,7 @@ templ conditionalAttributes(addClass bool) {
 			input: ` // first line removed to make indentation clear
 package test
 
-templ conditionalAttributes(addClass bool) {
+t1 conditionalAttributes(addClass bool) {
 	<div id="conditional"
 if addClass {
 class="itWasTrue"
@@ -1360,7 +1360,7 @@ width="300">Content</div>
 			expected: ` // first line removed to make indentation clear
 package test
 
-templ conditionalAttributes(addClass bool) {
+t1 conditionalAttributes(addClass bool) {
 	<div
 		id="conditional"
 		if addClass {
@@ -1374,11 +1374,11 @@ templ conditionalAttributes(addClass bool) {
 `,
 		},
 		{
-			name: "templ expression elements are formatted the same as other elements",
+			name: "t1 expression elements are formatted the same as other elements",
 			input: ` // first line removed to make indentation clear
 package main
 
-templ x() {
+t1 x() {
 	<li>
 		<a href="/">
 	    Home
@@ -1392,7 +1392,7 @@ templ x() {
 			expected: ` // first line removed to make indentation clear
 package main
 
-templ x() {
+t1 x() {
 	<li>
 		<a href="/">
 			Home
@@ -1405,11 +1405,11 @@ templ x() {
 `,
 		},
 		{
-			name: "templ expression attributes are formatted correctly when multiline",
+			name: "t1 expression attributes are formatted correctly when multiline",
 			input: ` // first line removed to make indentation clear
 package main
 
-templ x(id string, class string) {
+t1 x(id string, class string) {
 <button
 id={id}
 name={
@@ -1428,7 +1428,7 @@ class={
 			expected: ` // first line removed to make indentation clear
 package main
 
-templ x(id string, class string) {
+t1 x(id string, class string) {
 	<button
 		id={ id }
 		name={ "name" }
@@ -1448,14 +1448,14 @@ templ x(id string, class string) {
 			input: ` // first line removed to make indentation clear
 package main
 
-templ x() {
+t1 x() {
     <div>{firstName} {lastName}</div>
 }
 `,
 			expected: ` // first line removed to make indentation clear
 package main
 
-templ x() {
+t1 x() {
 	<div>{ firstName } { lastName }</div>
 }
 `,
@@ -1465,14 +1465,14 @@ templ x() {
 			input: ` // first line removed to make indentation clear
 package main
 
-templ x() {
+t1 x() {
     <div>{pt1}{pt2}</div>
 }
 `,
 			expected: ` // first line removed to make indentation clear
 package main
 
-templ x() {
+t1 x() {
 	<div>{ pt1 }{ pt2 }</div>
 }
 `,
@@ -1482,14 +1482,14 @@ templ x() {
 			input: ` // first line removed to make indentation clear
 package main
 
-templ x() {
+t1 x() {
     <div>{firstName...} {lastName...}</div>
 }
 `,
 			expected: ` // first line removed to make indentation clear
 package main
 
-templ x() {
+t1 x() {
 	<div>{ firstName... } { lastName... }</div>
 }
 `,
@@ -1514,7 +1514,7 @@ func test() {
 	}
 }
 
-templ x() {
+t1 x() {
 	<div>Hello World</div>
 }
 `,
@@ -1536,7 +1536,7 @@ func test() {
 	}
 }
 
-templ x() {
+t1 x() {
 	<div>Hello World</div>
 }
 `,
@@ -1546,7 +1546,7 @@ templ x() {
 			input: ` // first line removed to make indentation clear
 package main
 
-templ test() {
+t1 test() {
 	<p>
 		In a flowing <strong>paragraph</strong>, you can use inline elements.
 		These <strong>inline elements</strong> can be <strong>styled</strong>
@@ -1557,7 +1557,7 @@ templ test() {
 			expected: ` // first line removed to make indentation clear
 package main
 
-templ test() {
+t1 test() {
 	<p>
 		In a flowing <strong>paragraph</strong>, you can use inline elements.
 		These <strong>inline elements</strong> can be <strong>styled</strong>
@@ -1571,7 +1571,7 @@ templ test() {
 			input: ` // first line removed to make indentation clear
 package main
 
-templ test() {
+t1 test() {
 	<div>
 		Linebreaks<br/>and<hr/>rules<br/>for<br/>spacing
 	</div>
@@ -1580,7 +1580,7 @@ templ test() {
 			expected: ` // first line removed to make indentation clear
 package main
 
-templ test() {
+t1 test() {
 	<div>
 		Linebreaks
 		<br/>
@@ -1600,14 +1600,14 @@ templ test() {
 			input: ` // first line removed to make indentation clear
 package main
 
-templ test() {
+t1 test() {
 	<div>Linebreaks<br/>used<br/>for<br/>spacing</div>
 }
 `,
 			expected: ` // first line removed to make indentation clear
 package main
 
-templ test() {
+t1 test() {
 	<div>Linebreaks<br/>used<br/>for<br/>spacing</div>
 }
 `,
@@ -1617,7 +1617,7 @@ templ test() {
 			input: ` // first line removed to make indentation clear
 package main
 
-templ test() {
+t1 test() {
 	<!-- This is a comment -->
 	// This is not included in the output.
 	<div>Some standard templ</div>
@@ -1630,7 +1630,7 @@ templ test() {
 			expected: ` // first line removed to make indentation clear
 package main
 
-templ test() {
+t1 test() {
 	<!-- This is a comment -->
 	// This is not included in the output.
 	<div>Some standard templ</div>
@@ -1647,7 +1647,7 @@ templ test() {
 package main
 
 // test the comment handling.
-templ test() {
+t1 test() {
 	Test
 }
 `,
@@ -1655,7 +1655,7 @@ templ test() {
 package main
 
 // test the comment handling.
-templ test() {
+t1 test() {
 	Test
 }
 `,

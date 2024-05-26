@@ -21,7 +21,7 @@ func TestTextParser(t *testing.T) {
 			},
 		},
 		{
-			name:  "Text ends at a templ expression start",
+			name:  "Text ends at a t1 expression start",
 			input: `abcdef{%= "test" %}`,
 			expected: Text{
 				Value: "abcdef",

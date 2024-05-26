@@ -541,14 +541,14 @@ func TestTemplateParser(t *testing.T) {
 		},
 		{
 			name: "template: containing spread attributes and children expression",
-			input: `t1 Name(children templ.Attributes) {
+			input: `t1 Name(children t1.Attributes) {
 		<span { children... }>
 			{ children... }
 		</span>
 }`,
 			expected: HTMLTemplate{
 				Expression: Expression{
-					Value: "Name(children templ.Attributes)",
+					Value: "Name(children t1.Attributes)",
 					Range: Range{
 						From: Position{
 							Index: 6,
@@ -596,7 +596,7 @@ func TestTemplateParser(t *testing.T) {
 		},
 		{
 			name: "template: no parameters",
-			input: `templ Name() {
+			input: `t1 Name() {
 }`,
 			expected: HTMLTemplate{
 				Expression: Expression{
@@ -618,7 +618,7 @@ func TestTemplateParser(t *testing.T) {
 		},
 		{
 			name: "template: with receiver",
-			input: `templ (data Data) Name() {
+			input: `t1 (data Data) Name() {
 }`,
 			expected: HTMLTemplate{
 				Expression: Expression{
@@ -640,7 +640,7 @@ func TestTemplateParser(t *testing.T) {
 		},
 		{
 			name: "template: no spaces",
-			input: `templ Name(){
+			input: `t1 Name(){
 }`,
 			expected: HTMLTemplate{
 				Expression: Expression{
@@ -662,7 +662,7 @@ func TestTemplateParser(t *testing.T) {
 		},
 		{
 			name: "template: single parameter",
-			input: `templ Name(p Parameter) {
+			input: `t1 Name(p Parameter) {
 }`,
 			expected: HTMLTemplate{
 				Expression: Expression{
@@ -684,7 +684,7 @@ func TestTemplateParser(t *testing.T) {
 		},
 		{
 			name: "template: can have multiline params",
-			input: `templ Multiline(
+			input: `t1 Multiline(
 	params expense,
 ) {
 }`,
@@ -708,7 +708,7 @@ func TestTemplateParser(t *testing.T) {
 		},
 		{
 			name: "template: containing element",
-			input: `templ Name(p Parameter) {
+			input: `t1 Name(p Parameter) {
 <span>{ "span content" }</span>
 }`,
 			expected: HTMLTemplate{
@@ -756,7 +756,7 @@ func TestTemplateParser(t *testing.T) {
 		},
 		{
 			name: "template: containing nested elements",
-			input: `templ Name(p Parameter) {
+			input: `t1 Name(p Parameter) {
 <div>
   { "div content" }
   <span>
@@ -838,7 +838,7 @@ func TestTemplateParser(t *testing.T) {
 		},
 		{
 			name: "template: containing if element",
-			input: `templ Name(p Parameter) {
+			input: `t1 Name(p Parameter) {
 	if p.Test {
 		<span>
 			{ "span content" }
@@ -917,7 +917,7 @@ func TestTemplateParser(t *testing.T) {
 		},
 		{
 			name: "template: inputs",
-			input: `templ Name(p Parameter) {
+			input: `t1 Name(p Parameter) {
 	<input type="text" value="a" />
 	<input type="text" value="b" />
 }`,
@@ -960,7 +960,7 @@ func TestTemplateParser(t *testing.T) {
 		},
 		{
 			name: "template: doctype",
-			input: `templ Name() {
+			input: `t1 Name() {
 <!DOCTYPE html>
 }`,
 			expected: HTMLTemplate{
@@ -989,7 +989,7 @@ func TestTemplateParser(t *testing.T) {
 		},
 		{
 			name: "template: incomplete open tag",
-			input: `templ Name() {
+			input: `t1 Name() {
 				        <div
 						{"some string"}
 					</div>
@@ -998,8 +998,8 @@ func TestTemplateParser(t *testing.T) {
 			expectError: true,
 		},
 		{
-			name: "template: can contain inline templ elements",
-			input: `templ x() {
+			name: "template: can contain inline t1 elements",
+			input: `t1 x() {
  <a href="/"> @Icon("home", Inline) Home</a>
 }`,
 			expected: HTMLTemplate{
@@ -1059,7 +1059,7 @@ func TestTemplateParser(t *testing.T) {
 		},
 		{
 			name: "template: can contain single line comments",
-			input: `templ x() {
+			input: `t1 x() {
 	// Comment
 }`,
 			expected: HTMLTemplate{
@@ -1078,7 +1078,7 @@ func TestTemplateParser(t *testing.T) {
 		},
 		{
 			name: "template: can contain block comments on the same line",
-			input: `templ x() {
+			input: `t1 x() {
 	/* Comment */
 }`,
 			expected: HTMLTemplate{
@@ -1098,7 +1098,7 @@ func TestTemplateParser(t *testing.T) {
 		},
 		{
 			name: "template: can contain block comments on multiple lines",
-			input: `templ x() {
+			input: `t1 x() {
 	/* Line 1
 		 Line 2
 	*/
@@ -1120,7 +1120,7 @@ func TestTemplateParser(t *testing.T) {
 		},
 		{
 			name: "template: can contain HTML comments",
-			input: `templ x() {
+			input: `t1 x() {
 	<!-- Single line -->
 	<!-- 
 		Multiline
@@ -1145,14 +1145,14 @@ func TestTemplateParser(t *testing.T) {
 		},
 		{
 			name: "template: containing spread attributes and children expression",
-			input: `templ Name(children templ.Attributes) {
+			input: `t1 Name(children t1.Attributes) {
 		<span { children... }>
 			{ children... }
 		</span>
 }`,
 			expected: HTMLTemplate{
 				Expression: Expression{
-					Value: "Name(children templ.Attributes)",
+					Value: "Name(children t1.Attributes)",
 					Range: Range{
 						From: Position{
 							Index: 6,
@@ -1227,7 +1227,7 @@ func TestTemplateParserErrors(t *testing.T) {
 	}{
 		{
 			name: "template: containing element",
-			input: `templ Name(p Parameter) {
+			input: `t1 Name(p Parameter) {
 <span
 }`,
 			expected: "<span>: malformed open element: line 2, col 0",

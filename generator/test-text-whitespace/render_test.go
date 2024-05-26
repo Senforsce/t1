@@ -6,17 +6,17 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
-	templ "github.com/senforsce/t1"
+	"github.com/senforsce/t1"
 )
 
 func TestTextWhitespace(t *testing.T) {
 	for _, test := range []struct {
 		name     string
-		input    templ.Component
+		input    t1.Component
 		expected string
 	}{
 		{
-			name:     "whitespace is added within templ statements",
+			name:     "whitespace is added within t1 statements",
 			input:    WhitespaceIsAddedWithinTemplStatements(),
 			expected: WhitespaceIsAddedWithinTemplStatementsExpected,
 		},

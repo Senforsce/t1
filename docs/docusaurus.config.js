@@ -6,12 +6,12 @@ const darkCodeTheme = require('prism-react-renderer').themes.dracula;
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'templ docs',
+  title: 't1 docs',
   tagline: 'A language for writing HTML user interfaces in Go. ',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://templ.guide',
+  url: 'https://senforsce.com/t1/guide',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
@@ -48,7 +48,7 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/a-h/templ/tree/main/docs/',
+            'https://github.com/senforsce/t1/tree/main/docs/',
         },
         blog: false,
         theme: {
@@ -76,7 +76,7 @@ const config = {
             label: 'Docs',
           },
           {
-            href: 'https://github.com/a-h/templ',
+            href: 'https://github.com/senforsce/t1',
             label: 'GitHub',
             position: 'right',
           },

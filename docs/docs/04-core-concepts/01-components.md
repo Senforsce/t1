@@ -1,13 +1,13 @@
 # Components
 
-templ Components are markup and code that is compiled into functions that return a `templ.Component` interface by running the `templ generate` command.
+t1 Components are markup and code that is compiled into functions that return a `t1.Component` interface by running the `t1 generate` command.
 
-Components can contain templ elements that render HTML, text, expressions that output text or include other templates, and branching statements such as `if` and `switch`, and `for` loops.
+Components can contain t1 elements that render HTML, text, expressions that output text or include other templates, and branching statements such as `if` and `switch`, and `for` loops.
 
-```templ title="header.templ"
+```t1 title="header.t1"
 package main
 
-templ headerTemplate(name string) {
+t1 headerTemplate(name string) {
   <header data-testid="headerTemplate">
     <h1>{ name }</h1>
   </header>
@@ -15,14 +15,14 @@ templ headerTemplate(name string) {
 ```
 
 :::tip
-Since templ produces Go code, you can share templates the same way that you share Go code - by sharing your Go module.
+Since t1 produces Go code, you can share templates the same way that you share Go code - by sharing your Go module.
 
-templ follows the same rules as Go. If a `templ` block starts with an uppercase letter, then it is public, otherwise, it is private.
+t1 follows the same rules as Go. If a `t1` block starts with an uppercase letter, then it is public, otherwise, it is private.
 :::
 
 ## Code-only components
 
-Since templ Components ultimately implement the `templ.Component`, any code that implements the interface can be used in place of a templ component generated from a `*.templ` file.
+Since t1 Components ultimately implement the `t1.Component`, any code that implements the interface can be used in place of a t1 component generated from a `*.t1` file.
 
 ```go
 package main
@@ -32,11 +32,11 @@ import (
 	"io"
 	"os"
 
-	"github.com/a-h/templ"
+	"github.com/senforsce/t1"
 )
 
-func button(text string) templ.Component {
-	return templ.ComponentFunc(func(ctx context.Context, w io.Writer) error {
+func button(text string) t1.Component {
+	return t1.ComponentFunc(func(ctx context.Context, w io.Writer) error {
 		_, err := io.WriteString(w, "<button>"+text+"</button>")
 		return err
 	})
@@ -48,29 +48,27 @@ func main() {
 ```
 
 ```html title="Output"
-<button>
- Click me
-</button>
+<button>Click me</button>
 ```
 
 :::warning
-This code is unsafe! In code-only components, you're responsible for escaping the HTML content yourself, e.g. with the `templ.EscapeString` function.
+This code is unsafe! In code-only components, you're responsible for escaping the HTML content yourself, e.g. with the `t1.EscapeString` function.
 :::
 
 ## Method components
 
-templ components can be returned from methods (functions attached to types).
+t1 components can be returned from methods (functions attached to types).
 
 Go code:
 
-```templ
+```t1
 package main
 
 type Data struct {
 	message string
 }
 
-templ (d Data) Method() {
+t1 (d Data) Method() {
 	<div>{ d.message }</div>
 }
 
@@ -81,7 +79,3 @@ func main() {
 	d.Method().Render(context.Background(), os.Stdout)
 }
 ```
-
-
-
-

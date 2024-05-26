@@ -101,15 +101,15 @@ func run(ctx context.Context, w io.Writer, args Arguments) (err error) {
 	// Create the proxy to sit between.
 	serverProxy, serverInit := proxy.NewServer(log, goplsServer, cache, diagnosticCache)
 
-	// Create templ server.
-	log.Info("creating templ server")
-	templStream := jsonrpc2.NewStream(stdrwc{log: log})
-	_, templConn, templClient := protocol.NewServer(context.Background(), serverProxy, templStream, log)
-	defer templConn.Close()
+	// Create t1 server.
+	log.Info("creating t1 server")
+	t1Stream := jsonrpc2.NewStream(stdrwc{log: log})
+	_, t1Conn, t1Client := protocol.NewServer(context.Background(), serverProxy, t1Stream, log)
+	defer t1Conn.Close()
 
 	// Allow both the server and the client to initiate outbound requests.
-	clientInit(templClient)
-	serverInit(templClient)
+	clientInit(t1Client)
+	serverInit(t1Client)
 
 	// Start the web server if required.
 	if args.HTTPDebug != "" {
@@ -127,8 +127,8 @@ func run(ctx context.Context, w io.Writer, args Arguments) (err error) {
 	select {
 	case <-ctx.Done():
 		log.Info("context closed")
-	case <-templConn.Done():
-		log.Info("templConn closed")
+	case <-t1Conn.Done():
+		log.Info("t1Conn closed")
 	case <-goplsConn.Done():
 		log.Info("goplsConn closed")
 	}

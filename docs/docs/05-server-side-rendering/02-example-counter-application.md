@@ -15,36 +15,36 @@ flowchart TD
 
 First, define a HTML form post with two buttons. One to update a global state, and one for a per-user state.
 
-```templ title="components.templ"
+```t1 title="components.t1"
 package main
 
 import "strconv"
 
-templ counts(global, user int) {
+t1 counts(global, user int) {
 	<div>Global: { strconv.Itoa(global) }</div>
 	<div>User: { strconv.Itoa(user) }</div>
 }
 
-templ form() {
+t1 form() {
 	<form action="/" method="POST">
 		<div><button type="submit" name="global" value="global">Global</button></div>
 		<div><button type="submit" name="user" value="user">User</button></div>
 	</form>
 }
 
-templ page(global, user int) {
+t1 page(global, user int) {
 	@counts(global, user)
 	@form()
 }
 ```
 
 :::tip
-While we could read the global state directly, we're following the best practice that templ components are idempotent, pure functions.
+While we could read the global state directly, we're following the best practice that t1 components are idempotent, pure functions.
 :::
 
 The HTTP form in the templates posts data back to the `/` handler.
 
-The `/` handler looks at the HTTP request. If it's a GET request, the templ templates are rendered by the `getHandler`.
+The `/` handler looks at the HTTP request. If it's a GET request, the t1 templates are rendered by the `getHandler`.
 
 If it's a POST request, then the `postHandler` is used. This parses the data sent over HTTP, and looks to see if the `global` button was the button that submitted the form, and increments the global count value if it was.
 
@@ -203,4 +203,4 @@ Incrementing a count by reading and setting the value is not an atomic operation
 The default behaviour of `scs` is to store session data in RAM, which isn't suitable for stateless function deployments, or load-balanced applications, but the library supports a range of backend storage solutions.
 :::
 
-Complete source code including AWS CDK code to set up the infrastructure is available at https://github.com/a-h/templ/tree/main/examples/counter
+Complete source code including AWS CDK code to set up the infrastructure is available at https://github.com/senforsce/t1/tree/main/examples/counter

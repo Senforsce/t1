@@ -115,7 +115,7 @@ func (p TemplateFileParser) Parse(pi parse.Input) parse.Result {
 	}
 
 	// Optional templates, CSS, and script templates.
-	// {% templ Name(p Parameter) %}
+	// {% t1 Name(p Parameter) %}
 	// {% css Name() %}
 	// {% script Name() %}
 	tp := newTemplateParser()

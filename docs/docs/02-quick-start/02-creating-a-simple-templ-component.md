@@ -1,6 +1,6 @@
-# Creating a simple templ component
+# Creating a simple t1 component
 
-To create a templ component, first create a new Go project.
+To create a t1 component, first create a new Go project.
 
 ## Setup project
 
@@ -14,38 +14,38 @@ Initialize a new Go project within it.
 
 ```sh
 cd hello-world
-go mod init github.com/a-h/templ-examples/hello-world
-go get github.com/a-h/templ
+go mod init github.com/a-h/t1-examples/hello-world
+go get github.com/senforsce/t1
 ```
 
-## Create a templ file
+## Create a t1 file
 
-To use it, create a `hello.templ` file containing a component.
+To use it, create a `hello.t1` file containing a component.
 
-Components are functions that contain templ elements, markup, and `if`, `switch`, and `for` Go expressions.
+Components are functions that contain t1 elements, markup, and `if`, `switch`, and `for` Go expressions.
 
-```templ title="hello.templ"
+```t1 title="hello.t1"
 package main
 
-templ hello(name string) {
+t1 hello(name string) {
 	<div>Hello, { name }</div>
 }
 ```
 
-## Generate Go code from the templ file
+## Generate Go code from the t1 file
 
-Run the `templ generate` command.
+Run the `t1 generate` command.
 
 ```sh
-templ generate
+t1 generate
 ```
 
-templ will generate a `hello_templ.go` file containing Go code.
+t1 will generate a `hello_t1.go` file containing Go code.
 
-This file will contain a function called `hello` which takes `name` as an argument, and returns a `templ.Component` that renders HTML.
+This file will contain a function called `hello` which takes `name` as an argument, and returns a `t1.Component` that renders HTML.
 
 ```go
-func hello(name string) templ.Component {
+func hello(name string) t1.Component {
   // ...
 }
 ```
@@ -82,4 +82,4 @@ go run .
 
 Instead of passing `os.Stdout` to the component's render function, you can pass any type that implements the `io.Writer` interface. This includes files, `bytes.Buffer`, and HTTP responses.
 
-In this way, templ can be used to generate HTML files that can be hosted as static content in an S3 bucket, Google Cloud Storage, or used to generate HTML that is fed into PDF conversion processes, or sent via email.
+In this way, t1 can be used to generate HTML files that can be hosted as static content in an S3 bucket, Google Cloud Storage, or used to generate HTML that is fed into PDF conversion processes, or sent via email.

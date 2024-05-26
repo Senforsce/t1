@@ -2,20 +2,20 @@ package parser
 
 import (
 	"github.com/a-h/parse"
-	"github.com/a-h/templ/parser/v2/goexpression"
+	"github.com/senforsce/t1/parser/v2/goexpression"
 )
 
-type templElementExpressionParser struct{}
+type t1ElementExpressionParser struct{}
 
-func (p templElementExpressionParser) Parse(pi *parse.Input) (n Node, ok bool, err error) {
+func (p t1ElementExpressionParser) Parse(pi *parse.Input) (n Node, ok bool, err error) {
 	// Check the prefix first.
 	if _, ok, err = parse.Rune('@').Parse(pi); err != nil || !ok {
 		return
 	}
 
 	var r TemplElementExpression
-	// Parse the Go expresion.
-	if r.Expression, err = parseGo("templ element", pi, goexpression.Expression); err != nil {
+	// Parse the Go expression.
+	if r.Expression, err = parseGo("t1 element", pi, goexpression.TemplExpression); err != nil {
 		return r, false, err
 	}
 
@@ -32,14 +32,13 @@ func (p templElementExpressionParser) Parse(pi *parse.Input) (n Node, ok bool, e
 	// Once we've had the start of an element's children, we must conclude the block.
 
 	// Node contents.
-	np := newTemplateNodeParser(closeBraceWithOptionalPadding, "templ element closing brace")
+	np := newTemplateNodeParser(closeBraceWithOptionalPadding, "t1 element closing brace")
 	var nodes Nodes
 	if nodes, ok, err = np.Parse(pi); err != nil || !ok {
 		err = parse.Error("@"+r.Expression.Value+": expected nodes, but none were found", pi.Position())
 		return
 	}
 	r.Children = nodes.Nodes
-	r.Diagnostics = nodes.Diagnostics
 
 	// Read the required closing brace.
 	if _, ok, err = closeBraceWithOptionalPadding.Parse(pi); err != nil || !ok {
@@ -50,4 +49,4 @@ func (p templElementExpressionParser) Parse(pi *parse.Input) (n Node, ok bool, e
 	return r, true, nil
 }
 
-var templElementExpression templElementExpressionParser
+var t1ElementExpression t1ElementExpressionParser

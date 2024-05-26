@@ -1,0 +1,36 @@
+package main
+
+import "path"
+import "github.com/gosimple/slug"
+
+t1 headerComponent(title string) {
+	<head><title>{ title }</title></head>
+}
+
+t1 contentComponent(title string, body t1.Component) {
+	<body>
+		<h1>{ title }</h1>
+		<div class="content">
+			@body
+		</div>
+	</body>
+}
+
+t1 contentPage(title string, body t1.Component) {
+	<html>
+		@headerComponent(title)
+		@contentComponent(title, body)
+	</html>
+}
+
+t1 indexPage(posts []Post) {
+	<html>
+		@headerComponent("My Blog")
+		<body>
+			<h1>My Blog</h1>
+			for _, post := range posts {
+				<div><a href={ t1.SafeURL(path.Join(post.Date.Format("2006/01/02"), slug.Make(post.Title), "/")) }>{ post.Title }</a></div>
+			}
+		</body>
+	</html>
+}

@@ -1,8 +1,8 @@
 # Hosting on AWS Lambda
 
-AWS Lambda is a great way to host templ applications.
+AWS Lambda is a great way to host t1 applications.
 
-The example at https://github.com/a-h/templ/tree/main/examples/counter includes AWS CDK code for deploying onto AWS Lambda.
+The example at https://github.com/senforsce/t1/tree/main/examples/counter includes AWS CDK code for deploying onto AWS Lambda.
 
 See the `/cdk` directory for the details.
 
@@ -18,10 +18,10 @@ package main
 import (
 	"os"
 
-	"github.com/a-h/templ/examples/counter/db"
-	"github.com/a-h/templ/examples/counter/handlers"
-	"github.com/a-h/templ/examples/counter/services"
-	"github.com/a-h/templ/examples/counter/session"
+	"github.com/senforsce/t1/examples/counter/db"
+	"github.com/senforsce/t1/examples/counter/handlers"
+	"github.com/senforsce/t1/examples/counter/services"
+	"github.com/senforsce/t1/examples/counter/session"
 	"github.com/akrylysov/algnhsa"
 	"golang.org/x/exp/slog"
 )

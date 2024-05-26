@@ -1,7 +1,7 @@
 -- in --
 package p
 
-templ f() {
+t1 f() {
 @Other(
 			p.Test,
 "s",
@@ -18,7 +18,7 @@ templ f() {
 -- out --
 package p
 
-templ f() {
+t1 f() {
 	@Other(
 		p.Test,
 		"s",

@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/a-h/templ"
+	"github.com/senforsce/t1"
 	"github.com/senforsce/t1/generator/htmldiff"
 )
 
@@ -14,9 +14,9 @@ import (
 var expected string
 
 func TestExample(t *testing.T) {
-	// Create the templ component.
-	templComponent := greeting()
-	html, err := templ.ToGoHTML(context.Background(), templComponent)
+	// Create the t1 component.
+	t1Component := greeting()
+	html, err := t1.ToGoHTML(context.Background(), t1Component)
 	if err != nil {
 		t.Fatalf("failed to convert to html: %v", err)
 	}

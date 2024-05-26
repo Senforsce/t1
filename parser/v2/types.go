@@ -22,14 +22,14 @@ import (
 //   color: #ffffff;
 // }
 //
-// templ RenderAddress(addr Address) {
+// t1 RenderAddress(addr Address) {
 // 	<div style={ AddressLineStyle() }>{ addr.Address1 }</div>
 // 	<div>{ addr.Address2 }</div>
 // 	<div>{ addr.Address3 }</div>
 // 	<div>{ addr.Address4 }</div>
 // }
 //
-// templ Render(p Person) {
+// t1 Render(p Person) {
 //    <div>
 //      <div>{ p.Name() }</div>
 //      <a href={ p.URL }>{ strings.ToUpper(p.Name()) }</a>
@@ -86,6 +86,22 @@ func NewExpression(value string, from, to parse.Position) Expression {
 	}
 }
 
+// NewRange creates a Range expression.
+func NewRange(from, to parse.Position) Range {
+	return Range{
+		From: Position{
+			Index: int64(from.Index),
+			Line:  uint32(from.Line),
+			Col:   uint32(from.Col),
+		},
+		To: Position{
+			Index: int64(to.Index),
+			Line:  uint32(to.Line),
+			Col:   uint32(to.Col),
+		},
+	}
+}
+
 // Range of text within a file.
 type Range struct {
 	From Position
@@ -98,12 +114,6 @@ type Expression struct {
 	Range Range
 }
 
-// Diagnostic for template file.
-type Diagnostic struct {
-	Message string
-	Range   Range
-}
-
 type TemplateFile struct {
 	// Header contains comments or whitespace at the top of the file.
 	Header []TemplateFileGoExpression
@@ -111,8 +121,6 @@ type TemplateFile struct {
 	Package Package
 	// Nodes in the file.
 	Nodes []TemplateFileNode
-	// Diagnostics contains any errors or warnings.
-	Diagnostics []Diagnostic
 }
 
 func (tf TemplateFile) Write(w io.Writer) error {
@@ -164,14 +172,23 @@ type TemplateFileNode interface {
 
 // TemplateFileGoExpression within a TemplateFile
 type TemplateFileGoExpression struct {
-	Expression Expression
+	Expression    Expression
+	BeforePackage bool
 }
 
 func (exp TemplateFileGoExpression) IsTemplateFileNode() bool { return true }
 func (exp TemplateFileGoExpression) Write(w io.Writer, indent int) error {
-	data, err := format.Source([]byte(exp.Expression.Value))
+	in := exp.Expression.Value
+
+	if exp.BeforePackage {
+		in += "\\\\formatstring\npackage p\n\\\\formatstring"
+	}
+	data, err := format.Source([]byte(in))
 	if err != nil {
 		return writeIndent(w, indent, exp.Expression.Value)
+	}
+	if exp.BeforePackage {
+		data = bytes.TrimSuffix(data, []byte("\\\\formatstring\npackage p\n\\\\formatstring"))
 	}
 	_, err = w.Write(data)
 	return err
@@ -254,7 +271,8 @@ type CSSTemplate struct {
 
 func (css CSSTemplate) IsTemplateFileNode() bool { return true }
 func (css CSSTemplate) Write(w io.Writer, indent int) error {
-	if err := writeIndent(w, indent, "css ", css.Expression.Value, " {\n"); err != nil {
+	source := formatFunctionArguments(css.Expression.Value)
+	if err := writeIndent(w, indent, "css ", string(source), " {\n"); err != nil {
 		return err
 	}
 	for _, p := range css.Properties {
@@ -336,21 +354,21 @@ func (dt DocType) Write(w io.Writer, indent int) error {
 
 // HTMLTemplate definition.
 //
-//	templ Name(p Parameter) {
+//	t1 Name(p Parameter) {
 //	  if ... {
 //	      <Element></Element>
 //	  }
 //	}
 type HTMLTemplate struct {
-	Diagnostics []Diagnostic
-	Expression  Expression
-	Children    []Node
+	Expression Expression
+	Children   []Node
 }
 
 func (t HTMLTemplate) IsTemplateFileNode() bool { return true }
 
 func (t HTMLTemplate) Write(w io.Writer, indent int) error {
-	if err := writeIndent(w, indent, "templ ", t.Expression.Value, " {\n"); err != nil {
+	source := formatFunctionArguments(t.Expression.Value)
+	if err := writeIndent(w, indent, "t1 ", string(source), " {\n"); err != nil {
 		return err
 	}
 	if err := writeNodesIndented(w, indent+1, t.Children); err != nil {
@@ -393,8 +411,7 @@ func NewTrailingSpace(s string) (ts TrailingSpace, err error) {
 }
 
 type Nodes struct {
-	Diagnostics []Diagnostic
-	Nodes       []Node
+	Nodes []Node
 }
 
 // A Node appears within a template, e.g. an StringExpression, Element, IfExpression etc.
@@ -402,6 +419,11 @@ type Node interface {
 	IsNode() bool
 	// Write out the string.
 	Write(w io.Writer, indent int) error
+}
+
+type CompositeNode interface {
+	Node
+	ChildNodes() []Node
 }
 
 type WhitespaceTrailer interface {
@@ -439,7 +461,7 @@ type Element struct {
 	Children       []Node
 	IndentChildren bool
 	TrailingSpace  TrailingSpace
-	Diagnostics    []Diagnostic
+	NameRange      Range
 }
 
 func (e Element) Trailing() TrailingSpace {
@@ -482,7 +504,7 @@ func (e Element) Validate() (msgs []string, ok bool) {
 	for _, attr := range e.Attributes {
 		if exprAttr, isExprAttr := attr.(ExpressionAttribute); isExprAttr {
 			if strings.EqualFold(exprAttr.Name, "style") {
-				msgs = append(msgs, "invalid style attribute: style attributes cannot be a templ expression")
+				msgs = append(msgs, "invalid style attribute: style attributes cannot be a t1 expression")
 			}
 		}
 	}
@@ -510,6 +532,9 @@ func containsNonTextNodes(nodes []Node) bool {
 	return false
 }
 
+func (e Element) ChildNodes() []Node {
+	return e.Children
+}
 func (e Element) IsNode() bool { return true }
 func (e Element) Write(w io.Writer, indent int) error {
 	if err := writeIndent(w, indent, "<", e.Name); err != nil {
@@ -692,7 +717,8 @@ type Attribute interface {
 
 // <hr noshade/>
 type BoolConstantAttribute struct {
-	Name string
+	Name      string
+	NameRange Range
 }
 
 func (bca BoolConstantAttribute) String() string {
@@ -708,6 +734,7 @@ type ConstantAttribute struct {
 	Name        string
 	Value       string
 	SingleQuote bool
+	NameRange   Range
 }
 
 func (ca ConstantAttribute) String() string {
@@ -722,24 +749,26 @@ func (ca ConstantAttribute) Write(w io.Writer, indent int) error {
 	return writeIndent(w, indent, ca.String())
 }
 
-// noshade={ templ.Bool(...) }
+// noshade={ t1.Bool(...) }
 type BoolExpressionAttribute struct {
 	Name       string
 	Expression Expression
+	NameRange  Range
 }
 
-func (ea BoolExpressionAttribute) String() string {
-	return ea.Name + `?={ ` + ea.Expression.Value + ` }`
+func (bea BoolExpressionAttribute) String() string {
+	return bea.Name + `?={ ` + bea.Expression.Value + ` }`
 }
 
-func (ea BoolExpressionAttribute) Write(w io.Writer, indent int) error {
-	return writeIndent(w, indent, ea.String())
+func (bea BoolExpressionAttribute) Write(w io.Writer, indent int) error {
+	return writeIndent(w, indent, bea.String())
 }
 
 // href={ ... }
 type ExpressionAttribute struct {
 	Name       string
 	Expression Expression
+	NameRange  Range
 }
 
 func (ea ExpressionAttribute) String() string {
@@ -887,16 +916,6 @@ func (c GoComment) Write(w io.Writer, indent int) error {
 	return writeIndent(w, indent, "//", c.Contents)
 }
 
-// HDTContextRetrievalExpression.
-type HDTContextRetrievalExpression struct {
-	Contents string
-}
-
-func (c HDTContextRetrievalExpression) IsNode() bool { return true }
-func (c HDTContextRetrievalExpression) Write(w io.Writer, indent int) error {
-	return writeIndent(w, indent, `c.get("`, c.Contents, `").(string)`)
-}
-
 // HTMLComment.
 type HTMLComment struct {
 	Contents string
@@ -932,10 +951,12 @@ type TemplElementExpression struct {
 	// Expression returns a template to execute.
 	Expression Expression
 	// Children returns the elements in a block element.
-	Children    []Node
-	Diagnostics []Diagnostic
+	Children []Node
 }
 
+func (tee TemplElementExpression) ChildNodes() []Node {
+	return tee.Children
+}
 func (tee TemplElementExpression) IsNode() bool { return true }
 func (tee TemplElementExpression) Write(w io.Writer, indent int) error {
 	source, err := format.Source([]byte(tee.Expression.Value))
@@ -960,7 +981,7 @@ func (tee TemplElementExpression) Write(w io.Writer, indent int) error {
 	return nil
 }
 
-// ChildrenExpression can be used to rended the children of a templ element.
+// ChildrenExpression can be used to rended the children of a t1 element.
 // { children ... }
 type ChildrenExpression struct{}
 
@@ -975,19 +996,26 @@ func (ChildrenExpression) Write(w io.Writer, indent int) error {
 // if p.Type == "test" && p.thing {
 // }
 type IfExpression struct {
-	Expression  Expression
-	Then        []Node
-	ElseIfs     []ElseIfExpression
-	Else        []Node
-	Diagnostics []Diagnostic
+	Expression Expression
+	Then       []Node
+	ElseIfs    []ElseIfExpression
+	Else       []Node
 }
 
 type ElseIfExpression struct {
-	Expression  Expression
-	Then        []Node
-	Diagnostics []Diagnostic
+	Expression Expression
+	Then       []Node
 }
 
+func (n IfExpression) ChildNodes() []Node {
+	var nodes []Node
+	nodes = append(nodes, n.Then...)
+	nodes = append(nodes, n.Else...)
+	for _, elseIf := range n.ElseIfs {
+		nodes = append(nodes, elseIf.Then...)
+	}
+	return nodes
+}
 func (n IfExpression) IsNode() bool { return true }
 func (n IfExpression) Write(w io.Writer, indent int) error {
 	if err := writeIndent(w, indent, "if ", n.Expression.Value, " {\n"); err != nil {
@@ -1030,6 +1058,13 @@ type SwitchExpression struct {
 	Cases      []CaseExpression
 }
 
+func (se SwitchExpression) ChildNodes() []Node {
+	var nodes []Node
+	for _, c := range se.Cases {
+		nodes = append(nodes, c.Children...)
+	}
+	return nodes
+}
 func (se SwitchExpression) IsNode() bool { return true }
 func (se SwitchExpression) Write(w io.Writer, indent int) error {
 	if err := writeIndent(w, indent, "switch ", se.Expression.Value, " {\n"); err != nil {
@@ -1054,20 +1089,21 @@ func (se SwitchExpression) Write(w io.Writer, indent int) error {
 
 // case "Something":
 type CaseExpression struct {
-	Expression  Expression
-	Children    []Node
-	Diagnostics []Diagnostic
+	Expression Expression
+	Children   []Node
 }
 
 //	for i, v := range p.Addresses {
 //	  {! Address(v) }
 //	}
 type ForExpression struct {
-	Expression  Expression
-	Children    []Node
-	Diagnostics []Diagnostic
+	Expression Expression
+	Children   []Node
 }
 
+func (fe ForExpression) ChildNodes() []Node {
+	return fe.Children
+}
 func (fe ForExpression) IsNode() bool { return true }
 func (fe ForExpression) Write(w io.Writer, indent int) error {
 	if err := writeIndent(w, indent, "for ", fe.Expression.Value, " {\n"); err != nil {
@@ -1080,6 +1116,37 @@ func (fe ForExpression) Write(w io.Writer, indent int) error {
 		return err
 	}
 	return nil
+}
+
+// GoCode is used within HTML elements, and allows arbitrary go code.
+// {{ ... }}
+type GoCode struct {
+	Expression Expression
+	// TrailingSpace lists what happens after the expression.
+	TrailingSpace TrailingSpace
+	Multiline     bool
+}
+
+func (gc GoCode) Trailing() TrailingSpace {
+	return gc.TrailingSpace
+}
+
+func (gc GoCode) IsNode() bool { return true }
+func (gc GoCode) Write(w io.Writer, indent int) error {
+	if isWhitespace(gc.Expression.Value) {
+		gc.Expression.Value = ""
+	}
+	if !gc.Multiline {
+		return writeIndent(w, indent, `{{ `, gc.Expression.Value, ` }}`)
+	}
+	formatted, err := format.Source([]byte(gc.Expression.Value))
+	if err != nil {
+		return err
+	}
+	if err := writeIndent(w, indent, "{{"+string(formatted)+"\n"); err != nil {
+		return err
+	}
+	return writeIndent(w, indent, "}}")
 }
 
 // StringExpression is used within HTML elements, and for style values.
@@ -1112,7 +1179,8 @@ type ScriptTemplate struct {
 
 func (s ScriptTemplate) IsTemplateFileNode() bool { return true }
 func (s ScriptTemplate) Write(w io.Writer, indent int) error {
-	if err := writeIndent(w, indent, "script ", s.Name.Value, "(", s.Parameters.Value, ") {\n"); err != nil {
+	source := formatFunctionArguments(s.Name.Value + "(" + s.Parameters.Value + ")")
+	if err := writeIndent(w, indent, "script ", string(source), " {\n"); err != nil {
 		return err
 	}
 	if _, err := io.WriteString(w, s.Value); err != nil {
@@ -1122,6 +1190,27 @@ func (s ScriptTemplate) Write(w io.Writer, indent int) error {
 		return err
 	}
 	return nil
+}
+
+// formatFunctionArguments formats the function arguments, if possible.
+func formatFunctionArguments(expression string) string {
+	source := []byte(expression)
+	formatted, err := format.Source([]byte("func " + expression))
+	if err == nil {
+		formatted = bytes.TrimPrefix(formatted, []byte("func "))
+		source = formatted
+	}
+	return string(source)
+}
+
+// HDTContextRetrievalExpression.
+type HDTContextRetrievalExpression struct {
+	Contents string
+}
+
+func (c HDTContextRetrievalExpression) IsNode() bool { return true }
+func (c HDTContextRetrievalExpression) Write(w io.Writer, indent int) error {
+	return writeIndent(w, indent, `c.get("`, c.Contents, `").(string)`)
 }
 
 // O8Template is a script block.

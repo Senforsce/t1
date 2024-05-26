@@ -1,11 +1,11 @@
 # Elements
 
-templ elements are used to render HTML within templ components.
+t1 elements are used to render HTML within t1 components.
 
-```templ title="button.templ"
+```t1 title="button.t1"
 package main
 
-templ button(text string) {
+t1 button(text string) {
 	<button class="button">{ text }</button>
 }
 ```
@@ -24,32 +24,30 @@ func main() {
 ```
 
 ```html title="Output"
-<button class="button">
- Click me
-</button>
+<button class="button">Click me</button>
 ```
 
 :::info
-templ automatically minifies HTML responses, output is shown formatted for readability.
+t1 automatically minifies HTML responses, output is shown formatted for readability.
 :::
 
 ## Tags must be closed
 
-templ requires that all HTML elements are closed with either a closing tag (`</a>`), or by using a self-closing element (`<hr/>`).
+t1 requires that all HTML elements are closed with either a closing tag (`</a>`), or by using a self-closing element (`<hr/>`).
 
-templ is aware of which HTML elements are "void", and will omit the closing `/` from the element.
+t1 is aware of which HTML elements are "void", and will omit the closing `/` from the element.
 
-```templ title="button.templ"
+```t1 title="button.t1"
 package main
 
-templ component() {
+t1 component() {
 	<div>Test</div>
 	<img src="images/test.png"/>
 	<br/>
 }
 ```
 
-```templ title="Output"
+```t1 title="Output"
 <div>Test</div>
 <img src="images/test.png">
 <br>
@@ -57,12 +55,12 @@ templ component() {
 
 ## Attributes and elements can contain expressions
 
-templ elements can contain placeholder expressions for attributes and content.
+t1 elements can contain placeholder expressions for attributes and content.
 
-```templ title="button.templ"
+```t1 title="button.t1"
 package main
 
-templ button(name string, content string) {
+t1 button(name string, content string) {
 	<button value={ name }>{ content }</button>
 }
 ```

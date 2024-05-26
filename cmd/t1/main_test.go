@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/a-h/templ"
 	"github.com/google/go-cmp/cmp"
+	"github.com/senforsce/t1"
 )
 
 func TestMain(t *testing.T) {
@@ -22,44 +22,44 @@ func TestMain(t *testing.T) {
 			expectedCode: 0,
 		},
 		{
-			name:         `"templ help" prints help`,
-			args:         []string{"templ", "help"},
+			name:         `"t1 help" prints help`,
+			args:         []string{"t1", "help"},
 			expected:     usageText,
 			expectedCode: 0,
 		},
 		{
-			name:         `"templ --help" prints help`,
-			args:         []string{"templ", "--help"},
+			name:         `"t1 --help" prints help`,
+			args:         []string{"t1", "--help"},
 			expected:     usageText,
 			expectedCode: 0,
 		},
 		{
-			name:         `"templ version" prints version`,
-			args:         []string{"templ", "version"},
-			expected:     templ.Version() + "\n",
+			name:         `"t1 version" prints version`,
+			args:         []string{"t1", "version"},
+			expected:     t1.Version() + "\n",
 			expectedCode: 0,
 		},
 		{
-			name:         `"templ --version" prints version`,
-			args:         []string{"templ", "--version"},
-			expected:     templ.Version() + "\n",
+			name:         `"t1 --version" prints version`,
+			args:         []string{"t1", "--version"},
+			expected:     t1.Version() + "\n",
 			expectedCode: 0,
 		},
 		{
-			name:         `"templ fmt --help" prints usage`,
-			args:         []string{"templ", "fmt", "--help"},
+			name:         `"t1 fmt --help" prints usage`,
+			args:         []string{"t1", "fmt", "--help"},
 			expected:     fmtUsageText,
 			expectedCode: 0,
 		},
 		{
-			name:         `"templ generate --help" prints usage`,
-			args:         []string{"templ", "generate", "--help"},
+			name:         `"t1 generate --help" prints usage`,
+			args:         []string{"t1", "generate", "--help"},
 			expected:     generateUsageText,
 			expectedCode: 0,
 		},
 		{
-			name:         `"templ lsp --help" prints usage`,
-			args:         []string{"templ", "lsp", "--help"},
+			name:         `"t1 lsp --help" prints usage`,
+			args:         []string{"t1", "lsp", "--help"},
 			expected:     lspUsageText,
 			expectedCode: 0,
 		},

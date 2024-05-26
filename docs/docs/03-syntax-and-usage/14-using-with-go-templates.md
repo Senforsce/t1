@@ -2,22 +2,22 @@
 
 Templ components can be used with the Go standard library [`html/template`](https://pkg.go.dev/html/template) package.
 
-## Using `html/template` in a templ component
+## Using `html/template` in a t1 component
 
-To use an existing `html/template` in a templ component, use the `templ.FromGoHTML` function.
+To use an existing `html/template` in a t1 component, use the `t1.FromGoHTML` function.
 
-```templ title="component.templ"
+```t1 title="component.t1"
 package testgotemplates
 
 import "html/template"
 
 var goTemplate = template.Must(template.New("example").Parse("<div>{{ . }}</div>"))
 
-templ Example() {
+t1 Example() {
 	<!DOCTYPE html>
 	<html>
 		<body>
-			@templ.FromGoHTML(goTemplate, "Hello, World!")
+			@t1.FromGoHTML(goTemplate, "Hello, World!")
 		</body>
 	</html>
 }
@@ -32,17 +32,17 @@ func main() {
 ```html title="Output"
 <!DOCTYPE html>
 <html>
-	<body>
-		<div>Hello, World!</div>
-	</body>
+  <body>
+    <div>Hello, World!</div>
+  </body>
 </html>
 ```
 
-## Using a templ component with	`html/template`
+## Using a t1 component with `html/template`
 
-To use a templ component within a `html/template`, use the `templ.ToGoHTML` function to render the component into a `template.HTML value`.
+To use a t1 component within a `html/template`, use the `t1.ToGoHTML` function to render the component into a `t1ate.HTML value`.
 
-```templ title="component.html"
+```t1 title="component.html"
 package testgotemplates
 
 import "html/template"
@@ -55,23 +55,23 @@ var example = template.Must(template.New("example").Parse(`<!DOCTYPE html>
 </html>
 `))
 
-templ greeting() {
+t1 greeting() {
 	<div>Hello, World!</div>
 }
 ```
 
 ```go title="main.go"
 func main() {
-	// Create the templ component.
-	templComponent := greeting()
+	// Create the t1 component.
+	t1Component := greeting()
 
-	// Render the templ component to a `template.HTML` value.
-	html, err := templ.ToGoHTML(context.Background(), templComponent)
+	// Render the t1 component to a `t1ate.HTML` value.
+	html, err := t1.ToGoHTML(context.Background(), t1Component)
 	if err != nil {
 		t.Fatalf("failed to convert to html: %v", err)
 	}
 
-	// Use the `template.HTML` value within the text/html template.
+	// Use the `t1ate.HTML` value within the text/html template.
 	err = example.Execute(os.Stdout, html)
 	if err != nil {
 		t.Fatalf("failed to execute template: %v", err)
@@ -82,8 +82,8 @@ func main() {
 ```html title="Output"
 <!DOCTYPE html>
 <html>
-	<body>
-		<div>Hello, World!</div>
-	</body>
+  <body>
+    <div>Hello, World!</div>
+  </body>
 </html>
 ```

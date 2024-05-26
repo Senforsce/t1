@@ -77,7 +77,7 @@ var cssExpressionParser = parse.Func(func(pi *parse.Input) (r cssExpression, ok 
 	// e.g.
 	// css (x []string) Test() {
 	// becomes:
-	// func (x []string) Test() templ.CSSComponent {
+	// func (x []string) Test() t1.CSSComponent {
 	if r.Name, r.Expression, err = parseCSSFuncDecl(pi); err != nil {
 		return r, false, err
 	}

@@ -1,7 +1,7 @@
 -- in --
 package p
 
-templ f() {
+t1 f() {
 	<div>
 	@Other(
 			p.Test,
@@ -12,7 +12,7 @@ templ f() {
 -- out --
 package p
 
-templ f() {
+t1 f() {
 	<div>
 		@Other(
 			p.Test,

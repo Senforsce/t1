@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-The latest version of templ is supported.
+The latest version of t1 is supported.
 
 ## Reporting a Vulnerability
 

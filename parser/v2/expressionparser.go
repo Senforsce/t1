@@ -37,8 +37,10 @@ var openBraceWithPadding = parse.StringFrom(optionalSpaces,
 var openBraceWithOptionalPadding = parse.Any(openBraceWithPadding, openBrace)
 
 var closeBrace = parse.String("}")
-var closeBraceWithPadding = parse.String(" }")
-var closeBraceWithOptionalPadding = parse.Any(closeBraceWithPadding, closeBrace)
+var closeBraceWithOptionalPadding = parse.StringFrom(optionalSpaces, closeBrace)
+
+var dblCloseBrace = parse.String("}}")
+var dblCloseBraceWithOptionalPadding = parse.StringFrom(optionalSpaces, dblCloseBrace)
 
 var openBracket = parse.String("(")
 var closeBracket = parse.String(")")
@@ -49,6 +51,7 @@ var stringUntilNewLineOrEOF = parse.StringUntil(newLineOrEOF)
 
 var jsOrGoSingleLineComment = parse.StringFrom(parse.String("//"), parse.StringUntil(parse.Any(parse.NewLine, parse.EOF[string]())))
 var jsOrGoMultiLineComment = parse.StringFrom(parse.String("/*"), parse.StringUntil(parse.String("*/")))
+
 var singleHDTContextRetrievalExpression = parse.StringFrom(parse.String("/-"), parse.StringUntil(parse.String("-/")))
 
 var exp = expressionParser{

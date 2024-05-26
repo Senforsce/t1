@@ -2,10 +2,10 @@
 
 Use the standard Go `for` loop for iteration.
 
-```templ title="component.templ"
+```t1 title="component.t1"
 package main
 
-templ nameList(items []Item) {
+t1 nameList(items []Item) {
   <ul>
   for _, item := range items {
     <li>{ item.Name }</li>

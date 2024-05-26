@@ -1,10 +1,10 @@
-# Using React with templ
+# Using React with t1
 
-templ is great for server-side rendering. Combined with [HTMX](https://htmx.org/), it's even more powerful, since HTMX can be used to replace elements within the page with updated HTML fetched from the server, providing many of the benefits of React with reduced overall complexity. See [/server-side-rendering/htmx](/server-side-rendering/htmx) for an example.
+t1 is great for server-side rendering. Combined with [HTMX](https://htmx.org/), it's even more powerful, since HTMX can be used to replace elements within the page with updated HTML fetched from the server, providing many of the benefits of React with reduced overall complexity. See [/server-side-rendering/htmx](/server-side-rendering/htmx) for an example.
 
 However, React has a huge ecosystem of rich interactive components, so being able to tap into the ecosystem is very useful.
 
-With templ, it's more likely that you will use React components as [islands of interactivity](https://www.patterns.dev/vanilla/islands-architecture/) rather than taking over all aspects of displaying your app, with templ taking over server-side rendering, but using React to provide specific features on the client side.
+With templ, it's more likely that you will use React components as [islands of interactivity](https://www.patterns.dev/vanilla/islands-architecture/) rather than taking over all aspects of displaying your app, with t1 taking over server-side rendering, but using React to provide specific features on the client side.
 
 ## Using React components
 
@@ -12,17 +12,17 @@ First, lets start by rendering simple React components.
 
 ### Create React components
 
-To use React components in your templ app, create your React components using TSX (TypeScript) or JSX as usual.
+To use React components in your t1 app, create your React components using TSX (TypeScript) or JSX as usual.
 
 ```tsx title="react/components.tsx"
-export const Header = () => (<h1>React component Header</h1>);
+export const Header = () => <h1>React component Header</h1>;
 
-export const Body = () => (<div>This is client-side content from React</div>);
+export const Body = () => <div>This is client-side content from React</div>;
 ```
 
-### Create a templ page
+### Create a t1 page
 
-Next, use templ to create a page containing HTML elements with specific IDs.
+Next, use t1 to create a page containing HTML elements with specific IDs.
 
 :::note
 This page defines elements with ids of `react-header` and `react-content`.
@@ -30,15 +30,15 @@ This page defines elements with ids of `react-header` and `react-content`.
 A `<script>` element loads in a JavaScript bundle that we haven't created yet.
 :::
 
-```templ title="components.templ"
+```t1 title="components.t1"
 package main
 
-templ page() {
+t1 page() {
 	<html>
 		<body>
 			<div id="react-header"></div>
 			<div id="react-content"></div>
-			<div>This is server-side content from templ.</div>
+			<div>This is server-side content from t1.</div>
 			<!-- Load the React bundle created using esbuild -->
 			<script src="static/index.js"></script>
 		</body>
@@ -47,29 +47,29 @@ templ page() {
 ```
 
 :::tip
-Remember to run `templ generate` when you've finished writing your templ file.
+Remember to run `t1 generate` when you've finished writing your t1 file.
 :::
 
 ### Render React components into the IDs
 
-Write TypeScript or JavaScript to render the React components into the HTML elements that are rendered by templ.
+Write TypeScript or JavaScript to render the React components into the HTML elements that are rendered by t1.
 
 ```typescript title="react/index.ts"
-import { createRoot } from 'react-dom/client';
-import { Header, Body } from './components';
+import { createRoot } from "react-dom/client";
+import { Header, Body } from "./components";
 
-// Render the React component into the templ page at the react-header.
-const headerRoot = document.getElementById('react-header');
+// Render the React component into the t1 page at the react-header.
+const headerRoot = document.getElementById("react-header");
 if (!headerRoot) {
-	throw new Error('Could not find element with id react-header');
+  throw new Error("Could not find element with id react-header");
 }
 const headerReactRoot = createRoot(headerRoot);
 headerReactRoot.render(Header());
 
 // Add the body React component.
-const contentRoot = document.getElementById('react-content');
+const contentRoot = document.getElementById("react-content");
 if (!contentRoot) {
-	throw new Error('Could not find element with id react-content');
+  throw new Error("Could not find element with id react-content");
 }
 const contentReactRoot = createRoot(contentRoot);
 contentReactRoot.render(Body());
@@ -87,9 +87,9 @@ Executing `esbuild` with the following arguments creates an `index.js` file in t
 esbuild --bundle index.ts --outdir=../static --minify
 ```
 
-### Serve the templ component and client side bundle
+### Serve the t1 component and client side bundle
 
-To serve the server-side rendered templ template, and the client-side JavaScript bundle created in the previous step, setup a Go web server.
+To serve the server-side rendered t1 template, and the client-side JavaScript bundle created in the previous step, setup a Go web server.
 
 ```go title="main.go"
 package main
@@ -99,14 +99,14 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/a-h/templ"
+	"github.com/senforsce/t1"
 )
 
 func main() {
 	mux := http.NewServeMux()
 
-	// Serve the templ page.
-	mux.Handle("/", templ.Handler(page()))
+	// Serve the t1 page.
+	mux.Handle("/", t1.Handler(page()))
 
 	// Serve static content.
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
@@ -121,16 +121,16 @@ func main() {
 
 ### Results
 
-Putting this together results in a web page that renders server-side HTML using templ. The server-side HTML includes a link to the static React bundle.
+Putting this together results in a web page that renders server-side HTML using t1. The server-side HTML includes a link to the static React bundle.
 
 ```mermaid
 sequenceDiagram
     browser->>app: GET /
     activate app
-	app->>templ_component: Render
-	activate templ_component
-	templ_component->>app: HTML
-	deactivate templ_component
+	app->>t1_component: Render
+	activate t1_component
+	t1_component->>app: HTML
+	deactivate t1_component
     app->>browser: HTML
     deactivate app
 	browser->>app: GET /static/index.js
@@ -149,32 +149,30 @@ Moving on from the previous example, it's possible to pass data to client-side R
 First, add a new component.
 
 ```tsx title="react/components.tsx"
-export const Hello = (name: string) => (
-  <div>Hello {name} (Client-side React, rendering server-side data)</div>
-);
+export const Hello = (name: string) => <div>Hello {name} (Client-side React, rendering server-side data)</div>;
 ```
 
 ### Export a JavaScript function that renders the React component to a HTML element
 
 ```typescript title="react/index.ts"
 // Update the import to add the new Hello React component.
-import { Header, Body, Hello } from './components';
+import { Header, Body, Hello } from "./components";
 
 // Previous script contents...
-  
+
 export function renderHello(id: string, name: string) {
-	const rootElement = document.getElementById(id);
-	if (!rootElement) {
-		throw new Error(`Could not find element with id ${id}`);
-	}
-	const reactRoot = createRoot(rootElement);
-	reactRoot.render(Hello(name));
+  const rootElement = document.getElementById(id);
+  if (!rootElement) {
+    throw new Error(`Could not find element with id ${id}`);
+  }
+  const reactRoot = createRoot(rootElement);
+  reactRoot.render(Hello(name));
 }
 ```
 
-### Update the templ component to use the new function
+### Update the t1 component to use the new function
 
-Now that we have a `renderHello` function that will render the React component to the given element, we can update the templ components to use it.
+Now that we have a `renderHello` function that will render the React component to the given element, we can update the t1 components to use it.
 
 In templ, we can add a `Hello` component that does two things:
 
@@ -185,7 +183,7 @@ In templ, we can add a `Hello` component that does two things:
 The template renders three copies of the `Hello` React component, passing in a distinct `id` and `name` parameter ("Alice", "Bob" and "Charlie").
 :::
 
-```templ title="components.templ"
+```t1 title="components.t1"
 package main
 
 import "fmt"
@@ -195,12 +193,12 @@ script renderHelloReact(id, name string) {
 	bundle.renderHello(id, name)
 }
 
-templ Hello(id, name string) {
+t1 Hello(id, name string) {
 	<div id={ id }></div>
 	@renderHelloReact(id, name)
 }
 
-templ page() {
+t1 page() {
 	<html>
 		<head>
 			<title>React integration</title>
@@ -209,7 +207,7 @@ templ page() {
 			<div id="react-header"></div>
 			<div id="react-content"></div>
 			<div>
-				This is server-side content from templ.
+				This is server-side content from t1.
 			</div>
 			<!-- Load the React bundle that was created using esbuild -->
 			<!-- Since the bundle was coded to expect the react-header and react-content elements to exist already, in this case, the script has to be loaded after the elements are on the page -->
@@ -240,24 +238,35 @@ The HTML that's rendered is:
 
 ```html
 <html>
-   <head>
-      <title>React integration</title>
-   </head>
-   <body>
-      <div id="react-header"></div>
-      <div id="react-content"></div>
-      <div>This is server-side content from templ.</div>
-      <!-- Load the React bundle that was created using esbuild --><!-- Since the bundle was coded to expect the react-header and react-content elements to exist already, in this case, the script has to be loaded after the elements are on the page --><script src="static/index.js"></script><!-- Now that the React bundle is loaded, we can use the functions that are in it --><!-- the renderName function in the bundle can be used, but we want to pass it some server-side data -->
-      <div id="react-hello-0"></div>
-      <script type="text/javascript">function __templ_renderHelloReact_7494(id, name){// Use the renderHello function from the React bundle.
-         bundle.renderHello(id, name)
-         }
-      </script><script type="text/javascript">__templ_renderHelloReact_7494("react-hello-0","Alice")</script>
-      <div id="react-hello-1"></div>
-      <script type="text/javascript">__templ_renderHelloReact_7494("react-hello-1","Bob")</script>
-      <div id="react-hello-2"></div>
-      <script type="text/javascript">__templ_renderHelloReact_7494("react-hello-2","Charlie")</script>
-   </body>
+  <head>
+    <title>React integration</title>
+  </head>
+  <body>
+    <div id="react-header"></div>
+    <div id="react-content"></div>
+    <div>This is server-side content from t1.</div>
+    <!-- Load the React bundle that was created using esbuild --><!-- Since the bundle was coded to expect the react-header and react-content elements to exist already, in this case, the script has to be loaded after the elements are on the page -->
+    <script src="static/index.js"></script>
+    <!-- Now that the React bundle is loaded, we can use the functions that are in it --><!-- the renderName function in the bundle can be used, but we want to pass it some server-side data -->
+    <div id="react-hello-0"></div>
+    <script type="text/javascript">
+      function __t1_renderHelloReact_7494(id, name) {
+        // Use the renderHello function from the React bundle.
+        bundle.renderHello(id, name);
+      }
+    </script>
+    <script type="text/javascript">
+      __t1_renderHelloReact_7494("react-hello-0", "Alice");
+    </script>
+    <div id="react-hello-1"></div>
+    <script type="text/javascript">
+      __t1_renderHelloReact_7494("react-hello-1", "Bob");
+    </script>
+    <div id="react-hello-2"></div>
+    <script type="text/javascript">
+      __t1_renderHelloReact_7494("react-hello-2", "Charlie");
+    </script>
+  </body>
 </html>
 ```
 
@@ -266,7 +275,7 @@ And the browser shows the expected content after rendering the client side React
 ```
 React component Header
 This is client-side content from React
-This is server-side content from templ.
+This is server-side content from t1.
 Hello Alice (Client-side React, rendering server-side data)
 Hello Bob (Client-side React, rendering server-side data)
 Hello Charlie (Client-side React, rendering server-side data)
@@ -274,4 +283,4 @@ Hello Charlie (Client-side React, rendering server-side data)
 
 ## Example code
 
-See https://github.com/a-h/templ/tree/main/examples/integration-react for a complete example.
+See https://github.com/senforsce/t1/tree/main/examples/integration-react for a complete example.

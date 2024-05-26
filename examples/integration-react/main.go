@@ -4,15 +4,13 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-
-	"github.com/a-h/templ"
 )
 
 func main() {
 	mux := http.NewServeMux()
 
-	// Serve the templ page.
-	mux.Handle("/", templ.Handler(page()))
+	// Serve the t1 page.
+	mux.Handle("/", t1.Handler(page()))
 
 	// Serve static content.
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
