@@ -89,7 +89,7 @@ func writeToStdout(_ string, contents []byte) error {
 func (h *FSEventHandler) HandleEvent(ctx context.Context, event fsnotify.Event) (goUpdated, textUpdated bool, err error) {
 	// Handle _t1.go files.
 	if !event.Has(fsnotify.Remove) && strings.HasSuffix(event.Name, "_t1.go") {
-		_, err = os.Stat(strings.TrimSuffix(event.Name, "_t1.go") + ".templ")
+		_, err = os.Stat(strings.TrimSuffix(event.Name, "_t1.go") + ".t1")
 		if !os.IsNotExist(err) {
 			return false, false, err
 		}
@@ -118,7 +118,7 @@ func (h *FSEventHandler) HandleEvent(ctx context.Context, event fsnotify.Event) 
 	}
 
 	// Handle .t1 files.
-	if !strings.HasSuffix(event.Name, ".templ") {
+	if !strings.HasSuffix(event.Name, ".t1") {
 		return false, false, nil
 	}
 
@@ -201,7 +201,7 @@ func (h *FSEventHandler) generate(ctx context.Context, fileName string) (goUpdat
 	if err != nil {
 		return false, false, nil, fmt.Errorf("%s parsing error: %w", fileName, err)
 	}
-	targetFileName := strings.TrimSuffix(fileName, ".templ") + "_t1.go"
+	targetFileName := strings.TrimSuffix(fileName, ".t1") + "_t1.go"
 
 	// Only use relative filenames to the basepath for filenames in runtime error messages.
 	absFilePath, err := filepath.Abs(fileName)
@@ -238,7 +238,7 @@ func (h *FSEventHandler) generate(ctx context.Context, fileName string) (goUpdat
 
 	// Add the txt file if it has changed.
 	if len(literals) > 0 {
-		txtFileName := strings.TrimSuffix(fileName, ".templ") + "_t1.txt"
+		txtFileName := strings.TrimSuffix(fileName, ".t1") + "_t1.txt"
 		txtHash := sha256.Sum256([]byte(literals))
 		if h.UpsertHash(txtFileName, txtHash) {
 			textUpdated = true
@@ -307,7 +307,7 @@ func generateSourceMapVisualisation(ctx context.Context, t1FileName, goFileName 
 		return t1Err
 	}
 
-	targetFileName := strings.TrimSuffix(t1FileName, ".templ") + "_templ_sourcemap.html"
+	targetFileName := strings.TrimSuffix(t1FileName, ".t1") + "_templ_sourcemap.html"
 	w, err := os.Create(targetFileName)
 	if err != nil {
 		return fmt.Errorf("%s sourcemap visualisation error: %w", t1FileName, err)
