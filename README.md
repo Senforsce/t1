@@ -1,6 +1,6 @@
 ![t1](https://github.com/senforsce/t1/raw/main/t1.png)
 
-## A HTML t1ating language for Go that has great developer tooling.
+## A HTML templating language for Go that has great developer tooling.
 
 ![t1](ide-demo.gif)
 
