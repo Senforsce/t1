@@ -208,7 +208,7 @@ func TestTemplElementExpressionParser(t *testing.T) {
 			input: `@templates.Icon("home", Inline)`,
 			expected: TemplElementExpression{
 				Expression: Expression{
-					Value: `t1ates.Icon("home", Inline)`,
+					Value: `templates.Icon("home", Inline)`,
 					Range: Range{
 						From: Position{
 							Index: 1,
@@ -229,7 +229,7 @@ func TestTemplElementExpressionParser(t *testing.T) {
 			input: `@templates.New(test{}, other())`,
 			expected: TemplElementExpression{
 				Expression: Expression{
-					Value: `t1ates.New(test{}, other())`,
+					Value: `templates.New(test{}, other())`,
 					Range: Range{
 						From: Position{
 							Index: 1,
@@ -250,7 +250,7 @@ func TestTemplElementExpressionParser(t *testing.T) {
 			input: `@templates[0]()`,
 			expected: TemplElementExpression{
 				Expression: Expression{
-					Value: `t1ates[0]()`,
+					Value: `templates[0]()`,
 					Range: Range{
 						From: Position{
 							Index: 1,
@@ -271,7 +271,7 @@ func TestTemplElementExpressionParser(t *testing.T) {
 			input: `@templates["key"]()`,
 			expected: TemplElementExpression{
 				Expression: Expression{
-					Value: `t1ates["key"]()`,
+					Value: `templates["key"]()`,
 					Range: Range{
 						From: Position{
 							Index: 1,
@@ -292,7 +292,7 @@ func TestTemplElementExpressionParser(t *testing.T) {
 			input: `@templates[0].CreateTemplate()`,
 			expected: TemplElementExpression{
 				Expression: Expression{
-					Value: `t1ates[0].CreateTemplate()`,
+					Value: `templates[0].CreateTemplate()`,
 					Range: Range{
 						From: Position{
 							Index: 1,

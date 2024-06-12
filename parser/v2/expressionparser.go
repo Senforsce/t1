@@ -28,9 +28,9 @@ func ExpressionOf(p parse.Parser[string]) parse.Parser[Expression] {
 
 var lt = parse.Rune('<')
 var gt = parse.Rune('>')
-var openBrace = parse.String("{")
 var optionalSpaces = parse.StringFrom(parse.Optional(
 	parse.AtLeast(1, parse.Rune(' '))))
+var openBrace = parse.String("{")
 var openBraceWithPadding = parse.StringFrom(optionalSpaces,
 	openBrace,
 	optionalSpaces)
@@ -38,6 +38,15 @@ var openBraceWithOptionalPadding = parse.Any(openBraceWithPadding, openBrace)
 
 var closeBrace = parse.String("}")
 var closeBraceWithOptionalPadding = parse.StringFrom(optionalSpaces, closeBrace)
+
+var openSquareBracket = parse.String("[")
+var openSquareBracketWithPadding = parse.StringFrom(optionalSpaces,
+	openSquareBracket,
+	optionalSpaces)
+var openSquareBracketWithOptionalPadding = parse.Any(openSquareBracketWithPadding, openSquareBracket)
+
+var closeSquareBracket = parse.String("]")
+var closeSquareBracketWithOptionalPadding = parse.StringFrom(optionalSpaces, closeSquareBracket)
 
 var dblCloseBrace = parse.String("}}")
 var dblCloseBraceWithOptionalPadding = parse.StringFrom(optionalSpaces, dblCloseBrace)
@@ -52,7 +61,7 @@ var stringUntilNewLineOrEOF = parse.StringUntil(newLineOrEOF)
 var jsOrGoSingleLineComment = parse.StringFrom(parse.String("//"), parse.StringUntil(parse.Any(parse.NewLine, parse.EOF[string]())))
 var jsOrGoMultiLineComment = parse.StringFrom(parse.String("/*"), parse.StringUntil(parse.String("*/")))
 
-var singleHDTContextRetrievalExpression = parse.StringFrom(parse.String("/-"), parse.StringUntil(parse.String("-/")))
+var singleHDTContextRetrievalExpression = parse.StringFrom(parse.String("~"), parse.StringUntil(parse.String("~")))
 
 var exp = expressionParser{
 	startBraceCount: 1,
@@ -66,11 +75,11 @@ func (p expressionParser) Parse(pi *parse.Input) (s Expression, ok bool, err err
 	from := pi.Position()
 
 	braceCount := p.startBraceCount
-
 	sb := new(strings.Builder)
 loop:
 	for {
 		var result string
+		var intermediate string
 
 		// Try to parse a single line comment.
 		if result, ok, err = jsOrGoSingleLineComment.Parse(pi); err != nil {
@@ -83,15 +92,6 @@ loop:
 
 		// Try to parse a multi-line comment.
 		if result, ok, err = jsOrGoMultiLineComment.Parse(pi); err != nil {
-			return
-		}
-		if ok {
-			sb.WriteString(result)
-			continue
-		}
-
-		// Try to parse a triple value.
-		if result, ok, err = singleHDTContextRetrievalExpression.Parse(pi); err != nil {
 			return
 		}
 		if ok {
@@ -115,14 +115,25 @@ loop:
 			sb.WriteString(result)
 			continue
 		}
+
 		// Try opener.
-		if result, ok, err = openBrace.Parse(pi); err != nil {
+		if intermediate, ok, err = openBrace.Parse(pi); err != nil {
 			return
 		}
 		if ok {
 			braceCount++
-			sb.WriteString(result)
-			continue
+
+			// Try to parse a triple value.
+			if result, ok, err = singleHDTContextRetrievalExpression.Parse(pi); err != nil {
+				sb.WriteString(intermediate)
+
+				continue
+			}
+			if ok {
+				sb.WriteString(`{ c.Get("` + strings.ReplaceAll(result, "~", "") + `").(string)`)
+				continue
+			}
+
 		}
 		// Try closer.
 		startOfCloseBrace := pi.Index()

@@ -62,12 +62,13 @@ type templateNodeParser[TUntil any] struct {
 var rawElements = parse.Any[Node](styleElement, scriptElement)
 
 var templateNodeParsers = []parse.Parser[Node]{
-	docType,                // <!DOCTYPE html>
-	htmlComment,            // <!--
-	goComment,              // // or /*
-	rawElements,            // <text>, <>, or <style> element (special behaviour - contents are not parsed).
-	element,                // <a>, <br/> etc.
-	ifExpression,           // if {}
+	docType,      // <!DOCTYPE html>
+	htmlComment,  // <!--
+	goComment,    // // or /*
+	rawElements,  // <text>, <>, or <style> element (special behaviour - contents are not parsed).
+	element,      // <a>, <br/> etc.
+	ifExpression, // if {}
+	contextRetrievalExpressionP,
 	forExpression,          // for {}
 	switchExpression,       // switch {}
 	callTemplateExpression, // {! TemplateName(a, b, c) }

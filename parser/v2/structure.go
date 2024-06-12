@@ -20,6 +20,7 @@ var (
 	_ Node = GoComment{}
 	_ Node = HTMLComment{}
 	_ Node = CallTemplateExpression{}
+	_ Node = HDTContextRetrievalExpression{}
 	_ Node = TemplElementExpression{}
 	_ Node = ChildrenExpression{}
 	_ Node = IfExpression{}

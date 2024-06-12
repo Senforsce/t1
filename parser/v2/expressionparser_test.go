@@ -200,6 +200,13 @@ func TestExpressions(t *testing.T) {
 			expected:        `"data"`,
 		},
 		{
+			name:            "context retrieval value: simple string",
+			input:           `~ sen:Company ~`,
+			prefix:          "{ ",
+			startBraceCount: 1,
+			expected:        `{ c.Get("sen:Company").(string) }`,
+		},
+		{
 			name:            "javascript expression",
 			input:           "var x = 123;",
 			prefix:          "",

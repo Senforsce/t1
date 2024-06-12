@@ -4,8 +4,8 @@ import (
 	"github.com/a-h/parse"
 )
 
-var contextRetrievalExpressionStart = parse.String("/-")
-var contextRetrievalExpressionEnd = parse.String("-/")
+var contextRetrievalExpressionStart = parse.String("~")
+var contextRetrievalExpressionEnd = parse.String("~")
 
 type contextRetrievalExpressionParser struct {
 }
@@ -22,9 +22,11 @@ func (p contextRetrievalExpressionParser) Parse(pi *parse.Input) (n Node, ok boo
 	// Once we've got the comment start sequence, parse anything until the end
 	// sequence as the comment contents.
 	if c.Contents, ok, err = parse.StringUntil(contextRetrievalExpressionEnd).Parse(pi); err != nil || !ok {
-		err = parse.Error("expected end comment literal '-/' not found", pi.Position())
+		err = parse.Error("expected end triple literal '~' not found", pi.Position())
 		return
 	}
+	c.Contents = `c.Get("` + c.Contents + `")`
+
 	// Move past the end element.
 	_, _, _ = contextRetrievalExpressionEnd.Parse(pi)
 	return c, true, nil

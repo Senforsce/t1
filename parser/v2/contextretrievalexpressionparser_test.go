@@ -16,15 +16,15 @@ func TestContextRetrievalExpressionParser(t *testing.T) {
 
 		{
 			name:  "multiline triple can be on one line",
-			input: `/- senforsce:Version -/`,
+			input: `~ senforsce:Version ~`,
 			expected: HDTContextRetrievalExpression{
 				Contents: " senforsce:Version ",
 			},
 		},
 		{
 			name: "multiline triple can span lines",
-			input: `/- subject:Test 
-			rdf:has senforsce:HTMX -/`,
+			input: `~ subject:Test
+rdf:has senforsce:HTMX ~`,
 			expected: HDTContextRetrievalExpression{
 				Contents: " subject:Test\nrdf:has senforsce:HTMX ",
 			},
@@ -56,12 +56,12 @@ func TestContextRetrievalExpressionParserError(t *testing.T) {
 	}{
 		{
 			name:  "unclosed triple comments result in an error",
-			input: `/- unclosed triple literal`,
-			expected: parse.Error("expected end triple literal '-/' not found",
+			input: `~ unclosed triple literal`,
+			expected: parse.Error("expected end triple literal ']' not found",
 				parse.Position{
-					Index: 24,
+					Index: 1,
 					Line:  0,
-					Col:   24,
+					Col:   1,
 				}),
 		},
 	}

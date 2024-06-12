@@ -119,9 +119,17 @@ func (p *Server) convertGoRangeToTemplRange(t1URI lsp.DocumentURI, input lsp.Ran
 	return
 }
 
+var replaced string
+
 // parseTemplate parses the t1 file content, and notifies the end user via the LSP about how it went.
 func (p *Server) parseTemplate(ctx context.Context, uri uri.URI, templateText string) (template parser.TemplateFile, ok bool, err error) {
-	template, err = parser.ParseString(templateText)
+	inter := strings.ReplaceAll(templateText, "{ ~ ", `{ c.Get("`)
+	if len(inter) > len(templateText) {
+		replaced = strings.ReplaceAll(inter, " ~ }", `").(string) }`)
+	} else {
+		replaced = templateText
+	}
+	template, err = parser.ParseString(replaced)
 	if err != nil {
 		msg := &lsp.PublishDiagnosticsParams{
 			URI: uri,
@@ -129,7 +137,7 @@ func (p *Server) parseTemplate(ctx context.Context, uri uri.URI, templateText st
 				{
 					Severity: lsp.DiagnosticSeverityError,
 					Code:     "",
-					Source:   "templ",
+					Source:   "Tndr",
 					Message:  err.Error(),
 				},
 			},

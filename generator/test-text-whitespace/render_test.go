@@ -37,7 +37,7 @@ func TestTextWhitespace(t *testing.T) {
 		},
 		{
 			name:     "whitespace around templated values is maintained",
-			input:    WhiteSpaceAroundTemplatedValues("templ", "allows whitespace around templated values."),
+			input:    WhiteSpaceAroundTemplatedValues("t1", "allows whitespace around templated values."),
 			expected: WhiteSpaceAroundTemplatedValuesExpected,
 		},
 	} {

@@ -456,7 +456,7 @@ func SanitizeCSS(property, value string) SafeCSS {
 // Hyperlink sanitization.
 
 // FailedSanitizationURL is returned if a URL fails sanitization checks.
-const FailedSanitizationURL = SafeURL("about:invalid#TemplFailedSanitizationURL")
+const FailedSanitizationURL = SafeURL("about:invalid#T1FailedSanitizationURL")
 
 // URL sanitizes the input string s and returns a SafeURL.
 func URL(s string) SafeURL {
@@ -741,7 +741,7 @@ type Error struct {
 
 func (e Error) Error() string {
 	if e.FileName == "" {
-		e.FileName = "templ"
+		e.FileName = "t1"
 	}
 	return fmt.Sprintf("%s: error at line %d, col %d: %v", e.FileName, e.Line, e.Col, e.Err)
 }

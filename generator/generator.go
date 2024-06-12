@@ -943,6 +943,8 @@ func (g *generator) writeAttributeCSS(indentLevel int, attr parser.ExpressionAtt
 	if _, err = g.w.WriteIndent(indentLevel, "var "+classesName+" = []any{"); err != nil {
 		return
 	}
+	inter := strings.Replace(attr.Expression.Value, "~", `c.Get("`, 1)
+	attr.Expression.Value = strings.Replace(inter, "~", `")`, 1)
 	// p.Name()
 	if r, err = g.w.Write(attr.Expression.Value); err != nil {
 		return
@@ -1324,7 +1326,8 @@ func (g *generator) writeStringExpression(indentLevel int, e parser.Expression) 
 		return err
 	}
 	// p.Name()
-	if r, err = g.w.Write(e.Value); err != nil {
+	inter := strings.Replace(e.Value, "~", `c.Get("`, 1)
+	if r, err = g.w.Write(strings.Replace(inter, "~", `").(string)`, 1)); err != nil {
 		return err
 	}
 	g.sourceMap.Add(e, r)

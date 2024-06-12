@@ -69,8 +69,9 @@ func NewPosition(index int64, line, col uint32) Position {
 
 // NewExpression creates a Go expression.
 func NewExpression(value string, from, to parse.Position) Expression {
+	inter := strings.Replace(value, "~", `c.Get("`, 1)
 	return Expression{
-		Value: value,
+		Value: strings.Replace(inter, "~", `").(string)`, 1),
 		Range: Range{
 			From: Position{
 				Index: int64(from.Index),
