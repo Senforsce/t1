@@ -8,9 +8,9 @@ import (
 
 	"github.com/a-h/parse"
 	lsp "github.com/a-h/protocol"
-	"github.com/senforsce/t1"
-	"github.com/senforsce/t1/generator"
-	"github.com/senforsce/t1/parser/v2"
+	"github.com/senforsce/tndr"
+	"github.com/senforsce/tndr/generator"
+	"github.com/senforsce/tndr/parser/v2"
 	"go.lsp.dev/uri"
 	"go.uber.org/zap"
 )
@@ -174,7 +174,7 @@ func (p *Server) parseTemplate(ctx context.Context, uri uri.URI, templateText st
 			msg.Diagnostics = append(msg.Diagnostics, lsp.Diagnostic{
 				Severity: lsp.DiagnosticSeverityWarning,
 				Code:     "",
-				Source:   "templ",
+				Source:   "t1",
 				Message:  d.Message,
 				Range: lsp.Range{
 					Start: lsp.Position{
@@ -438,7 +438,7 @@ type importInsert struct {
 	Text      string
 }
 
-var nonImportKeywordRegexp = regexp.MustCompile(`^(?:templ|func|css|script|var|const|type)\s`)
+var nonImportKeywordRegexp = regexp.MustCompile(`^(?:t1|func|css|script|var|const|type)\s`)
 
 func addImport(lines []string, pkg string) (result importInsert) {
 	var isInMultiLineImport bool

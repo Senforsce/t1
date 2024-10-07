@@ -8,25 +8,25 @@ Below are some examples of how to use t1 with other Go libraries, frameworks and
 
 See an example of using https://github.com/go-chi/chi with t1 at:
 
-https://github.com/senforsce/t1/tree/main/examples/integration-chi
+https://github.com/senforsce/tndr/tree/main/examples/integration-chi
 
 ## Echo
 
 See an example of using https://echo.labstack.com/ with t1 at:
 
-https://github.com/senforsce/t1/tree/main/examples/integration-echo
+https://github.com/senforsce/tndr/tree/main/examples/integration-echo
 
 ## Gin
 
 See an example of using https://github.com/gin-gonic/gin with t1 at:
 
-https://github.com/senforsce/t1/tree/main/examples/integration-gin
+https://github.com/senforsce/tndr/tree/main/examples/integration-gin
 
 ## Go Fiber
 
 See an example of using https://github.com/gofiber/fiber with t1 at:
 
-https://github.com/senforsce/t1/tree/main/examples/integration-gofiber
+https://github.com/senforsce/tndr/tree/main/examples/integration-gofiber
 
 ## `t1ate/html`
 

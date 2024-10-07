@@ -6,10 +6,10 @@ import (
 	"os"
 	"time"
 
-	"github.com/senforsce/t1/examples/counter/db"
-	"github.com/senforsce/t1/examples/counter/handlers"
-	"github.com/senforsce/t1/examples/counter/services"
-	"github.com/senforsce/t1/examples/counter/session"
+	"github.com/senforsce/tndr/examples/counter/db"
+	"github.com/senforsce/tndr/examples/counter/handlers"
+	"github.com/senforsce/tndr/examples/counter/services"
+	"github.com/senforsce/tndr/examples/counter/session"
 	"golang.org/x/exp/slog"
 )
 

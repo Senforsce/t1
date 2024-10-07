@@ -2,6 +2,6 @@ module templ/testproject
 
 go 1.21
 
-require github.com/senforsce/t1 v0.2.513 // indirect
+require github.com/senforsce/tndr v0.2.513 // indirect
 
-replace github.com/senforsce/t1 => {moduleRoot}
+replace github.com/senforsce/tndr => {moduleRoot}

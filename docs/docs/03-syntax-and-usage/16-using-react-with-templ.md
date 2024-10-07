@@ -99,7 +99,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/senforsce/t1"
+	"github.com/senforsce/tndr"
 )
 
 func main() {
@@ -283,4 +283,4 @@ Hello Charlie (Client-side React, rendering server-side data)
 
 ## Example code
 
-See https://github.com/senforsce/t1/tree/main/examples/integration-react for a complete example.
+See https://github.com/senforsce/tndr/tree/main/examples/integration-react for a complete example.

@@ -120,7 +120,7 @@ import (
 	"path"
 	"time"
 
-	"github.com/senforsce/t1"
+	"github.com/senforsce/tndr"
 	"github.com/gosimple/slug"
 	"github.com/yuin/goldmark"
 )

@@ -17,8 +17,8 @@ import (
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
-	"github.com/senforsce/t1/cmd/t1/generatecmd"
-	"github.com/senforsce/t1/cmd/t1/generatecmd/modcheck"
+	"github.com/senforsce/tndr/cmd/t1/generatecmd"
+	"github.com/senforsce/tndr/cmd/t1/generatecmd/modcheck"
 )
 
 //go:embed testdata/*

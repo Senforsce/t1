@@ -18,7 +18,7 @@ import (
 
 	_ "embed"
 
-	"github.com/senforsce/t1/parser/v2"
+	"github.com/senforsce/tndr/parser/v2"
 )
 
 type GenerateOpt func(g *generator) error
@@ -167,7 +167,7 @@ func (g *generator) templateNodeInfo() (hasTemplates bool, hasCSS bool) {
 func (g *generator) writeImports() error {
 	var err error
 	// Always import t1 because it's the interface type of all templates.
-	if _, err = g.w.Write("import \"github.com/senforsce/t1\"\n"); err != nil {
+	if _, err = g.w.Write("import \"github.com/senforsce/tndr\"\n"); err != nil {
 		return err
 	}
 	hasTemplates, hasCSS := g.templateNodeInfo()

@@ -17,7 +17,7 @@ import (
 	"time"
 
 	"github.com/andybalholm/brotli"
-	"github.com/senforsce/t1/cmd/t1/generatecmd/sse"
+	"github.com/senforsce/tndr/cmd/t1/generatecmd/sse"
 
 	_ "embed"
 )

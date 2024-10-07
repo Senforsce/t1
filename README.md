@@ -1,4 +1,4 @@
-![t1](https://github.com/senforsce/t1/raw/main/t1.png)
+![t1](https://github.com/senforsce/tndr/raw/main/t1.png)
 
 ## A HTML templating language for Go that has great developer tooling.
 
@@ -9,10 +9,10 @@
 See user documentation at https://senforsce.com/t1/guide
 
 <p align="center">
-<a href="https://pkg.go.dev/github.com/senforsce/t1"><img src="https://pkg.go.dev/badge/github.com/senforsce/t1.svg" alt="Go Reference" /></a>
+<a href="https://pkg.go.dev/github.com/senforsce/tndr"><img src="https://pkg.go.dev/badge/github.com/senforsce/tndr.svg" alt="Go Reference" /></a>
 <a href="https://xcfile.dev"><img src="https://xcfile.dev/badge.svg" alt="xc compatible" /></a>
-<a href="https://raw.githack.com/wiki/senforsce/t1/coverage.html"><img src="https://github.com/senforsce/t1/wiki/coverage.svg" alt="Go Coverage" /></a>
-<a href="https://goreportcard.com/report/github.com/senforsce/t1"><img src="https://goreportcard.com/badge/github.com/senforsce/t1" alt="Go Report Card" /></a<
+<a href="https://raw.githack.com/wiki/senforsce/t1/coverage.html"><img src="https://github.com/senforsce/tndr/wiki/coverage.svg" alt="Go Coverage" /></a>
+<a href="https://goreportcard.com/report/github.com/senforsce/tndr"><img src="https://goreportcard.com/badge/github.com/senforsce/tndr" alt="Go Report Card" /></a<
 </p>
 
 ## Tasks

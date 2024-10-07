@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin/render"
-	"github.com/senforsce/t1"
+	"github.com/senforsce/tndr"
 )
 
 var Default = &Renderer{}

@@ -6,7 +6,7 @@ Enable Go developers to build strongly typed, component-based HTML user interfac
 
 ## Come up with a design and share it
 
-Before starting work on any major pull requests or code changes, start a discussion at https://github.com/senforsce/t1/discussions or raise an issue.
+Before starting work on any major pull requests or code changes, start a discussion at https://github.com/senforsce/tndr/discussions or raise an issue.
 
 We don't want you to spend time on a PR or feature that ultimately doesn't get merged because it doesn't fit with the project goals, or the design doesn't work for some reason.
 

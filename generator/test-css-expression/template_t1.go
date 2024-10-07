@@ -4,7 +4,7 @@ package testcssexpression
 
 //lint:file-ignore SA4006 This context is only used if a nested component is present.
 
-import "github.com/senforsce/t1"
+import "github.com/senforsce/tndr"
 import "strings"
 
 func className() t1.CSSClass {

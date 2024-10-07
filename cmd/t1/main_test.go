@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
-	"github.com/senforsce/t1"
+	"github.com/senforsce/tndr"
 )
 
 func TestMain(t *testing.T) {

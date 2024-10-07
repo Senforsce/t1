@@ -8,7 +8,7 @@ import (
 
 	_ "net/http/pprof"
 
-	"github.com/senforsce/t1/cmd/t1/sloghandler"
+	"github.com/senforsce/tndr/cmd/t1/sloghandler"
 )
 
 type Arguments struct {

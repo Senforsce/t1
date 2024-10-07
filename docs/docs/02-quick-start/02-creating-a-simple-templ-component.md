@@ -15,7 +15,7 @@ Initialize a new Go project within it.
 ```sh
 cd hello-world
 go mod init github.com/a-h/t1-examples/hello-world
-go get github.com/senforsce/t1
+go get github.com/senforsce/tndr
 ```
 
 ## Create a t1 file

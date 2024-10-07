@@ -10,10 +10,10 @@ import (
 	"runtime"
 
 	"github.com/fatih/color"
-	"github.com/senforsce/t1"
-	"github.com/senforsce/t1/cmd/t1/fmtcmd"
-	"github.com/senforsce/t1/cmd/t1/generatecmd"
-	"github.com/senforsce/t1/cmd/t1/lspcmd"
+	"github.com/senforsce/tndr"
+	"github.com/senforsce/tndr/cmd/t1/fmtcmd"
+	"github.com/senforsce/tndr/cmd/t1/generatecmd"
+	"github.com/senforsce/tndr/cmd/t1/lspcmd"
 )
 
 func main() {

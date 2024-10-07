@@ -10,7 +10,7 @@ import (
 	"time"
 
 	"github.com/gosimple/slug"
-	"github.com/senforsce/t1"
+	"github.com/senforsce/tndr"
 	"github.com/yuin/goldmark"
 )
 

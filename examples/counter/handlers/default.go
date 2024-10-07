@@ -4,9 +4,9 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/senforsce/t1/examples/counter/components"
-	"github.com/senforsce/t1/examples/counter/services"
-	"github.com/senforsce/t1/examples/counter/session"
+	"github.com/senforsce/tndr/examples/counter/components"
+	"github.com/senforsce/tndr/examples/counter/services"
+	"github.com/senforsce/tndr/examples/counter/session"
 	"golang.org/x/exp/slog"
 )
 

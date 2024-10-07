@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/senforsce/t1"
+	"github.com/senforsce/tndr"
 )
 
 // Append adds an append action to the output stream.

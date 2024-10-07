@@ -11,9 +11,9 @@ import (
 	"time"
 
 	"github.com/natefinch/atomic"
-	"github.com/senforsce/t1/cmd/t1/processor"
-	"github.com/senforsce/t1/cmd/t1/sloghandler"
-	parser "github.com/senforsce/t1/parser/v2"
+	"github.com/senforsce/tndr/cmd/t1/processor"
+	"github.com/senforsce/tndr/cmd/t1/sloghandler"
+	parser "github.com/senforsce/tndr/parser/v2"
 )
 
 type Arguments struct {

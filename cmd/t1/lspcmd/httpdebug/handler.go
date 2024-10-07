@@ -6,10 +6,10 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/senforsce/t1"
+	"github.com/senforsce/tndr"
 
-	"github.com/senforsce/t1/cmd/t1/lspcmd/proxy"
-	"github.com/senforsce/t1/cmd/t1/visualize"
+	"github.com/senforsce/tndr/cmd/t1/lspcmd/proxy"
+	"github.com/senforsce/tndr/cmd/t1/visualize"
 	"go.uber.org/zap"
 )
 

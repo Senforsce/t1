@@ -42,7 +42,7 @@ func TestPatchGoVersion(t *testing.T) {
 	}
 	for _, test := range tests {
 		t.Run(test.input, func(t *testing.T) {
-			input := "module github.com/senforsce/t1\n\n" + string(test.input) + "\n"
+			input := "module github.com/senforsce/tndr\n\n" + string(test.input) + "\n"
 			actual := patchGoVersion([]byte(input))
 			mf, err := modfile.Parse("go.mod", actual, nil)
 			if err != nil {

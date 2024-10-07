@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"regexp"
 
-	"github.com/senforsce/t1"
+	"github.com/senforsce/tndr"
 
 	"golang.org/x/mod/modfile"
 	"golang.org/x/mod/semver"
@@ -46,7 +46,7 @@ func WalkUp(dir string) (string, error) {
 	return dir, nil
 }
 
-// Replace "go 1.21.3" with "go 1.21" until https://github.com/golang/go/issues/61888 is fixed, see t1 issue https://github.com/senforsce/t1/issues/355
+// Replace "go 1.21.3" with "go 1.21" until https://github.com/golang/go/issues/61888 is fixed, see t1 issue https://github.com/senforsce/tndr/issues/355
 var goVersionRegexp = regexp.MustCompile(`\ngo (\d+\.\d+)(?:\D.+)\n`)
 
 func patchGoVersion(moduleFileContents []byte) []byte {
@@ -74,15 +74,15 @@ func Check(dir string) error {
 	if err != nil {
 		return fmt.Errorf("failed to parse go.mod file: %w", err)
 	}
-	if mf.Module.Mod.Path == "github.com/senforsce/t1" {
+	if mf.Module.Mod.Path == "github.com/senforsce/tndr" {
 		// The go.mod file is for t1 itself.
 		return nil
 	}
 	for _, r := range mf.Require {
-		if r.Mod.Path == "github.com/senforsce/t1" {
+		if r.Mod.Path == "github.com/senforsce/tndr" {
 			cmp := semver.Compare(r.Mod.Version, t1.Version())
 			if cmp < 0 {
-				return fmt.Errorf("generator %v is newer than t1 version %v found in go.mod file, consider running `go get -u github.com/senforsce/t1` to upgrade", t1.Version(), r.Mod.Version)
+				return fmt.Errorf("generator %v is newer than t1 version %v found in go.mod file, consider running `go get -u github.com/senforsce/tndr` to upgrade", t1.Version(), r.Mod.Version)
 			}
 			if cmp > 0 {
 				return fmt.Errorf("generator %v is older than t1 version %v found in go.mod file, consider upgrading t1 CLI", t1.Version(), r.Mod.Version)
@@ -90,5 +90,5 @@ func Check(dir string) error {
 			return nil
 		}
 	}
-	return fmt.Errorf("t1 not found in go.mod file, run `go get github.com/senforsce/t1 to install it`")
+	return fmt.Errorf("t1 not found in go.mod file, run `go get github.com/senforsce/tndr to install it`")
 }

@@ -10,7 +10,7 @@ import (
 
 	"github.com/a-h/htmlformat"
 	"github.com/google/go-cmp/cmp"
-	"github.com/senforsce/t1"
+	"github.com/senforsce/tndr"
 )
 
 //go:embed expected.html

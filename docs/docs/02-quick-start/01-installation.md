@@ -5,16 +5,16 @@
 With Go 1.20 or greater installed, run:
 
 ```sh
-go install github.com/senforsce/t1/cmd/templ@latest
+go install github.com/senforsce/tndr/cmd/templ@latest
 ```
 
 ## Github binaries
 
-Download the latest release from https://github.com/senforsce/t1/releases/latest
+Download the latest release from https://github.com/senforsce/tndr/releases/latest
 
 ## Nix
 
-t1 provides a Nix flake with an exported package containing the binary at https://github.com/senforsce/t1/blob/main/flake.nix
+t1 provides a Nix flake with an exported package containing the binary at https://github.com/senforsce/tndr/blob/main/flake.nix
 
 ```sh
 nix run github:senforsce/t1

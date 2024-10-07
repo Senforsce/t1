@@ -9,9 +9,9 @@ import (
 	"os/signal"
 
 	"github.com/a-h/protocol"
-	"github.com/senforsce/t1/cmd/t1/lspcmd/httpdebug"
-	"github.com/senforsce/t1/cmd/t1/lspcmd/pls"
-	"github.com/senforsce/t1/cmd/t1/lspcmd/proxy"
+	"github.com/senforsce/tndr/cmd/t1/lspcmd/httpdebug"
+	"github.com/senforsce/tndr/cmd/t1/lspcmd/pls"
+	"github.com/senforsce/tndr/cmd/t1/lspcmd/proxy"
 	"go.lsp.dev/jsonrpc2"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"

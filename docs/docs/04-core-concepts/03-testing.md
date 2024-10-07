@@ -9,7 +9,7 @@ To test that data is rendered as expected, there are two main ways to do it:
 
 Expectation validates that data appears in the output in the right format, and position.
 
-The example at https://github.com/senforsce/t1/blob/main/examples/blog/posts_test.go uses the `goquery` library to make assertions on the HTML.
+The example at https://github.com/senforsce/tndr/blob/main/examples/blog/posts_test.go uses the `goquery` library to make assertions on the HTML.
 
 ```go
 func TestPosts(t *testing.T) {
@@ -68,7 +68,7 @@ Snapshot testing is a more broad check. It simply checks that the output hasn't 
 
 It relies on manually checking the output to make sure it's correct, and then "locking it in" by using the snapshot.
 
-t1 uses this strategy to check for regressions in behaviour between releases, as per https://github.com/senforsce/t1/blob/main/generator/test-html-comment/render_test.go
+t1 uses this strategy to check for regressions in behaviour between releases, as per https://github.com/senforsce/tndr/blob/main/generator/test-html-comment/render_test.go
 
 To make it easier to compare the output against the expected HTML, t1 uses a HTML formatting library before executing the diff.
 
@@ -79,7 +79,7 @@ import (
 	_ "embed"
 	"testing"
 
-	"github.com/senforsce/t1/generator/htmldiff"
+	"github.com/senforsce/tndr/generator/htmldiff"
 )
 
 //go:embed expected.html

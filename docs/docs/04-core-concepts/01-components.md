@@ -32,7 +32,7 @@ import (
 	"io"
 	"os"
 
-	"github.com/senforsce/t1"
+	"github.com/senforsce/tndr"
 )
 
 func button(text string) t1.Component {

@@ -2,7 +2,7 @@
 
 The example counter project demonstrates a way to structure your applications.
 
-https://github.com/senforsce/t1/tree/main/examples/counter
+https://github.com/senforsce/tndr/tree/main/examples/counter
 
 The application is divided up into multiple packages, each with its own purpose.
 
@@ -218,10 +218,10 @@ import (
 	"os"
 	"time"
 
-	"github.com/senforsce/t1/examples/counter/db"
-	"github.com/senforsce/t1/examples/counter/handlers"
-	"github.com/senforsce/t1/examples/counter/services"
-	"github.com/senforsce/t1/examples/counter/session"
+	"github.com/senforsce/tndr/examples/counter/db"
+	"github.com/senforsce/tndr/examples/counter/handlers"
+	"github.com/senforsce/tndr/examples/counter/services"
+	"github.com/senforsce/tndr/examples/counter/session"
 	"golang.org/x/exp/slog"
 )
 

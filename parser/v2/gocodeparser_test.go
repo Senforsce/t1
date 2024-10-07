@@ -5,7 +5,7 @@ import (
 
 	"github.com/a-h/parse"
 	"github.com/google/go-cmp/cmp"
-	"github.com/senforsce/t1/cfg"
+	"github.com/senforsce/tndr/cfg"
 )
 
 func TestGoCodeParser(t *testing.T) {

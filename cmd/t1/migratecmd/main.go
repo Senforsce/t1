@@ -10,9 +10,9 @@ import (
 	"time"
 
 	"github.com/natefinch/atomic"
-	"github.com/senforsce/t1/cmd/t1/processor"
-	v1 "github.com/senforsce/t1/parser/v1"
-	v2 "github.com/senforsce/t1/parser/v2"
+	"github.com/senforsce/tndr/cmd/t1/processor"
+	v1 "github.com/senforsce/tndr/parser/v1"
+	v2 "github.com/senforsce/tndr/parser/v2"
 )
 
 const workerCount = 4

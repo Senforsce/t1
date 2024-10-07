@@ -2,7 +2,7 @@
 
 Applications that use t1 can be deployed using the same techniques and platforms as any other Go application.
 
-An example Dockerfile is provided in the https://github.com/senforsce/t1/tree/main/examples/counter-basic example.
+An example Dockerfile is provided in the https://github.com/senforsce/tndr/tree/main/examples/counter-basic example.
 
 # Static content
 
@@ -10,7 +10,7 @@ An example Dockerfile is provided in the https://github.com/senforsce/t1/tree/ma
 
 Web applications often need to include static content such as CSS, images, and icon files.
 
-The https://github.com/senforsce/t1/tree/main/examples/counter-basic example has an `assets` directory for this purpose.
+The https://github.com/senforsce/tndr/tree/main/examples/counter-basic example has an `assets` directory for this purpose.
 
 The `COPY` instruction in the Dockerfile copies all of the code and the `assets` directory to the container so that it can be served by the application.
 
@@ -91,8 +91,8 @@ Once the container starts, you can open a web browser at `localhost:8080` and vi
 
 ## Example deployment
 
-The https://github.com/senforsce/t1/tree/main/examples/counter-basic example is deployed at https://counter-basic.fly.dev/
+The https://github.com/senforsce/tndr/tree/main/examples/counter-basic example is deployed at https://counter-basic.fly.dev/
 
 :::note
-This sample application stores the counts in RAM. If the server restarts, all of the information is lost. To avoid this, use a data store such as DynamoDB or Cloud Firestore. See https://github.com/senforsce/t1/tree/main/examples/counter for an example of this.
+This sample application stores the counts in RAM. If the server restarts, all of the information is lost. To avoid this, use a data store such as DynamoDB or Cloud Firestore. See https://github.com/senforsce/tndr/tree/main/examples/counter for an example of this.
 :::

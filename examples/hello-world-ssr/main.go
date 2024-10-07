@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/senforsce/t1"
+	"github.com/senforsce/tndr"
 )
 
 func main() {

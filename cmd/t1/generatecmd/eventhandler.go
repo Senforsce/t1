@@ -18,9 +18,9 @@ import (
 	"time"
 
 	"github.com/fsnotify/fsnotify"
-	"github.com/senforsce/t1/cmd/t1/visualize"
-	"github.com/senforsce/t1/generator"
-	"github.com/senforsce/t1/parser/v2"
+	"github.com/senforsce/tndr/cmd/t1/visualize"
+	"github.com/senforsce/tndr/generator"
+	"github.com/senforsce/tndr/parser/v2"
 )
 
 func NewFSEventHandler(

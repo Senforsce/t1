@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	"github.com/PuerkitoBio/goquery"
-	"github.com/senforsce/t1"
+	"github.com/senforsce/tndr"
 )
 
 var contentTemplate = t1.ComponentFunc(func(ctx context.Context, w io.Writer) error {

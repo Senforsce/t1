@@ -9,7 +9,7 @@ import (
 
 	_ "embed"
 
-	"github.com/senforsce/t1/parser/v2"
+	"github.com/senforsce/tndr/parser/v2"
 )
 
 func BenchmarkTemplRender(b *testing.B) {

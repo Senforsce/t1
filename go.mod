@@ -1,4 +1,4 @@
-module github.com/senforsce/t1
+module github.com/senforsce/tndr
 
 go 1.21
 

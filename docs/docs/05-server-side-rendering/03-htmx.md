@@ -53,4 +53,4 @@ t1 counts(global, session int) {
 
 The example can be viewed at https://d3qfg6xxljj3ky.cloudfront.net
 
-Complete source code including AWS CDK code to set up the infrastructure is available at https://github.com/senforsce/t1/tree/main/examples/counter
+Complete source code including AWS CDK code to set up the infrastructure is available at https://github.com/senforsce/tndr/tree/main/examples/counter

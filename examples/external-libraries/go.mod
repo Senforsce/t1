@@ -1,7 +1,7 @@
-module github.com/senforsce/t1/examples/external-libraries
+module github.com/senforsce/tndr/examples/external-libraries
 
 go 1.20
 
-require github.com/senforsce/t1 v0.2.304
+require github.com/senforsce/tndr v0.2.304
 
-replace github.com/senforsce/t1 => ../../
+replace github.com/senforsce/tndr => ../../

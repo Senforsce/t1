@@ -20,7 +20,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/senforsce/t1/safehtml"
+	"github.com/senforsce/tndr/safehtml"
 )
 
 // Types exposed by all components.

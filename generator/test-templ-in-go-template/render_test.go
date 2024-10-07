@@ -6,8 +6,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/senforsce/t1"
-	"github.com/senforsce/t1/generator/htmldiff"
+	"github.com/senforsce/tndr"
+	"github.com/senforsce/tndr/generator/htmldiff"
 )
 
 //go:embed expected.html

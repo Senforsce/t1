@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/senforsce/t1/examples/integration-gin/gintemplrenderer"
+	"github.com/senforsce/tndr/examples/integration-gin/gintemplrenderer"
 )
 
 func main() {

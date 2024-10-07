@@ -1,9 +1,9 @@
-module github.com/senforsce/t1/examples/counter
+module github.com/senforsce/tndr/examples/counter
 
 go 1.20
 
 require (
-	github.com/senforsce/t1 v0.2.234-0.20230427112944-80f0dc03a8a8
+	github.com/senforsce/tndr v0.2.234-0.20230427112944-80f0dc03a8a8
 	github.com/akrylysov/algnhsa v1.0.0
 	github.com/aws/aws-cdk-go/awscdk/v2 v2.77.0
 	github.com/aws/aws-cdk-go/awscdklambdagoalpha/v2 v2.77.0-alpha.0
@@ -45,4 +45,4 @@ require (
 	golang.org/x/tools v0.7.0 // indirect
 )
 
-replace github.com/senforsce/t1 => ../../
+replace github.com/senforsce/tndr => ../../

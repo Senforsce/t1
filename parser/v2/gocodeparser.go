@@ -2,8 +2,8 @@ package parser
 
 import (
 	"github.com/a-h/parse"
-	"github.com/senforsce/t1/cfg"
-	"github.com/senforsce/t1/parser/v2/goexpression"
+	"github.com/senforsce/tndr/cfg"
+	"github.com/senforsce/tndr/parser/v2/goexpression"
 )
 
 var goCode = parse.Func(func(pi *parse.Input) (n Node, ok bool, err error) {

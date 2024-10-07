@@ -2,7 +2,7 @@ package parser
 
 import (
 	"github.com/a-h/parse"
-	"github.com/senforsce/t1/parser/v2/goexpression"
+	"github.com/senforsce/tndr/parser/v2/goexpression"
 )
 
 var ifExpression ifExpressionParser

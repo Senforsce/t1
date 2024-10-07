@@ -10,4 +10,4 @@ https://invite.slack.golangbridge.org/
 
 ## Github Discussion
 
-https://github.com/senforsce/t1/discussions
+https://github.com/senforsce/tndr/discussions

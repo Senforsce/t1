@@ -8,8 +8,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/senforsce/t1"
-	"github.com/senforsce/t1/parser/v2"
+	"github.com/senforsce/tndr"
+	"github.com/senforsce/tndr/parser/v2"
 )
 
 func HTML(t1FileName string, t1Contents, goContents string, sourceMap *parser.SourceMap) t1.Component {
